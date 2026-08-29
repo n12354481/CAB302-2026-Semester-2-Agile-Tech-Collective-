@@ -1,4 +1,5 @@
-import com.example.cab302project.Settings.SettingsModel.Settings;
+import com.example.cab302project.Settings.SettingsModel;
+import com.example.cab302project.Settings.SettingsModel;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,17 +7,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class SettingsTestClass {
-
+    private SettingsModel settings;
     @BeforeEach
     public void setUp() {
-
+        settings = new SettingsModel();
     }
 
     @Test
-    public  void test1() {
+    public  void testCommunityParticipationEnabled() {
+        settings.setCommunityParticipation(true);
+        assertEquals(true, settings.contributeToCommunityStatistics());
+    }
 
+
+    @Test
+    public  void testCommunityParticipationDisabled() {
+        settings.setCommunityParticipation(false);
+        assertEquals(false, settings.contributeToCommunityStatistics());
+    }
+
+    @Test
+    public  void testActivityDataDisabled() {
+        settings.setCommunityParticipation(true);
+        settings.setActivityDataParticipation(false);
+        assertEquals(false, settings.contributeOnlyActivity());
     }
 }
+
 
 /*
 Settings

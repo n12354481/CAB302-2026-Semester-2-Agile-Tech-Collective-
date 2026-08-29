@@ -1,17 +1,35 @@
-import com.example.cab302project.Dashboard.DashboardModel.Dashboard;
-
+import com.example.cab302project.Dashboard.DashboardModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DashboardTestClass {
+
+public class DashboardModelTestClass {
     @BeforeEach
     public void setUp() {
 
     }
-
+    //1) Generate community wellbeing statistic: Correct community statistic is calculated
     @Test
-    public  void test1() {
+    public  void WeeklyActivities() {
+        //Given user completed 3 activities
+        //When
+        int result = DashboardModel.getWeeklyActivitiesCompleted();
+        //Then
+        assertEquals(3, result);
+        //User: John Smith
+        //Activities: Monday, tuesday, wednes
+        //Result: 3
+    }
+    //1) Generate community wellbeing statistic: Correct community statistic is calculated
+    @Test
+    public  void WellbeingStatistics() {
+
+    }
+
+    //2) Community statistic excludes opted-out users: Users who disabled contribution aren't included
+    @Test
+    public  void CommunityStatsExcludeOptedOutUsers() {
 
     }
 /*
