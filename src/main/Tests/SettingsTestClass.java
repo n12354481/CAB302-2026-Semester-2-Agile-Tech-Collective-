@@ -1,5 +1,4 @@
 import com.example.cab302project.Settings.SettingsModel;
-import com.example.cab302project.Settings.SettingsModel;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,12 +12,12 @@ public class SettingsTestClass {
         settings = new SettingsModel();
     }
 
+    //Privacy
     @Test
     public  void testCommunityParticipationEnabled() {
         settings.setCommunityParticipation(true);
         assertEquals(true, settings.contributeToCommunityStatistics());
     }
-
 
     @Test
     public  void testCommunityParticipationDisabled() {
@@ -32,16 +31,35 @@ public class SettingsTestClass {
         settings.setActivityDataParticipation(false);
         assertEquals(false, settings.contributeOnlyActivity());
     }
+
+
+    //AI Personalisation
+    @Test
+    public void testAIPersonalisationEnabled()
+    {
+        settings.setAIPersonalisation(true);
+        assertEquals(true, settings.AIPersonalisationEnabled());
+    }
+
+    @Test
+    public void testAIActivityPersonalisationEnabled()
+    {
+        settings.setAIActivityPersonalisation(true);
+        assertEquals(true, settings.AIActivityPersonalisationEnabled());
+    }
+
+    @Test
+    public void testAICheckinPersonalisationEnabled()
+    {
+        settings.setAICheckinPersonalisation(true);
+        assertEquals(true, settings.AICheckinPersonalisationEnabled());
+    }
+
+    //Data
+
+
+    //Profile
+
+    //Common
+    //        5) Preferences are saved - Settings remain after being saved
 }
-
-
-/*
-Settings
-    Privacy
-        1) Community participation enabled - User's statistics are included in the community statistics
-        2) Disabled community participation - User's stats are excluded from community participation
-        3) Activity Data is disabled -  Only user's activity data is excluded from the community statistics
-        4) Check-in Data is disabled - Only user's check-in data is excluded from the community statistics
-        5) Preferences are saved - Settings remain after being saved
-
- */
