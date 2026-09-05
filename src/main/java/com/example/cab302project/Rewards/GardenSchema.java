@@ -30,9 +30,9 @@ public final class GardenSchema {
                     + "UNIQUE (userID, effective_from), "
                     + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE)",
 
-            // Below the ground: sleep is the taproot, deliberate rest the side roots.
+            // Below the ground: sleep is the single dominant root (taproot), deliberate rest the side roots.
             "CREATE TABLE IF NOT EXISTS rest_entry ("
-                    + "restID INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "restID INTEGER PRIMARY KEY AUTOINCREMENT,  "
                     + "userID INTEGER NOT NULL, "
                     + "entry_date TEXT NOT NULL, "
                     + "label TEXT NOT NULL, "
@@ -40,7 +40,7 @@ public final class GardenSchema {
                     + "minutes INTEGER NOT NULL, "
                     + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE)",
 
-            // Thresholds as data so the numbers can be set without touching code.
+            // Thresholds as data so the numbers can be set without using code.
             // Not seeded -- the stage names and counts are still unconfirmed.
             "CREATE TABLE IF NOT EXISTS growth_stage ("
                     + "stage_number INTEGER PRIMARY KEY, "
