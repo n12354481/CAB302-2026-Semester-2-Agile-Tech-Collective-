@@ -23,6 +23,8 @@ public class SettingsModel {
         this.AIActivityPersonalise = AIActivityPersonalise;
         this.AICheckinPersonalise = AICheckinPersonalise;
     }
+
+
     //Privacy
     public void setCommunityParticipation(boolean enabled) {
         communityParticipation = enabled;
@@ -36,6 +38,20 @@ public class SettingsModel {
         checkinDataParticipation = enabled;
     }
 
+    public boolean isCommunityParticipation()
+    {
+        return communityParticipation;
+    }
+
+    public boolean isCommunityActivityParticipation()
+    {
+        return activityDataParticipation;
+    }
+
+    public boolean isCommunityCheckinParticipation()
+    {
+        return checkinDataParticipation;
+    }
 
     public boolean contributeToCommunityStatistics() {
         return communityParticipation;

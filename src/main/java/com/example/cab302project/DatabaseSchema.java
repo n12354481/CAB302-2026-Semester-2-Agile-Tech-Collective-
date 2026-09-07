@@ -6,9 +6,6 @@ import java.sql.Statement;
 
 /**
  * The shared tables, from the team's schema document.
- *
- * <p>SQLite has no date type, so dates are ISO-8601 text (YYYY-MM-DD) and times are HH:MM.
- * Foreign keys are off by default and are per-connection, so they are enabled here.
  */
 public final class DatabaseSchema {
 
@@ -16,14 +13,14 @@ public final class DatabaseSchema {
     }
 
     private static final String[] TABLES = {
-
+            //Users
             "CREATE TABLE IF NOT EXISTS users ("
                     + "userID INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "email TEXT NOT NULL UNIQUE, "
                     + "username TEXT NOT NULL UNIQUE, "
                     + "password TEXT NOT NULL)",
 
-            // Column names match DatabaseSettingsDAO.
+            //Settings
             "CREATE TABLE IF NOT EXISTS settings ("
                     + "user_id INTEGER PRIMARY KEY, "
                     + "community_participation INTEGER NOT NULL DEFAULT 0, "
@@ -34,7 +31,7 @@ public final class DatabaseSchema {
                     + "ai_checkin_personalisation INTEGER NOT NULL DEFAULT 0, "
                     + "FOREIGN KEY (user_id) REFERENCES users (userID) ON DELETE CASCADE)",
 
-            // Catalogue of activities, not a record of time spent -- see activity_log.
+            //Activities
             "CREATE TABLE IF NOT EXISTS activity ("
                     + "activityID INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "activity_name TEXT NOT NULL, "
@@ -43,7 +40,6 @@ public final class DatabaseSchema {
                     + "goal INTEGER, "
                     + "points INTEGER NOT NULL DEFAULT 0)",
 
-            // One row per logged instance. Not in the schema doc -- see KNOWN-ISSUES.
             "CREATE TABLE IF NOT EXISTS activity_log ("
                     + "logID INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "userID INTEGER NOT NULL, "
@@ -53,6 +49,7 @@ public final class DatabaseSchema {
                     + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE, "
                     + "FOREIGN KEY (activityID) REFERENCES activity (activityID))",
 
+            //Checkin
             "CREATE TABLE IF NOT EXISTS checkin ("
                     + "checkinID INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "userID INTEGER NOT NULL, "
@@ -75,6 +72,7 @@ public final class DatabaseSchema {
                     + "FOREIGN KEY (checkinID) REFERENCES checkin (checkinID) ON DELETE CASCADE, "
                     + "FOREIGN KEY (moodID) REFERENCES mood (moodID))",
 
+            //Posts
             "CREATE TABLE IF NOT EXISTS post ("
                     + "postID INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "userID INTEGER NOT NULL, "
@@ -89,7 +87,6 @@ public final class DatabaseSchema {
                     + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE)"
     };
 
-    /** Creates the shared tables if they are not already there. Safe to call on startup. */
     public static void createAll(Connection connection) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             statement.execute("PRAGMA foreign_keys = ON");

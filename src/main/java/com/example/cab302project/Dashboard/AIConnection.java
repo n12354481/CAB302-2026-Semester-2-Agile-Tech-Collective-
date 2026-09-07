@@ -1,0 +1,5 @@
+package com.example.cab302project.Dashboard;
+public class AIConnection {
+    String api_url = "http://127.0.0.1:11434/api/generate";
+
+}
