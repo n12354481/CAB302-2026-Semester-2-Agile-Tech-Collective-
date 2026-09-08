@@ -16,7 +16,7 @@ public class SocialPostingsController {
     @FXML
     private VBox postsContainer;
 
-    private final ISocialPostingsDAO socialPostingsDAO = new DatabaseSocialPostingsDAO();
+    private final ISocialPostingsDAO socialPostingsDAO = new SocialPostingsDAO();
 
     @FXML
     public void initialise() {
