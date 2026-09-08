@@ -11,8 +11,16 @@ public class SettingsController {
 
     @FXML
     private CheckBox communityParticipationCheckBox;
-    //Do that for the remaining 5 checkboxes.
-
+    @FXML
+    private CheckBox activityParticipationCheckbox;
+    @FXML
+    private CheckBox checkinParticipationCheckbox;
+    @FXML
+    private CheckBox aiCheckbox;
+    @FXML
+    private CheckBox aiActivityCheckbox;
+    @FXML
+    private CheckBox aiCheckinCheckbox;
 
     public SettingsController() {
         settingsDAO = new SettingsDAO();
@@ -32,17 +40,21 @@ public class SettingsController {
         }
 
         communityParticipationCheckBox.setSelected(settings.isCommunityParticipation());
-
-        //...
-
-
+        activityParticipationCheckbox.setSelected(settings.isCommunityActivityParticipation());
+        checkinParticipationCheckbox.setSelected(settings.isCommunityCheckinParticipation());
+        aiCheckbox.setSelected(settings.AIPersonalisationEnabled());
+        aiActivityCheckbox.setSelected(settings.AIActivityPersonalisationEnabled());
+        aiCheckinCheckbox.setSelected(settings.AICheckinPersonalisationEnabled());
     }
 
     @FXML
     private void onSaveSettings() {
         settings.setCommunityParticipation(communityParticipationCheckBox.isSelected());
-
-        //...
+        settings.setActivityDataParticipation(activityParticipationCheckbox.isSelected());
+        settings.setCheckinDataParticipation(checkinParticipationCheckbox.isSelected());
+        settings.setAIPersonalisation(aiCheckbox.isSelected());
+        settings.setAIActivityPersonalisation(aiActivityCheckbox.isSelected());
+        settings.setAICheckinPersonalisation(aiCheckinCheckbox.isSelected());
 
         settingsDAO.saveSettings(userId, settings);
     }
