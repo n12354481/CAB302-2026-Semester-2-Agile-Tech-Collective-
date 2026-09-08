@@ -1,3 +1,4 @@
+import com.example.cab302project.Settings.ISettingsDAO;
 import com.example.cab302project.Settings.SettingsModel;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +10,8 @@ public class SettingsTestClass {
     private SettingsModel settings;
     @BeforeEach
     public void setUp() {
-        settings = new SettingsModel();
+        settings = new SettingsModel(new MockContactDAO());
+
     }
 
     //Privacy
@@ -44,6 +46,7 @@ public class SettingsTestClass {
     @Test
     public void testAIActivityPersonalisationEnabled()
     {
+        settings.setAIPersonalisation(true);
         settings.setAIActivityPersonalisation(true);
         assertEquals(true, settings.AIActivityPersonalisationEnabled());
     }
@@ -51,10 +54,30 @@ public class SettingsTestClass {
     @Test
     public void testAICheckinPersonalisationEnabled()
     {
+        settings.setAIPersonalisation(true);
         settings.setAICheckinPersonalisation(true);
         assertEquals(true, settings.AICheckinPersonalisationEnabled());
     }
 
+    @Test
+    public void testAIActivityPersonalisationDisabled()
+    {
+        settings.setAIPersonalisation(false);
+        settings.setAIActivityPersonalisation(true);
+        assertEquals(false, settings.AIActivityPersonalisationEnabled());
+    }
+
+    @Test
+    public void testSettingsCanBeSavedAndRetrieved() {
+        int userId = 1;
+
+        SettingsModel settings = new SettingsModel(true, true, false, true, false, true);
+        settingsDAO.saveSettings(userId, settings);
+        SettingsModel result = settingsDAO.getSettings(userId);
+        assertEquals(true, result.isCommunityParticipation());
+        assertEquals(false, result.isCommunityCheckinParticipation());
+        assertEquals(true, result.isCommunityActivityParticipation());
+    }
     //Data
 
 
