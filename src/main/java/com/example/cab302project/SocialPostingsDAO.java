@@ -15,7 +15,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
 
     private void createTables() {
 
-        String posts = "CREATE TABLE IF NOT EXISTS social_posts ("
+        String posts = "CREATE TABLE IF NOT EXISTS posts ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "title TEXT NOT NULL, "
                 + "description TEXT, "
@@ -26,7 +26,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
                 + "map_location TEXT, "
                 + "contact_info TEXT, "
                 + "register_link TEXT, "
-                + "status TEXT NOT NULL DEFAULT 'draft', "
+                + "status TEXT NOT NULL DEFAULT 'draft'"
                 + ")";
 
         String images = "CREATE TABLE IF NOT EXISTS post_images ("
@@ -36,5 +36,12 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
                 + "sort_order INTEGER DEFAULT 0, "
                 + "FOREIGN KEY (post_id) REFERENCES social_posts(id) ON DELETE CASCADE"
                 + ")";
+
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(posts);
+            statement.executeUpdate(images);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
