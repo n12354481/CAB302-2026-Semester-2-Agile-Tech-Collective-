@@ -16,7 +16,7 @@
 //    @FXML
 //    private VBox postsContainer;
 //
-//   // private final ISocialPostingsDAO socialPostingsDAO = new DatabaseSocialPostingsDAO();
+//    private final ISocialPostingsDAO socialPostingsDAO = new DatabaseSocialPostingsDAO();
 //
 //    @FXML
 //    public void initialise() {

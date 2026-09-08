@@ -1,6 +1,7 @@
 package com.example.cab302project;
 
 import com.example.cab302project.Database.DatabaseConnection;
+import com.example.cab302project.Database.DatabaseSchema;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
