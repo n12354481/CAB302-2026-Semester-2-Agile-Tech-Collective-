@@ -8,8 +8,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Smoke test: the DDL runs, and running it twice is safe.
- * Uses an in-memory database so no .db file is written during the build.
+ * Test: the DDL runs, running it twice ensures its safe.
+ * Uses an in memory database so no .db file is written during the build.
  */
 class GardenSchemaTest {
 
