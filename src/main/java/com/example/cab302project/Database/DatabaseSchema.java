@@ -1,4 +1,4 @@
-package com.example.cab302project;
+package com.example.cab302project.Database;
 
 import java.sql.Connection;
 import java.sql.SQLException;

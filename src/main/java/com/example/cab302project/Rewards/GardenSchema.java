@@ -1,5 +1,7 @@
 package com.example.cab302project.Rewards;
 
+import com.example.cab302project.Database.DatabaseSchema;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,7 +12,7 @@ import java.sql.Statement;
  * <p>Each day is one plant: activity grows the stem above the ground line, rest grows the
  * root below it. A day that does both is balanced, and balanced days bank a growth stage.
  *
- * <p>Needs {@link com.example.cab302project.DatabaseSchema} created first.
+ * <p>Needs {@link DatabaseSchema} created first.
  */
 public final class GardenSchema {
 
