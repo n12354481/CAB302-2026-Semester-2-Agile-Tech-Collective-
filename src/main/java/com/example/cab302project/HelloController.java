@@ -68,7 +68,7 @@ public class HelloController {
 
     @FXML
     private void onSettingsButtonClicked() {
-        loadPage("Settings.fxml");
+        loadPage("settings.fxml");
     }
 
     @FXML
@@ -89,6 +89,7 @@ public class HelloController {
                 HelloApplication.class.getResource(page)
             );
 
+            //Using a node type to ensure any page with any element can be displayed.
             Node content = loader.load();
 
             mainContent.getChildren().setAll(content);

@@ -1,13 +1,44 @@
 package com.example.cab302project.Settings;
 
-import com.example.cab302project.SettingsDAO;
+import com.example.cab302project.Database.DatabaseSchema;
+import com.example.cab302project.HelloApplication;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
 
 public class SettingsController {
     private int userId;
     private SettingsModel settings;
     private ISettingsDAO settingsDAO;
+
+    @FXML
+    private Button accountButton;
+
+    @FXML
+    private Button privacyButton;
+
+    @FXML
+    private Button dataButton;
+
+    @FXML
+    private Button aiButton;
+
+    @FXML
+    private AnchorPane account;
+
+    @FXML
+    private AnchorPane data;
+
+    @FXML
+    private AnchorPane privacy;
+
+    @FXML
+    private AnchorPane ai;
 
     @FXML
     private CheckBox communityParticipationCheckBox;
@@ -23,10 +54,41 @@ public class SettingsController {
     private CheckBox aiCheckinCheckbox;
 
     public SettingsController() {
-        settingsDAO = new SettingsDAO();
+        settingsDAO = new DatabaseSchema.SettingsDAO();
     }
 
-    public void setUserId(int UserId) {
+    @FXML
+    private void onAccountButtonClicked() { show(account); }
+
+    @FXML
+    private void onPrivacyButtonClicked() { show(privacy); }
+
+    @FXML
+    private void onDataButtonClicked() { show(data); }
+
+    @FXML
+    private void onAIButtonClicked() { show(ai); }
+
+
+    private void show(AnchorPane section)
+    {
+        account.setVisible(false);
+        account.setManaged(false);
+
+        data.setVisible(false);
+        data.setManaged(false);
+
+        ai.setVisible(false);
+        ai.setManaged(false);
+
+        privacy.setVisible(false);
+        privacy.setManaged(false);
+
+        section.setVisible(true);
+        section.setManaged(true);
+    }
+
+    public void setUserId(int userId) {
         this.userId = userId;
         loadSettings();
     }
@@ -57,6 +119,7 @@ public class SettingsController {
         settings.setAICheckinPersonalisation(aiCheckinCheckbox.isSelected());
 
         settingsDAO.saveSettings(userId, settings);
-    }
 
+        System.out.println("Settings saved for user: " + userId);
+    }
 }

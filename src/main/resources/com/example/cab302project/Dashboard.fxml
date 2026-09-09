@@ -6,10 +6,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cab302project.Dashboard.DashboardController"
             prefHeight="400.0" prefWidth="600.0">
+    <VBox AnchorPane.leftAnchor="0"
+          AnchorPane.topAnchor="0"
+          AnchorPane.rightAnchor="0"
+          AnchorPane.bottomAnchor="0"
+          spacing="30">
+        <HBox style="-fx-background-color: #DEF3F0">
+            <padding>
+                <Insets top="20" left="20" right="20" bottom="50"/>
+            </padding>
+            <Label text="THis is the first box"/>
+        </HBox>
 
-    <Label text="Hello how are you"/>
+        <HBox style="-fx-background-color: #ECECEC">
+            <padding>
+                <Insets top="10" left="20" right="20" bottom="10"/>
+            </padding>
+            <Label text="THis is the second box"/>
+        </HBox>
+        <HBox style="-fx-background-color: #ECECEC">
+            <padding>
+                <Insets top="10" left="20" right="20" bottom="10"/>
+            </padding>
+            <Label text="THis is the third box"/>
+        </HBox>
+    </VBox>
 </AnchorPane>

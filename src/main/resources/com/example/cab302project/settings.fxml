@@ -15,40 +15,354 @@
             style="-fx-background-color: #fff;">
 
     <children>
-    <!-- Sidebar -->
+        <!-- Sidebar -->
         <VBox prefWidth="205.0"
               AnchorPane.topAnchor="0.0"
               AnchorPane.bottomAnchor="0.0"
               AnchorPane.leftAnchor="0.0"
-              style="-fx-background-color: #1F6F64"
+              style="-fx-background-color: #F7F8F7"
         >
             <children>
-                <!--logo and name-->
-                <HBox alignment="CENTER_LEFT"
-                      spacing="8"
-                      prefHeight="65"
-                >
-                    <padding>
-                        <Insets left="20"/>
-                    </padding>
-
-                    <children>
-                        <Label text="STEM App"
-                               textFill="#fff"
-                               style="-fx-font-size: 16px;"/>
-
-                    </children>
-                </HBox>
-
                 <!--Nav-->
-                <VBox spacing="6" prefWidth="205">
+                <VBox VBox.vgrow="ALWAYS"
+                      style="-fx-padding: 45 0 0 0"
+                      alignment="TOP_CENTER"
+                      spacing="12"
+                      fillWidth="true"
+                      prefWidth="205">
                     <children>
-                        <Button text="Account"/>
+                        <Button text="Account"
+                                fx:id="accountButton"
+                                onAction="#onAccountButtonClicked"
+                                prefWidth="170"
+                                prefHeight="45"
+                                style="-fx-background-color: #F7F8F7;
+                                       -fx-text-fill: black;
+                                       -fx-font-size: 20px;
+                                       -fx-font-family: 'Arial';
+                                       -fx-font-weight: bold;
+                                       -fx-background-insets: 0;
+                                       -fx-background-radius: 8px;
+                                       -fx-border-color: transparent;
+                                       -fx-effect: none;
+                                       -fx-cursor: hand;"/>
+                        <Button text="Data"
+                                fx:id="dataButton"
+                                onAction="#onDataButtonClicked"
+                                prefWidth="170"
+                                prefHeight="45"
+                                style="-fx-background-color: #F7F8F7;
+                                       -fx-text-fill: black;
+                                       -fx-font-size: 20px;
+                                       -fx-font-family: 'Arial';
+                                       -fx-font-weight: bold;
+                                       -fx-background-insets: 0;
+                                       -fx-background-radius: 8px;
+                                       -fx-border-color: transparent;
+                                       -fx-effect: none;
+                                       -fx-cursor: hand;"/>
+                        <Button text="Privacy"
+                                fx:id="privacyButton"
+                                onAction="#onPrivacyButtonClicked"
+                                prefWidth="170"
+                                prefHeight="45"
+                                style="-fx-background-color: #F7F8F7;
+                                       -fx-text-fill: black;
+                                       -fx-font-size: 20px;
+                                       -fx-font-family: 'Arial';
+                                       -fx-font-weight: bold;
+                                       -fx-background-insets: 0;
+                                       -fx-background-radius: 8px;
+                                       -fx-border-color: transparent;
+                                       -fx-effect: none;
+                                       -fx-cursor: hand;"/>
+                        <Button text="AI"
+                                fx:id="aiButton"
+                                onAction="#onAIButtonClicked"
+                                prefWidth="170"
+                                prefHeight="45"
+                                style="-fx-background-color: #F7F8F7;
+                                       -fx-text-fill: black;
+                                       -fx-font-size: 20px;
+                                       -fx-font-family: 'Arial';
+                                       -fx-font-weight: bold;
+                                       -fx-background-insets: 0;
+                                       -fx-background-radius: 8px;
+                                       -fx-border-color: transparent;
+                                       -fx-effect: none;
+                                       -fx-cursor: hand;"/>
 
                     </children>
                 </VBox>
             </children>
-
         </VBox>
+
+        <!--Main Content-->
+        <StackPane AnchorPane.leftAnchor="205.0"
+                   AnchorPane.topAnchor="0.0"
+                   AnchorPane.rightAnchor="0.0"
+                   AnchorPane.bottomAnchor="0.0">
+            <children>
+                <!--Account-->
+                <AnchorPane fx:id="account"
+                            visible="true"
+                            managed="true">
+                    <BorderPane AnchorPane.leftAnchor="0"
+                                AnchorPane.topAnchor="0"
+                                AnchorPane.bottomAnchor="0"
+                                AnchorPane.rightAnchor="0">
+                        <top>
+                            <VBox>
+                                <Label text="PROFILE"
+                                       style="-fx-font-size: 25">
+                                    <padding>
+                                        <Insets top="40" right="22" bottom="12" left="22"/>
+                                    </padding>
+                                </Label>
+                            </VBox>
+                        </top>
+                        <center>
+                            <VBox spacing="32">
+                                <padding>
+                                    <Insets top="10" right="36" bottom="30" left="36"/>
+                                </padding>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <VBox>
+                                <padding>
+                                    <Insets top="30" right="36" bottom="30" left="35"/>
+                                </padding>
+                                <Button text="Save"
+                                        style="-fx-background-color: #77DD77"
+                                        prefWidth="150"
+                                        prefHeight="40"
+                                        onAction="#onSaveSettings"/>
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </AnchorPane>
+                <!--Privacy-->
+                <AnchorPane fx:id="privacy"
+                            visible="false"
+                            managed="false">
+                    <BorderPane AnchorPane.leftAnchor="0"
+                                AnchorPane.topAnchor="0"
+                                AnchorPane.bottomAnchor="0"
+                                AnchorPane.rightAnchor="0">
+                        <top>
+                            <VBox>
+                                <Label text="COMMUNITY STATISTICS INFORMATION"
+                                       style="-fx-font-size: 25">
+                                    <padding>
+                                        <Insets top="40" right="22" bottom="12" left="22"/>
+                                    </padding>
+                                </Label>
+                            </VBox>
+                        </top>
+                        <center>
+                            <VBox spacing="32">
+                                <padding>
+                                    <Insets top="10" right="36" bottom="30" left="36"/>
+                                </padding>
+
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Contribute to Community Statistics"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="Turning this ON will allow us to use your data when generating communtiy statistics."
+                                               style="-fx-font-size: 15;
+                                                       -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="communityParticipationCheckBox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Activity Data"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="This will allow us to use your data from the activities page when generating community statistics."
+                                               style="-fx-font-size: 15
+                                                      -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="activityParticipationCheckBox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Check-in Data"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="This will allow us to use your data from the check-in page when generating community statistics."
+                                               style="-fx-font-size: 15
+                                                      -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="checkinParticipationCheckBox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <VBox>
+                                <padding>
+                                    <Insets top="30" right="36" bottom="30" left="35"/>
+                                </padding>
+                                <Button text="Save"
+                                        style="-fx-background-color: #77DD77"
+                                        prefWidth="150"
+                                        prefHeight="40"
+                                        onAction="#onSaveSettings"/>
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </AnchorPane>
+                <!--Data-->
+                <AnchorPane fx:id="data"
+                            visible="false"
+                            managed="false">
+                    <BorderPane AnchorPane.leftAnchor="0"
+                                AnchorPane.topAnchor="0"
+                                AnchorPane.bottomAnchor="0"
+                                AnchorPane.rightAnchor="0">
+                        <top>
+                            <VBox>
+                                <Label text="ACTIVITY"
+                                       style="-fx-font-size: 25">
+                                    <padding>
+                                        <Insets top="40" right="22" bottom="12" left="22"/>
+                                    </padding>
+                                </Label>
+                            </VBox>
+                        </top>
+                        <center>
+                            <VBox spacing="32">
+                                <padding>
+                                    <Insets top="10" right="36" bottom="30" left="36"/>
+                                </padding>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <VBox>
+                                <padding>
+                                    <Insets top="30" right="36" bottom="30" left="35"/>
+                                </padding>
+                                <Button text="Save"
+                                        style="-fx-background-color: #77DD77"
+                                        prefWidth="150"
+                                        prefHeight="40"
+                                        onAction="#onSaveSettings"/>
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </AnchorPane>
+                <!--AI-->
+                <AnchorPane fx:id="ai"
+                            visible="false"
+                            managed="false">
+                    <BorderPane AnchorPane.leftAnchor="0"
+                                AnchorPane.topAnchor="0"
+                                AnchorPane.bottomAnchor="0"
+                                AnchorPane.rightAnchor="0">
+                        <top>
+                            <VBox>
+                                <Label text="PERSONALISATION"
+                                       style="-fx-font-size: 25">
+                                    <padding>
+                                        <Insets top="40" right="22" bottom="12" left="22"/>
+                                    </padding>
+                                </Label>
+                            </VBox>
+                        </top>
+                        <center>
+                            <VBox spacing="32">
+                                <padding>
+                                    <Insets top="10" right="36" bottom="30" left="36"/>
+                                </padding>
+
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="AI Personalisation"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="Turning this ON will allow our AI chatbot to access your data for recommending personal tips on improving your well-being."
+                                               style="-fx-font-size: 15;
+                                                       -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="aiCheckbox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Check-in Data"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="Turning this ON will allow our AI chatbot to access your check-in data for recommending personal tips on improving your mental well-being."
+                                               style="-fx-font-size: 15
+                                                      -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="aiCheckinCheckbox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Activity Data"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="Turning this ON will allow Maven to access your activities data for recommending personal tips on improving your physical well-being."
+                                               style="-fx-font-size: 15
+                                                      -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="aiActivityCheckbox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <HBox alignment="CENTER_LEFT">
+                            <padding>
+                                <Insets top="30" right="36" bottom="30" left="35"/>
+                            </padding>
+                            <Button text="Save"
+                                    style="-fx-background-color: #77DD77"
+                                    prefWidth="150"
+                                    prefHeight="40"
+                                    onAction="#onSaveSettings"/>
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </AnchorPane>
+
+            </children>
+        </StackPane>
     </children>
 </AnchorPane>
