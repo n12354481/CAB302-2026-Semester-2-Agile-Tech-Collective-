@@ -7,6 +7,7 @@ module com.example.cab302project {
     requires org.xerial.sqlitejdbc;
 
     opens com.example.cab302project to javafx.fxml;
+    opens com.example.cab302project.Dashboard to javafx.fxml;
     exports com.example.cab302project;
     exports com.example.cab302project.Settings;
     exports com.example.cab302project.Database;
