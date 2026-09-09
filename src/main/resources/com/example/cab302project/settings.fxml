@@ -122,9 +122,57 @@
                             </VBox>
                         </top>
                         <center>
-                            <VBox spacing="32">
+                            <VBox>
+                                <VBox spacing="32">
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="30"/>
+                                    </padding>
+
+
+                                    <Label text="Email"
+                                           style="-fx-font-weight: bold; -fx-font-size: 20;"/>
+                                    <VBox>
+                                        <VBox style="-fx-background-color: #F7F5F5"
+                                              spacing="20">
+                                            <Label text="janesmith@gmail.com"
+                                                   style="-fx-font-size: 20;"/>
+                                        </VBox>
+                                        <Button text="Update"
+                                                style="-fx-background-color: #C8EEE9"/>
+                                    </VBox>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="36"/>
+                                    </padding>
+
+
+                                    <Label text="Username"
+                                           style="-fx-font-weight: bold; -fx-font-size: 20;"/>
+                                    <VBox>
+                                        <VBox style="-fx-background-color: #F7F5F5">
+                                            <Label text="anonymousRhino123654"
+                                                   style="-fx-font-size: 20;"/>
+                                        </VBox>
+                                        <Button text="Update"
+                                                style="-fx-background-color: #C8EEE9"/>
+                                    </VBox>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="36"/>
+                                    </padding>
+
+                                </VBox>
+                                <VBox>
+                                    <Label text="UPDATE PASSWORD"
+                                           style="-fx-font-size: 25">
+                                        <padding>
+                                            <Insets top="40" right="0" bottom="12" left="0"/>
+                                        </padding>
+                                    </Label>
+
+                                </VBox>
+                                <Button text="Change Password"
+                                        style="-fx-background-color: #C8EEE9"/>
                                 <padding>
-                                    <Insets top="10" right="36" bottom="30" left="36"/>
+                                    <Insets top="10" right="36" bottom="30" left="50"/>
                                 </padding>
                             </VBox>
                         </center>
@@ -349,14 +397,14 @@
                         </center>
                         <bottom>
                             <HBox alignment="CENTER_LEFT">
-                            <padding>
-                                <Insets top="30" right="36" bottom="30" left="35"/>
-                            </padding>
-                            <Button text="Save"
-                                    style="-fx-background-color: #77DD77"
-                                    prefWidth="150"
-                                    prefHeight="40"
-                                    onAction="#onSaveSettings"/>
+                                <padding>
+                                    <Insets top="30" right="36" bottom="30" left="35"/>
+                                </padding>
+                                <Button text="Save"
+                                        style="-fx-background-color: #77DD77"
+                                        prefWidth="150"
+                                        prefHeight="40"
+                                        onAction="#onSaveSettings"/>
                             </HBox>
                         </bottom>
                     </BorderPane>
