@@ -6,10 +6,93 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cab302project.Dashboard.DashboardController"
             prefHeight="400.0" prefWidth="600.0">
+    <BorderPane AnchorPane.leftAnchor="0"
+                AnchorPane.topAnchor="0"
+                AnchorPane.rightAnchor="0"
+                AnchorPane.bottomAnchor="0">
+        <top>
+            <VBox fillWidth="true"
+                  spacing="20"
+                  style="-fx-background-color: #fff">
+                <HBox style="-fx-background-color: #DEF3F0">
+                    <padding>
+                        <Insets top="20" left="20" right="20" bottom="50"/>
+                    </padding>
+                    <Label text="THis is the first box"/>
+                </HBox>
 
-    <Label text="Hello how are you"/>
+                <VBox spacing="20">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <HBox style="-fx-background-color: #C5C6C7;
+                     -fx-background-radius: 15px;
+                     -fx-border-radius: 15px;
+                     -fx-border-width: 5px;
+                     -fx-border-color: #C5C6C7;">
+                        <padding>
+                            <Insets top="10" left="20" right="20" bottom="10"/>
+                        </padding>
+                        <Label text="THis is the second box"/>
+                    </HBox>
+
+                    <HBox style="-fx-background-color: #C5C6C7;
+                     -fx-background-radius: 15px;
+                     -fx-border-radius: 15px;
+                     -fx-border-width: 5px;
+                     -fx-border-color: #C5C6C7;">
+                        <padding>
+                            <Insets top="10" left="20" right="20" bottom="10"/>
+                        </padding>
+                        <Label text="THis is the third box"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </top>
+        <center>
+            <HBox spacing="20"
+                  fillHeight="true"
+                  style="-fx-padding: 20"
+                  alignment="CENTER">
+
+                <!--AI Rec-->
+                <VBox HBox.hgrow="ALWAYS"
+                      spacing="10"
+                      fillWidth="true">
+
+                    <Label text="AI Recommendations"
+                           style="-fx-font-size: 25;
+                                  -fx-font-weight: bold;"/>
+                    <VBox VBox.vgrow="ALWAYS"
+                          style="-fx-background-color: pink;
+                                 -fx-background-radius: 15;
+                                 -fx-border-radius: 20;">
+                        <Label text="Box 1"/>
+                    </VBox>
+                </VBox>
+
+                <!--Overall Stats-->
+                <VBox HBox.hgrow="ALWAYS"
+                      spacing="10"
+                      fillWidth="true">
+
+                    <Label text="Overall Statistics"
+                           style="-fx-font-size: 25;
+                                  -fx-font-weight: bold;"/>
+                    <VBox VBox.vgrow="ALWAYS"
+                          style="-fx-background-color: blue;
+                                 -fx-background-radius: 15;
+                                 -fx-border-radius: 20;">
+                        <Label text="Box 2"/>
+                    </VBox>
+                </VBox>
+            </HBox>
+        </center>
+    </BorderPane>
 </AnchorPane>
