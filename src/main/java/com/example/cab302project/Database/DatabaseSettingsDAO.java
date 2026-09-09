@@ -1,4 +1,4 @@
-package com.example.cab302project;
+package com.example.cab302project.Database;
 
 import com.example.cab302project.Settings.ISettingsDAO;
 
