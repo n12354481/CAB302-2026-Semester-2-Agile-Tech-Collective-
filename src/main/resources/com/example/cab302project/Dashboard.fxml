@@ -67,10 +67,11 @@
                       fillWidth="true">
 
                     <Label text="AI Recommendations"
-                           style="-fx-font-size: 25;
+                           alignment="CENTER_LEFT"
+                           style="-fx-font-size: 20;
                                   -fx-font-weight: bold;"/>
                     <VBox VBox.vgrow="ALWAYS"
-                          style="-fx-background-color: pink;
+                          style="-fx-background-color: #fff;
                                  -fx-background-radius: 15;
                                  -fx-border-radius: 20;">
                         <Label text="Box 1"/>
@@ -79,17 +80,36 @@
 
                 <!--Overall Stats-->
                 <VBox HBox.hgrow="ALWAYS"
-                      spacing="10"
-                      fillWidth="true">
+                      spacing="10">
 
                     <Label text="Overall Statistics"
-                           style="-fx-font-size: 25;
-                                  -fx-font-weight: bold;"/>
+                           style="-fx-font-size: 20;
+                                  -fx-font-weight: bold;"
+                           alignment="CENTER_RIGHT"/>
                     <VBox VBox.vgrow="ALWAYS"
-                          style="-fx-background-color: blue;
+                          fillWidth="true"
+                          alignment="TOP_LEFT"
+                          style="-fx-background-color: white;
                                  -fx-background-radius: 15;
                                  -fx-border-radius: 20;">
+
+
                         <Label text="Box 2"/>
+                        <StackPane alignment="CENTER"
+                                    VBox.vgrow="ALWAYS"
+                                    style="-fx-alignment: BOTTOM_RIGHT;">
+                        <ProgressIndicator progress="0.25"
+                                           prefWidth="180"
+                                           prefHeight="180"
+                                           maxHeight="180"
+                                           maxWidth="180"
+                                           style="-fx-progress-color: #2BB7A9;
+                                                  -fx-background-color: transparent;"/>
+                        <Label text="25%"
+                               style="-fx-font-size: 28px;
+                                      -fx-font-weight: bold;
+                                      -fx-text-fill: #33333;"/>
+                        </StackPane>
                     </VBox>
                 </VBox>
             </HBox>
