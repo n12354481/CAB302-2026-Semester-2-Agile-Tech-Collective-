@@ -58,11 +58,14 @@
         <center>
             <HBox spacing="20"
                   fillHeight="true"
-                  style="-fx-padding: 20"
-                  alignment="CENTER">
+                  alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="20" bottom="20" left="20" right="20"/>
+                </padding>
 
                 <!--AI Rec-->
                 <VBox HBox.hgrow="ALWAYS"
+                      VBox.vgrow="ALWAYS"
                       spacing="10"
                       fillWidth="true">
 
@@ -71,45 +74,104 @@
                            style="-fx-font-size: 20;
                                   -fx-font-weight: bold;"/>
                     <VBox VBox.vgrow="ALWAYS"
+                          spacing="20"
                           style="-fx-background-color: #fff;
                                  -fx-background-radius: 15;
                                  -fx-border-radius: 20;">
-                        <Label text="Box 1"/>
+                        <!--                        <Region style="-fx-background-color: #D9A441;-->
+                        <!--                                       -fx-padding: 0 0 4 0;">-->
+                        <VBox VBox.vgrow="ALWAYS"
+                              spacing="30">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                            <VBox spacing="25"
+                                  style="-fx-background-color: #F2FFFD;
+                                 -fx-background-radius: 15;
+                                 -fx-border-radius: 20;"
+                                  prefHeight="130">
+
+                                <Label text="First"/>
+                            </VBox>
+                        </VBox>
+                        <!--                        </Region>-->
+                        <VBox VBox.vgrow="ALWAYS"
+                              spacing="30">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                            <VBox spacing="25"
+                                  style="-fx-background-color: #F2FFFD;
+                                 -fx-background-radius: 15;
+                                 -fx-border-radius: 20;"
+                                  prefHeight="130">
+
+                                <Label text="Second"/>
+                            </VBox>
+                        </VBox>
+
+                        <VBox VBox.vgrow="ALWAYS"
+                              spacing="25">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                            <VBox spacing="30"
+                                  style="-fx-background-color: #F2FFFD;
+                                 -fx-background-radius: 15;
+                                 -fx-border-radius: 20;"
+                                  prefHeight="130">
+
+                                <Label text="Third"/>
+                            </VBox>
+                        </VBox>
+
                     </VBox>
                 </VBox>
 
                 <!--Overall Stats-->
                 <VBox HBox.hgrow="ALWAYS"
+                      VBox.vgrow="ALWAYS"
+                      fillWidth="true"
                       spacing="10">
 
                     <Label text="Overall Statistics"
                            style="-fx-font-size: 20;
-                                  -fx-font-weight: bold;"
-                           alignment="CENTER_RIGHT"/>
+                                  -fx-font-weight: bold;"/>
                     <VBox VBox.vgrow="ALWAYS"
                           fillWidth="true"
-                          alignment="TOP_LEFT"
+                          spacing="0"
                           style="-fx-background-color: white;
                                  -fx-background-radius: 15;
                                  -fx-border-radius: 20;">
 
+                            <HBox alignment="CENTER_LEFT"
+                                  style="-fx-background-color: #F3F3F3;"
+                                  spacing="20">
 
-                        <Label text="Box 2"/>
-                        <StackPane alignment="CENTER"
-                                    VBox.vgrow="ALWAYS"
-                                    style="-fx-alignment: BOTTOM_RIGHT;">
-                        <ProgressIndicator progress="0.25"
-                                           prefWidth="180"
-                                           prefHeight="180"
-                                           maxHeight="180"
-                                           maxWidth="180"
-                                           style="-fx-progress-color: #2BB7A9;
+                                <padding>
+                                    <Insets top="15" right="20" bottom="15" left="20"/>
+                                </padding>
+                                <Label text="Registered Events"/>
+<!--                                <Label text="5"-->
+<!--                                       style="-fx-font-size: 15"/>-->
+<!--                                <Button textFill="white"-->
+<!--                                        style="-fx-background-color: #1F6F64;"-->
+<!--                                        text="View Events"/>-->
+                            </HBox>
+
+                            <StackPane alignment="BOTTOM_RIGHT"
+                                       VBox.vgrow="ALWAYS">
+<!--                                <padding>-->
+<!--                                    <Insets top="20" right="20" left="0" bottom="20"/>-->
+<!--                                </padding>-->
+                                <ProgressIndicator progress="0.25"
+                                                   prefWidth="250"
+                                                   prefHeight="250"
+                                                   maxHeight="250"
+                                                   maxWidth="250"
+                                                   style="-fx-progress-color: #2BB7A9;
                                                   -fx-background-color: transparent;"/>
-                        <Label text="25%"
-                               style="-fx-font-size: 28px;
-                                      -fx-font-weight: bold;
-                                      -fx-text-fill: #33333;"/>
-                        </StackPane>
+                            </StackPane>
                     </VBox>
                 </VBox>
             </HBox>
