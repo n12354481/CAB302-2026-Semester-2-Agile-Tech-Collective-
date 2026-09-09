@@ -53,7 +53,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
-                <!-- Java level comes from the maven.compiler.release property above.
+                <!-- Java level comes from the maven.compiler.release property .
                      source/target 9 could not compile against the JavaFX 21 jars. -->
             </plugin>
             <plugin>
@@ -62,7 +62,7 @@
                 <version>3.2.5</version>
                 <configuration>
                     <!-- Run tests on the classpath. The project has a module-info,
-                         and patching test classes into the module is fragile. -->
+                         and patching test classes into the module is unreliable. -->
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
