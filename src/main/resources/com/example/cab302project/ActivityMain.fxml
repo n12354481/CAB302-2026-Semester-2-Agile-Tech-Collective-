@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.cab302project.Activities.ActivitiesController">
+    <ButtonBar layoutX="64.0" layoutY="76.0" prefHeight="83.0" prefWidth="285.0">
+        <buttons>
+            <Button mnemonicParsing="false"
+                    text="All"
+                    onAction="#onAllButtonClicked"/>
+            <Button layoutX="135.0" layoutY="39.0" mnemonicParsing="false"
+                    text="Activities" onAction="#onAllButtonClicked"/>
+            <Button layoutX="135.0" layoutY="39.0" mnemonicParsing="false"
+                    onAction="#onHobbiesButtonClicked"
+                    text="Hobbies"/>
+        </buttons>
+    </ButtonBar>
+    <Label layoutX="96.0" layoutY="50.0" text="Activities" style="-fx-font-size: 35px;"/>
+    <StackPane fx:id="activityContent" layoutY="80"/>
+
+</AnchorPane>
