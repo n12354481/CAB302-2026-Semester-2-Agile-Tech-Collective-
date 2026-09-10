@@ -89,8 +89,7 @@
                                        -fx-background-insets: 0;
                                        -fx-background-radius: 8px;
                                        -fx-border-color: transparent;
-                                       -fx-effect: none;
-                                       -fx-cursor: hand;"/>
+                                       -fx-effect: none;"/>
 
                     </children>
                 </VBox>
@@ -107,6 +106,7 @@
                 <AnchorPane fx:id="account"
                             visible="true"
                             managed="true">
+
                     <BorderPane AnchorPane.leftAnchor="0"
                                 AnchorPane.topAnchor="0"
                                 AnchorPane.bottomAnchor="0"
@@ -116,77 +116,89 @@
                                 <Label text="PROFILE"
                                        style="-fx-font-size: 25">
                                     <padding>
-                                        <Insets top="40" right="22" bottom="12" left="22"/>
+                                        <Insets top="40" right="36" bottom="12" left="36"/>
                                     </padding>
                                 </Label>
                             </VBox>
                         </top>
                         <center>
                             <VBox>
-                                <VBox spacing="32">
+                                <VBox spacing="25">
                                     <padding>
-                                        <Insets top="10" right="36" bottom="30" left="30"/>
+                                        <Insets top="10" right="36" bottom="20" left="36"/>
                                     </padding>
 
-
-                                    <Label text="Email"
-                                           style="-fx-font-weight: bold; -fx-font-size: 20;"/>
                                     <VBox>
-                                        <VBox style="-fx-background-color: #F7F5F5"
-                                              spacing="20">
-                                            <Label text="janesmith@gmail.com"
-                                                   style="-fx-font-size: 20;"/>
-                                        </VBox>
-                                        <Button text="Update"
-                                                style="-fx-background-color: #C8EEE9"/>
+                                        <Label text="Email"
+                                               style="-fx-font-weight: bold; -fx-font-size: 20;"/>
+                                        <HBox spacing="10">
+                                            <TextField fx:id="emailTextField"
+                                                       editable="false"
+                                                       prefHeight="40"
+                                                       HBox.hgrow="ALWAYS"
+                                                       style="-fx-background-color: #F7F5F5;
+                                                               -fx-font-size: 16;"/>
+                                            <Button fx:id="emailUpdateButton"
+                                                    text="Update"
+                                                    onAction="#onEmailUpdateClicked"
+                                                    prefHeight="40"
+                                                    prefWidth="90"
+                                                    style="-fx-background-color: #C8EEE9"/>
+                                        </HBox>
                                     </VBox>
-                                    <padding>
-                                        <Insets top="10" right="36" bottom="30" left="36"/>
-                                    </padding>
 
-
-                                    <Label text="Username"
-                                           style="-fx-font-weight: bold; -fx-font-size: 20;"/>
-                                    <VBox>
-                                        <VBox style="-fx-background-color: #F7F5F5">
-                                            <Label text="anonymousRhino123654"
-                                                   style="-fx-font-size: 20;"/>
-                                        </VBox>
-                                        <Button text="Update"
-                                                style="-fx-background-color: #C8EEE9"/>
+                                    <VBox spacing="8">
+                                        <Label text="Username"
+                                               style="-fx-font-weight: bold; -fx-font-size: 20;"/>
+                                        <HBox spacing="10">
+                                            <TextField fx:id="usernameTextField"
+                                                       editable="false"
+                                                       prefHeight="40"
+                                                       HBox.hgrow="ALWAYS"
+                                                       style="-fx-background-color: #F7F5F5;
+                                                              -fx-font-size: 16"/>
+                                            <Button fx:id="usernameUpdateButton"
+                                                    text="Update"
+                                                    onAction="#onUsernameUpdateClicked"
+                                                    prefWidth="90"
+                                                    prefHeight="40"
+                                                    style="-fx-background-color: #C8EEE9"/>
+                                        </HBox>
+<!--                                        <padding>-->
+<!--                                            <Insets top="10" right="36" bottom="30" left="36"/>-->
+<!--                                        </padding>-->
                                     </VBox>
-                                    <padding>
-                                        <Insets top="10" right="36" bottom="30" left="36"/>
-                                    </padding>
+                                    <VBox spacing="8">
+                                        <Label text="UPDATE PASSWORD"
+                                               style="-fx-font-size: 25;">
+                                            <padding>
+                                                <Insets top="15" right="0" bottom="5" left="0"/>
+                                            </padding>
+                                        </Label>
 
-                                </VBox>
-                                <VBox>
-                                    <Label text="UPDATE PASSWORD"
-                                           style="-fx-font-size: 25">
-                                        <padding>
-                                            <Insets top="40" right="0" bottom="12" left="0"/>
-                                        </padding>
-                                    </Label>
+                                        <Button text="Change Password"
 
+                                                prefHeight="40"
+                                                prefWidth="250"
+                                                onAction="#onChangePasswordClicked"
+                                                style="-fx-background-color: #C8EEE9;
+                                                       -fx-font-size: 20;"/>
+                                    </VBox>
                                 </VBox>
-                                <Button text="Change Password"
-                                        style="-fx-background-color: #C8EEE9"/>
-                                <padding>
-                                    <Insets top="10" right="36" bottom="30" left="50"/>
-                                </padding>
                             </VBox>
                         </center>
+
                         <bottom>
-                            <VBox>
+                            <HBox alignment="CENTER_LEFT">
                                 <padding>
-                                    <Insets top="30" right="36" bottom="30" left="35"/>
+                                    <Insets top="20" right="36" bottom="30" left="36"/>
                                 </padding>
                                 <Button text="Save"
+                                        onAction="#onSaveSettings"
                                         style="-fx-background-color: #77DD77"
                                         prefWidth="150"
-                                        prefHeight="40"
-                                        onAction="#onSaveSettings"/>
-                            </VBox>
+                                        prefHeight="40"/>
+                            </HBox>
                         </bottom>
                     </BorderPane>
                 </AnchorPane>
@@ -242,7 +254,7 @@
                                                style="-fx-font-size: 15
                                                       -fx-text-fill: grey"/>
                                     </VBox>
-                                    <CheckBox fx:id="activityParticipationCheckBox"/>
+                                    <CheckBox fx:id="activityParticipationCheckbox"/>
                                     <padding>
                                         <Insets top="10" right="36" bottom="30" left="50"/>
                                     </padding>
@@ -259,7 +271,7 @@
                                                style="-fx-font-size: 15
                                                       -fx-text-fill: grey"/>
                                     </VBox>
-                                    <CheckBox fx:id="checkinParticipationCheckBox"/>
+                                    <CheckBox fx:id="checkinParticipationCheckbox"/>
                                     <padding>
                                         <Insets top="10" right="36" bottom="30" left="50"/>
                                     </padding>
@@ -410,6 +422,83 @@
                     </BorderPane>
                 </AnchorPane>
 
+                <!--Password Changing overlay-->
+                <AnchorPane fx:id="passwordOverlay"
+                            visible="false"
+                            managed="false"
+                            AnchorPane.leftAnchor="0"
+                            AnchorPane.topAnchor="0"
+                            AnchorPane.bottomAnchor="0"
+                            AnchorPane.rightAnchor="0"
+                            style="-fx-background-color: rgba(0,0,0,0.45);">
+                    <VBox   alignment="CENTER"
+                            spacing="15"
+                            prefWidth="450"
+                            prefHeight="400"
+                            AnchorPane.leftAnchor="0"
+                            AnchorPane.topAnchor="0"
+                            AnchorPane.bottomAnchor="0"
+                            AnchorPane.rightAnchor="0">
+                        <VBox maxWidth="400"
+                              spacing="12"
+                              style="-fx-background-color: white;
+                                     -fx-background-radius: 12;
+                                     -fx-padding: 30;">
+                            <Label text="Update Password"
+                                   style="-fx-font-size: 24;
+                                          -fx-font-weight: bold;"/>
+
+                            <Label text="Current Password"
+                                   style="-fx-font-size: 15;
+                                          -fx-font-weight: bold;"/>
+
+                            <PasswordField fx:id="currentPasswordField"
+                                           promptText="Current Password"
+                                           prefHeight="40"/>
+
+                            <Label text="New Password"
+                                   style="-fx-font-size: 15;
+                                          -fx-font-weight: bold;"/>
+
+                            <PasswordField fx:id="newPasswordField"
+                                           promptText="New Password"
+                                           prefHeight="40"/>
+
+                            <Label text="Confirm Password"
+                                   style="-fx-font-size: 15;
+                                          -fx-font-weight: bold;"/>
+
+                            <PasswordField fx:id="confirmPasswordField"
+                                           promptText="Confirm Password"
+                                           prefHeight="40"/>
+
+                            <Label fx:id="passwordError"
+                                   text=""
+                                   wrapText="true"
+                                   visible="false"
+                                   managed="false"
+                                   style="-fx-text-fill: red;
+                                          -fx-font-size: 13"/>
+
+                            <HBox spacing="10"
+                                  alignment="CENTER_RIGHT">
+                                <Button text="Cancel"
+                                        onAction="#onCancelPasswordClicked"
+                                        prefWidth="100"
+                                        prefHeight="40"
+                                        style="-fx-background-color: white;
+                                               -fx-border-weight: 1"/>
+
+                                <Button text="Change Password"
+                                        onAction="#onConfirmPasswordClicked"
+                                        prefWidth="100"
+                                        prefHeight="40"
+                                        style="-fx-background-color: #1F6F64;
+                                               -fx-border-weight: 1"/>
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                </AnchorPane>
             </children>
         </StackPane>
     </children>

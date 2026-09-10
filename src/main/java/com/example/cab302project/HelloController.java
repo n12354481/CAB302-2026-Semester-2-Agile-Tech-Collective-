@@ -1,5 +1,6 @@
 package com.example.cab302project;
 
+import com.example.cab302project.Settings.SettingsController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -29,6 +30,12 @@ public class HelloController {
     @FXML
     private Button logoutButton;
 
+    private int userId;
+
+    public void setUserId(int userId)
+    {
+        this.userId = userId;
+    }
     @FXML
     private void onHomeButtonClicked() {
         loadPage("Dashboard.fxml");
@@ -91,6 +98,14 @@ public class HelloController {
 
             //Using a node type to ensure any page with any element can be displayed.
             Node content = loader.load();
+
+            if(page.equals("settings.fxml"))
+            {
+                SettingsController controller = loader.getController();
+                controller.setUserId(1); //Need to replace with the logged-in user's id when login is ready.
+            }
+
+            //Do that for all fxml pages.
 
             mainContent.getChildren().setAll(content);
         } catch (IOException e)
