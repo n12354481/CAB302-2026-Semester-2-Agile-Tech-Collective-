@@ -57,6 +57,7 @@
         </top>
         <center>
             <HBox spacing="20"
+                  VBox.vgrow="ALWAYS"
                   fillHeight="true"
                   alignment="TOP_CENTER">
                 <padding>
@@ -65,7 +66,6 @@
 
                 <!--AI Rec-->
                 <VBox HBox.hgrow="ALWAYS"
-                      VBox.vgrow="ALWAYS"
                       spacing="10"
                       fillWidth="true">
 
@@ -111,10 +111,11 @@
                         </VBox>
 
                         <VBox VBox.vgrow="ALWAYS"
+                              alignment="BOTTOM_LEFT"
                               spacing="25">
-                            <padding>
-                                <Insets top="15" right="15" bottom="15" left="15"/>
-                            </padding>
+<!--                            <padding>-->
+<!--                                <Insets top="15" right="15" bottom="15" left="15"/>-->
+<!--                            </padding>-->
                             <VBox spacing="30"
                                   style="-fx-background-color: #F2FFFD;
                                  -fx-background-radius: 15;
@@ -130,40 +131,36 @@
 
                 <!--Overall Stats-->
                 <VBox HBox.hgrow="ALWAYS"
-                      VBox.vgrow="ALWAYS"
                       fillWidth="true"
                       spacing="10">
 
                     <Label text="Overall Statistics"
                            style="-fx-font-size: 20;
                                   -fx-font-weight: bold;"/>
+
                     <VBox VBox.vgrow="ALWAYS"
                           fillWidth="true"
                           spacing="0"
                           style="-fx-background-color: white;
+                                 -fx-background-radius: 15;">
+
+                        <VBox VBox.vgrow="ALWAYS"
+                              spacing="30">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                            <HBox spacing="25"
+                                  style="-fx-background-color: #white;
                                  -fx-background-radius: 15;
-                                 -fx-border-radius: 20;">
+                                 -fx-border-radius: 20;"
+                                  prefHeight="130">
 
-                            <HBox alignment="CENTER_LEFT"
-                                  style="-fx-background-color: #F3F3F3;"
-                                  spacing="20">
-
-                                <padding>
-                                    <Insets top="15" right="20" bottom="15" left="20"/>
-                                </padding>
                                 <Label text="Registered Events"/>
-<!--                                <Label text="5"-->
-<!--                                       style="-fx-font-size: 15"/>-->
-<!--                                <Button textFill="white"-->
-<!--                                        style="-fx-background-color: #1F6F64;"-->
-<!--                                        text="View Events"/>-->
                             </HBox>
+                        </VBox>
 
-                            <StackPane alignment="BOTTOM_RIGHT"
+                        <StackPane alignment="BOTTOM_RIGHT"
                                        VBox.vgrow="ALWAYS">
-<!--                                <padding>-->
-<!--                                    <Insets top="20" right="20" left="0" bottom="20"/>-->
-<!--                                </padding>-->
                                 <ProgressIndicator progress="0.25"
                                                    prefWidth="250"
                                                    prefHeight="250"
