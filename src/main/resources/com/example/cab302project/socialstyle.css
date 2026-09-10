@@ -1,0 +1,23 @@
+.social-root {
+    -fx-background-color: transparent;
+}
+
+.header-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #1F6F64;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+}
+
+.header-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1C1C1C;
+}
+
+.header-subtitle {
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+    -fx-text-fill: #555555;
+}
