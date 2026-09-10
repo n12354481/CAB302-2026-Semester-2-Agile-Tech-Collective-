@@ -52,7 +52,7 @@ public class HelloController {
 
     @FXML
     private void onSocialButtonClicked() {
-        loadPage("Socials.fxml");
+        loadPage("socialpostings.fxml");
     }
 
     @FXML
