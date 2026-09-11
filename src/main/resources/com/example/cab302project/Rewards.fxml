@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.cab302project.Rewards.RewardsController"
+      spacing="16.0" prefWidth="520.0" prefHeight="360.0">
+
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+    </padding>
+
+    <Label text="Your garden" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    <Label fx:id="rangeLabel" style="-fx-text-fill: #666666;"/>
+
+    <!-- Shown when this user has nothing logged at all. -->
+    <VBox fx:id="emptyState" spacing="10.0" managed="false" visible="false">
+        <Label text="Nothing logged yet."
+               style="-fx-font-size: 14px;"/>
+        <Label text="There is no logging screen yet, so you can fill the last fortnight with demo data to see how the rewards work."
+               wrapText="true" style="-fx-text-fill: #666666;"/>
+        <HBox>
+            <Button fx:id="loadDemoButton" text="Load demo data" onAction="#onLoadDemo"/>
+        </HBox>
+    </VBox>
+
+    <!-- Shown once there is something to summarise. -->
+    <VBox fx:id="summaryState" spacing="14.0" managed="false" visible="false">
+        <Label fx:id="stageLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <Label fx:id="balancedLabel"/>
+        <Label fx:id="streakLabel"/>
+
+        <VBox spacing="6.0">
+            <Label text="Day by day" style="-fx-text-fill: #666666;"/>
+            <HBox fx:id="dayStrip" spacing="4.0"/>
+        </VBox>
+
+        <HBox spacing="10.0">
+            <Button fx:id="claimButton" text="Claim" onAction="#onClaim"/>
+            <Label fx:id="claimLabel" style="-fx-text-fill: #666666;"/>
+        </HBox>
+    </VBox>
+
+    <Label fx:id="messageLabel" wrapText="true" style="-fx-text-fill: #b00020;"/>
+</VBox>
