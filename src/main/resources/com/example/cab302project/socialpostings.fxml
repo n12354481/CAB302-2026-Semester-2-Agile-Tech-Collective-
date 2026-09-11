@@ -24,7 +24,9 @@
     </top>
 
     <center>
-        <VBox styleClass="feed-card">
+        <HBox spacing="16">
+
+        <VBox styleClass="feed-card" HBox.hgrow="ALWAYS">
 
             <!-- filter bar for users -->
             <HBox styleClass="filter-bar" spacing="8" alignment="CENTER_LEFT">
@@ -40,8 +42,27 @@
                     <padding><Insets top="12" right="16" bottom="16" left="16"/></padding>
                 </VBox>
             </ScrollPane>
-
         </VBox>
+
+            <VBox spacing="16" prefWidth="220" minWidth="220">
+                <Button text="+ Create a Post" styleClass="create-post-btn" onAction="#onCreatePostClicked" maxWidth="Infinity"/>
+
+                <VBox styleClass="panel-card">
+                    <Label text="Past Events" styleClass="panel-title"/>
+                    <Region styleClass="placeholder-bar"/>
+                    <Region styleClass="placeholder-bar"/>
+                    <Region styleClass="placeholder-bar"/>
+                </VBox>
+
+                <VBox styleClass="panel-card">
+                    <Label text="Reommendations" styleClass="panel-title"/>
+                    <Region styleClass="placeholder-bar"/>
+                    <Region styleClass="placeholder-bar"/>
+                    <Region styleClass="placeholder-bar"/>
+                </VBox>
+            </VBox>
+
+        </HBox>
     </center>
 
 </BorderPane>
