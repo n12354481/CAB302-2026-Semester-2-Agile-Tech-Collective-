@@ -8,9 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SettingsTestClass {
     private SettingsModel settings;
+    private ISettingsDAO settingsDAO;
     @BeforeEach
     public void setUp() {
-        settings = new SettingsModel(new MockContactDAO());
+
+        settings = new SettingsModel(false, false, false, false, false, false);
 
     }
 

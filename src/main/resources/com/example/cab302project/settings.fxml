@@ -6,31 +6,33 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <?import javafx.geometry.Insets?>
+
+
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cab302project.Settings.SettingsController"
             prefHeight="650.0" prefWidth="1100.0"
             style="-fx-background-color: #fff;">
-
     <children>
-        <!-- Sidebar -->
+        <!-- Sidebar for the settings page which handles the relevant sub-settings pages. -->
         <VBox prefWidth="205.0"
               AnchorPane.topAnchor="0.0"
               AnchorPane.bottomAnchor="0.0"
               AnchorPane.leftAnchor="0.0"
-              style="-fx-background-color: #F7F8F7"
-        >
+              style="-fx-background-color: #F7F8F7">
+
             <children>
-                <!--Nav-->
+                <!--Navigation bar which shows the four buttons for switching between pages.-->
                 <VBox VBox.vgrow="ALWAYS"
                       style="-fx-padding: 45 0 0 0"
                       alignment="TOP_CENTER"
                       spacing="12"
                       fillWidth="true"
                       prefWidth="205">
+
                     <children>
+                        <!--Button for the setting's account page.-->
                         <Button text="Account"
                                 fx:id="accountButton"
                                 onAction="#onAccountButtonClicked"
@@ -46,6 +48,8 @@
                                        -fx-border-color: transparent;
                                        -fx-effect: none;
                                        -fx-cursor: hand;"/>
+
+                        <!--Button for the setting's data page.-->
                         <Button text="Data"
                                 fx:id="dataButton"
                                 onAction="#onDataButtonClicked"
@@ -61,6 +65,8 @@
                                        -fx-border-color: transparent;
                                        -fx-effect: none;
                                        -fx-cursor: hand;"/>
+
+                        <!--Button for the setting's privacy page.-->
                         <Button text="Privacy"
                                 fx:id="privacyButton"
                                 onAction="#onPrivacyButtonClicked"
@@ -76,6 +82,8 @@
                                        -fx-border-color: transparent;
                                        -fx-effect: none;
                                        -fx-cursor: hand;"/>
+
+                        <!--Button for the setting's AI page.-->
                         <Button text="AI"
                                 fx:id="aiButton"
                                 onAction="#onAIButtonClicked"
@@ -90,23 +98,23 @@
                                        -fx-background-radius: 8px;
                                        -fx-border-color: transparent;
                                        -fx-effect: none;"/>
-
                     </children>
                 </VBox>
             </children>
         </VBox>
 
-        <!--Main Content-->
+        <!--Setting's main content section's fxml is shown below.-->
         <StackPane AnchorPane.leftAnchor="205.0"
                    AnchorPane.topAnchor="0.0"
                    AnchorPane.rightAnchor="0.0"
                    AnchorPane.bottomAnchor="0.0">
             <children>
-                <!--Account-->
+                <!--Account section FXML.-->
                 <AnchorPane fx:id="account"
                             visible="true"
                             managed="true">
 
+                    <!--Splits the account section into top, center, and bottom, where top is used for the headers, center for the content, and bottom for saving the details.-->
                     <BorderPane AnchorPane.leftAnchor="0"
                                 AnchorPane.topAnchor="0"
                                 AnchorPane.bottomAnchor="0"
@@ -121,7 +129,9 @@
                                 </Label>
                             </VBox>
                         </top>
+
                         <center>
+                            <!--Section for updating username or email..-->
                             <VBox>
                                 <VBox spacing="25">
                                     <padding>
@@ -164,9 +174,8 @@
                                                     prefHeight="40"
                                                     style="-fx-background-color: #C8EEE9"/>
                                         </HBox>
-<!--                                        <padding>-->
-<!--                                            <Insets top="10" right="36" bottom="30" left="36"/>-->
-<!--                                        </padding>-->
+
+                                    <!--Section for updating the user's password.-->
                                     </VBox>
                                     <VBox spacing="8">
                                         <Label text="UPDATE PASSWORD"
@@ -202,10 +211,12 @@
                         </bottom>
                     </BorderPane>
                 </AnchorPane>
-                <!--Privacy-->
+                <!--Privacy section FXML-->
+
                 <AnchorPane fx:id="privacy"
                             visible="false"
                             managed="false">
+                    <!--Splits the account section into top, center, and bottom, where top is used for the headers, center for the content, and bottom for saving the details.-->
                     <BorderPane AnchorPane.leftAnchor="0"
                                 AnchorPane.topAnchor="0"
                                 AnchorPane.bottomAnchor="0"
@@ -225,7 +236,7 @@
                                 <padding>
                                     <Insets top="10" right="36" bottom="30" left="36"/>
                                 </padding>
-
+                                <!--Has both the main and sub-checkboxes needed for the user to tick for enabling their personalised statistics in community quotes.-->
                                 <HBox alignment="CENTER_LEFT"
                                       spacing="20"
                                       style="-fx-background-color: #F6F6F6">
@@ -292,10 +303,12 @@
                         </bottom>
                     </BorderPane>
                 </AnchorPane>
-                <!--Data-->
+
+                <!--Data section FXMl. This section still needs to be written.-->
                 <AnchorPane fx:id="data"
                             visible="false"
                             managed="false">
+                    <!--Splits the account section into top, center, and bottom, where top is used for the headers, center for the content, and bottom for saving the details.-->
                     <BorderPane AnchorPane.leftAnchor="0"
                                 AnchorPane.topAnchor="0"
                                 AnchorPane.bottomAnchor="0"
@@ -331,10 +344,13 @@
                         </bottom>
                     </BorderPane>
                 </AnchorPane>
-                <!--AI-->
+
+                <!--AI section FXML.-->
                 <AnchorPane fx:id="ai"
                             visible="false"
                             managed="false">
+
+                    <!--Splits the account section into top, center, and bottom, where top is used for the headers, center for the content, and bottom for saving the details.-->
                     <BorderPane AnchorPane.leftAnchor="0"
                                 AnchorPane.topAnchor="0"
                                 AnchorPane.bottomAnchor="0"
@@ -354,7 +370,7 @@
                                 <padding>
                                     <Insets top="10" right="36" bottom="30" left="36"/>
                                 </padding>
-
+                                <!--Has both the main and sub-checkboxes needed for the user to tick for enabling their personalised statistics.-->
                                 <HBox alignment="CENTER_LEFT"
                                       spacing="20"
                                       style="-fx-background-color: #F6F6F6">
@@ -422,7 +438,7 @@
                     </BorderPane>
                 </AnchorPane>
 
-                <!--Password Changing overlay-->
+                <!--Password Changing overlay box's FXML is written here.-->
                 <AnchorPane fx:id="passwordOverlay"
                             visible="false"
                             managed="false"
@@ -431,14 +447,16 @@
                             AnchorPane.bottomAnchor="0"
                             AnchorPane.rightAnchor="0"
                             style="-fx-background-color: rgba(0,0,0,0.45);">
-                    <VBox   alignment="CENTER"
-                            spacing="15"
-                            prefWidth="450"
-                            prefHeight="400"
-                            AnchorPane.leftAnchor="0"
-                            AnchorPane.topAnchor="0"
-                            AnchorPane.bottomAnchor="0"
-                            AnchorPane.rightAnchor="0">
+
+                    <!--Creates the three password boxes (current, new, and confirm) for the user to change their password with validations.-->
+                    <VBox alignment="CENTER"
+                          spacing="15"
+                          prefWidth="450"
+                          prefHeight="400"
+                          AnchorPane.leftAnchor="0"
+                          AnchorPane.topAnchor="0"
+                          AnchorPane.bottomAnchor="0"
+                          AnchorPane.rightAnchor="0">
                         <VBox maxWidth="400"
                               spacing="12"
                               style="-fx-background-color: white;
