@@ -86,7 +86,22 @@ public final class GardenDemoData {
         return firstDay;
     }
 
-    /** Finds the demo activity, inserting it the first time. */
+    /**
+     * Makes sure the demo user exists. Foreign keys are on and the logged rows point at
+     * it. Does nothing if the row is already there. Demo scaffolding.
+     */
+    public static void ensureUser(Connection connection, int userID) throws SQLException {
+        String sql = "INSERT OR IGNORE INTO users (userID, email, username, password) "
+                + "VALUES (?, ?, ?, 'demo')";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userID);
+            statement.setString(2, "demo" + userID + "@qut.edu.au");
+            statement.setString(3, "demo" + userID);
+            statement.executeUpdate();
+        }
+    }
+
+    /** Finds the demo activity  inserting it the first time. */
     private static int demoActivityID(Connection connection) throws SQLException {
         String name = "Walk";
         try (PreparedStatement select =
