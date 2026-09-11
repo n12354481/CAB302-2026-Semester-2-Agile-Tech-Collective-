@@ -5,7 +5,7 @@ package com.example.cab302project.SocialPostings;
  * matches all the columns defined in the databaseschema
  */
 
-public record socialpostings (
+public record SocialPostings(
     int postId,
     int userId,
     String title,

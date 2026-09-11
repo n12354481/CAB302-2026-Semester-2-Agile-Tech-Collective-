@@ -30,26 +30,15 @@
             <HBox styleClass="filter-bar" spacing="8" alignment="CENTER_LEFT">
                 <padding><Insets top="12" right="16" bottom="12" left="16"/></padding>
                 <Label text="Filter posts by:" styleClass="filter-label"/>
-                <Button text="CLEAR FILTERS" styleClass="clear-filters-btn"/>
+                <Button text="CLEAR FILTERS" styleClass="clear-filters-btn" onAction="#onClearFiltersClicked"/>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Hyperlink text="FILTERS" styleClass="filters-link"/>
+                <Hyperlink text="FILTERS" styleClass="filters-link" onAction="#onFiltersClicked"/>
             </HBox>
 
             <ScrollPane fitToWidth="true" styleClass="feed-scroll" VBox.vgrow="ALWAYS">
-                <VBox styleClass="post-card">
-                    <Region styleClass="post-image" prefHeight="160"/>
-                    <VBox spacing="6">
-                        <padding><Insets top="10" right="14" bottom="14" left="14"/></padding>
-                        <Label text="Brisbane Monthly Hackathon" styleClass="post-title"/>
-                        <Label wrapText="true" styleClass="post-desc"
-                               text="Join us for a monthly hackathon! On the first of every weekend every month, we, the Brisbane Code Inspirers, host our hackathon at the University of Queensland."/>
-                        <HBox spacing="8">
-                            <Button text="Register Here!" styleClass="register-btn"/>
-                            <Button text="✓ Interested" styleClass="interested-btn"/>
-                        </HBox>
-                    </VBox>
+                <VBox fx:id="postsContainer" spacing="16">
+                    <padding><Insets top="12" right="16" bottom="16" left="16"/></padding>
                 </VBox>
-
             </ScrollPane>
 
         </VBox>
