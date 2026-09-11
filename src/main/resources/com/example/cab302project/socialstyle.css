@@ -51,7 +51,7 @@
     -fx-padding: 3 10 3 10;
 }
 .clear-filters-btn {
-    -fx-background-colour: #E2E2E2;
+    -fx-background-color: #E2E2E2;
     -fx-background-radius: 14;
     -fx-text-fill: #333333;
     -fx-font-size: 11px;
@@ -67,7 +67,7 @@
     -fx-background-color: transparent;
 }
 .feed-scroll .viewport {
-    -fx-background-colour: transparent;
+    -fx-background-color: transparent;
 }
 
 .post-card {
@@ -99,4 +99,38 @@
     -fx-background-radius: 12;
     -fx-font-size: 11px;
     -fx-padding: 3 10 3 10;
+}
+
+.create-post-btn {
+    -fx-background-color: white;
+    -fx-border-color: #1F6F64;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-text-fill: #1C1C1C;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+}
+
+.panel-card {
+    -fx-background-color: white;
+    -fx-border-color: #1F6F64;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 12;
+    -fx-spacing: 8;
+}
+.panel-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    -fx-text-fill: #1C1C1C;
+}
+.placeholder-bar {
+    -fx-background-color: #D9D9D9;
+    -fx-background-radius: 4;
+    -fx-pref-height: 24;
+    -fx-min-height: 24;
 }
