@@ -7,6 +7,10 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Arc?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cab302project.Dashboard.DashboardController"
@@ -50,7 +54,7 @@
                         <padding>
                             <Insets top="10" left="20" right="20" bottom="10"/>
                         </padding>
-                        <Label text="THis is the third box"/>
+                        <Label text="This is the third box"/>
                     </HBox>
                 </VBox>
             </VBox>
@@ -66,8 +70,11 @@
 
                 <!--AI Rec-->
                 <VBox HBox.hgrow="ALWAYS"
+                      fillWidth="true"
                       spacing="10"
-                      fillWidth="true">
+                      minWidth="0"
+                      prefWidth="0"
+                      maxWidth="Infinity">
 
                     <Label text="AI Recommendations"
                            alignment="CENTER_LEFT"
@@ -78,8 +85,6 @@
                           style="-fx-background-color: #fff;
                                  -fx-background-radius: 15;
                                  -fx-border-radius: 20;">
-                        <!--                        <Region style="-fx-background-color: #D9A441;-->
-                        <!--                                       -fx-padding: 0 0 4 0;">-->
                         <VBox VBox.vgrow="ALWAYS"
                               spacing="30">
                             <padding>
@@ -91,10 +96,21 @@
                                  -fx-border-radius: 20;"
                                   prefHeight="130">
 
+                                <padding>
+                                    <Insets top="0" right="5" bottom="0" left="5"/>
+                                </padding>
+
+                                <effect>
+                                    <DropShadow radius="0.1"
+                                                spread="0.8"
+                                                offsetX="-1"
+                                                offsetY="-1"
+                                                color="#D9A441"/>
+                                </effect>
                                 <Label text="First"/>
                             </VBox>
                         </VBox>
-                        <!--                        </Region>-->
+
                         <VBox VBox.vgrow="ALWAYS"
                               spacing="30">
                             <padding>
@@ -105,22 +121,45 @@
                                  -fx-background-radius: 15;
                                  -fx-border-radius: 20;"
                                   prefHeight="130">
+
+                                <padding>
+                                    <Insets top="0" right="5" bottom="0" left="5"/>
+                                </padding>
+
+                                <effect>
+                                    <DropShadow radius="0.1"
+                                                spread="0.8"
+                                                offsetX="-1"
+                                                offsetY="-1"
+                                                color="#D9A441"/>
+                                </effect>
 
                                 <Label text="Second"/>
                             </VBox>
                         </VBox>
 
                         <VBox VBox.vgrow="ALWAYS"
-                              alignment="BOTTOM_LEFT"
-                              spacing="25">
-<!--                            <padding>-->
-<!--                                <Insets top="15" right="15" bottom="15" left="15"/>-->
-<!--                            </padding>-->
-                            <VBox spacing="30"
+                              spacing="30">
+                            <padding>
+                                <Insets top="15" right="15" bottom="15" left="15"/>
+                            </padding>
+                            <VBox spacing="25"
                                   style="-fx-background-color: #F2FFFD;
                                  -fx-background-radius: 15;
                                  -fx-border-radius: 20;"
                                   prefHeight="130">
+
+                                <padding>
+                                    <Insets top="0" right="5" bottom="0" left="5"/>
+                                </padding>
+
+                                <effect>
+                                    <DropShadow radius="0.1"
+                                                spread="0.8"
+                                                offsetX="-1"
+                                                offsetY="-1"
+                                                color="#D9A441"/>
+                                </effect>
 
                                 <Label text="Third"/>
                             </VBox>
@@ -132,7 +171,10 @@
                 <!--Overall Stats-->
                 <VBox HBox.hgrow="ALWAYS"
                       fillWidth="true"
-                      spacing="10">
+                      spacing="10"
+                      minWidth="0"
+                      prefWidth="0"
+                      maxWidth="Infinity">
 
                     <Label text="Overall Statistics"
                            style="-fx-font-size: 20;
@@ -140,35 +182,191 @@
 
                     <VBox VBox.vgrow="ALWAYS"
                           fillWidth="true"
-                          spacing="0"
+                          spacing="20"
                           style="-fx-background-color: white;
                                  -fx-background-radius: 15;">
+                        <padding>
+                            <Insets top="20" bottom="20" left="20" right="20"/>
+                        </padding>
 
-                        <VBox VBox.vgrow="ALWAYS"
-                              spacing="30">
-                            <padding>
-                                <Insets top="15" right="15" bottom="15" left="15"/>
-                            </padding>
-                            <HBox spacing="25"
-                                  style="-fx-background-color: #white;
-                                 -fx-background-radius: 15;
-                                 -fx-border-radius: 20;"
-                                  prefHeight="130">
+                        <VBox spacing="15"
+                              VBox.vgrow="ALWAYS"
+                              fillWidth="true"
+                              alignment="TOP_CENTER">
 
-                                <Label text="Registered Events"/>
+                            <VBox spacing="5"
+                                  fillWidth="true">
+
+                                <Label text="Activity Completed"
+                                       style="-fx-font-weight:bold;
+                                              -fx-font-size: 15;"/>
+                                <HBox spacing="10"
+                                      fillHeight="true"
+                                      alignment="CENTER_LEFT">
+                                    <ProgressBar fx:id="activityCompleted"
+                                                 prefHeight="40"
+                                                 maxWidth="Infinity"
+                                                 HBox.hgrow="ALWAYS"
+                                                 style="-fx-accent: #1F6F64"/>
+                                    <Label fx:id="activitiesCompletedLabel"
+                                           text=""
+                                           style="-fx-font-weight:bold;
+                                              -fx-font-size: 15;"/>
+                                </HBox>
+                            </VBox>
+
+                            <VBox spacing="15"
+                                  VBox.vgrow="ALWAYS"
+                                  fillWidth="true"
+                                  alignment="TOP_CENTER">
+
+                                <VBox spacing="5"
+                                      fillWidth="true">
+
+                                    <Label text="Activity Minutes Completed"
+                                           style="-fx-font-weight=bold;
+                                              -fx-font-size: 15;"/>
+                                    <HBox spacing="10"
+                                          fillHeight="true"
+                                          alignment="CENTER_LEFT">
+                                        <ProgressBar fx:id="activitiesMinutesCompleted"
+                                                     prefHeight="40"
+                                                     maxWidth="Infinity"
+                                                     HBox.hgrow="ALWAYS"
+                                                     style="-fx-accent: #1F6F64"/>
+                                        <Label fx:id="activitiesMinutesCompletedLabel"
+                                               text=""
+                                               style="-fx-font-weight=bold;
+                                              -fx-font-size: 15;"/>
+                                    </HBox>
+                                </VBox>
+                            </VBox>
+
+                            <HBox spacing="20"
+                                  alignment="BOTTOM_CENTER"
+                                  fillHeight="true">
+
+                                <VBox HBox.hgrow="ALWAYS"
+                                      alignment="TOP_CENTER"
+                                      fillWidth="true"
+                                      prefHeight="150"
+                                      spacing="40"
+                                      style="-fx-background-color: #F5F3F3;
+                                         -fx-background-radius: 15;
+                                         -fx-border-radius: 20;">
+                                    <padding>
+                                        <Insets top="5" bottom="10" left="0" right="0"/>
+                                    </padding>
+
+                                    <Label text="Average Sleep"
+                                           wrapText="true"
+                                           alignment="CENTER"
+                                           textAlignment="CENTER"
+                                           maxWidth="Infinity"
+                                           HBox.hgrow="ALWAYS"
+                                           style="-fx-text-fill: #7A7A7A;
+                                                  -fx-font-size: 18;
+                                                  -fx-font-weight: bold;"/>
+
+                                    <Label fx:id="avgSleep"
+                                           text=""
+                                           style="-fx-font-size: 55;
+                                              -fx-font-weight: bold;"/>
+
+                                    <Button text="View Data"
+                                            prefWidth="150"
+                                            prefHeight="40"
+                                            maxHeight="40"
+                                            maxWidth="120"
+                                            style="-fx-background-color: #1F6F64;
+                                               -fx-text-fill: white;
+                                               -fx-background-radius: 10;
+                                               -fx-font-size: 20;"/>
+                                </VBox>
+
+                                <VBox HBox.hgrow="ALWAYS"
+                                      alignment="TOP_CENTER"
+                                      prefHeight="150"
+                                      fillWidth="true"
+                                      spacing="40"
+                                      style="-fx-background-color: #F5F3F3;
+                                         -fx-background-radius: 15;
+                                         -fx-border-radius: 20;">
+                                    <padding>
+                                        <Insets top="5" bottom="10" left="0" right="0"/>
+                                    </padding>
+
+                                    <Label text="Average Study Stress"
+                                           wrapText="true"
+                                           alignment="CENTER"
+                                           textAlignment="CENTER"
+                                           maxWidth="Infinity"
+                                           HBox.hgrow="ALWAYS"
+                                           style="-fx-text-fill: #7A7A7A;
+                                                  -fx-font-size: 18;
+                                                  -fx-font-weight: bold;"/>
+
+                                    <Label fx:id="avgStudyStress"
+                                           text=""
+                                           style="-fx-font-size: 55;
+                                              -fx-font-weight: bold;"/>
+
+                                    <Button text="View Data"
+                                            prefWidth="150"
+                                            prefHeight="40"
+                                            maxHeight="40"
+                                            maxWidth="150"
+                                            style="-fx-background-color: #1F6F64;
+                                               -fx-text-fill: white;
+                                               -fx-background-radius: 10;
+                                               -fx-font-size: 20;"/>
+                                </VBox>
+                                <VBox HBox.hgrow="ALWAYS"
+                                      alignment="CENTER"
+                                      fillWidth="true"
+                                      spacing="40"
+                                      style="-fx-background-color: #F5F3F3;
+                                             -fx-background-radius: 15;">
+                                    <Pane fx:id="streakProgressCircle"
+                                            prefWidth="250"
+                                          prefHeight="250">
+                                        <Circle radius="60"
+                                                centerY="125"
+                                                centerX="125"
+                                                fill="transparent"
+                                                stroke="darkgrey"
+                                                strokeWidth="10"/>
+                                        <Arc fx:id="streakArc"
+                                             radiusX="60"
+                                             radiusY="60"
+                                             centerY="125"
+                                             centerX="125"
+                                             startAngle="90"
+                                             length="270"
+                                             fill="transparent"
+                                             stroke="#1F6F64"
+                                             strokeWidth="10"
+                                             type="OPEN"/>
+
+                                        <VBox layoutY="95"
+                                              layoutX="75"
+                                              prefWidth="100"
+                                              spacing="3"
+                                              alignment="CENTER">
+                                            <Label fx:id="weeklyStreakLabel"
+                                                   text=""
+                                                   style="-fx-font-size: 20;
+                                                          -fx-font-weight: bold;"/>
+                                            <Label text="to complete weekly check-in streak"
+                                                   textAlignment="CENTER"
+                                                   wrapText="true"
+                                                   style="-fx-font-size: 12;
+                                              -fx-font-weight: bold;"/>
+                                        </VBox>
+                                    </Pane>
+                                </VBox>
                             </HBox>
                         </VBox>
-
-                        <StackPane alignment="BOTTOM_RIGHT"
-                                       VBox.vgrow="ALWAYS">
-                                <ProgressIndicator progress="0.25"
-                                                   prefWidth="250"
-                                                   prefHeight="250"
-                                                   maxHeight="250"
-                                                   maxWidth="250"
-                                                   style="-fx-progress-color: #2BB7A9;
-                                                  -fx-background-color: transparent;"/>
-                            </StackPane>
                     </VBox>
                 </VBox>
             </HBox>

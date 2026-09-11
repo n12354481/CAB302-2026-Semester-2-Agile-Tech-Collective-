@@ -21,7 +21,7 @@ public class HelloApplication extends Application {
 //            throw new RuntimeException("Could not create the database tables", sqlEx);
 //       // }
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 640);
         stage.setTitle("STEM App");
         stage.setScene(scene);
         stage.show();

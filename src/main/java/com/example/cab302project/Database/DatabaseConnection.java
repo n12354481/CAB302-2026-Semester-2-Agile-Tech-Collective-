@@ -11,6 +11,7 @@ public class DatabaseConnection {
         String url = "jdbc:sqlite:contacts.db";
         try {
             instance = DriverManager.getConnection(url);
+            DatabaseSchema.createAll(instance);
         } catch (SQLException sqlEx) {
             System.err.println(sqlEx);
         }

@@ -30,6 +30,12 @@ public class HelloController {
     private Button logoutButton;
 
     @FXML
+    private void initialize()
+    {
+        loadPage("Dashboard.fxml");
+    }
+
+    @FXML
     private void onHomeButtonClicked() {
         loadPage("Dashboard.fxml");
     }
