@@ -5,4 +5,8 @@ public interface IUserDAO {
     User loginUser(String username, String password);
     boolean emailExists(String email);
     boolean usernameExists(String username);
+    User getUserId(int userId);
+    boolean updateEmail(int userId, String email);
+    boolean updateUsername(int userId, String username);
+    boolean updatePassword(int userId, String password);
 }
