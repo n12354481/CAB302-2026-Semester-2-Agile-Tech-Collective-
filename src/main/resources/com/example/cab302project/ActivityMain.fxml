@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
+<AnchorPane fx:id="activityRoot" prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.cab302project.Activities.ActivitiesController">
 
@@ -15,7 +15,6 @@
             <Button text="All" onAction="#onAllButtonClicked"/>
             <Button text="Fitness" onAction="#onFitnessButtonClicked"/>
             <Button text="Social" onAction="#onSocialButtonClicked"/>
-            <Button text="Study" onAction="#onStudyButtonClicked"/>
             <Button text="Others" onAction="#onOthersButtonClicked"/>
 
         </buttons>
@@ -25,31 +24,98 @@
 
         <AnchorPane fx:id="all" visible="true" managed="true">
 
-            <Label layoutX="30.0" layoutY="30.0" text="All Listing" style="-fx-font-size: 20px;"/>
+            <Label layoutX="30.0" layoutY="30.0" text="All Activities" style="-fx-font-size: 20px;"/>
 
         </AnchorPane>
 
         <AnchorPane fx:id="fitness" visible="false" managed="false">
 
-            <Label layoutX="30.0" layoutY="30.0" text="Fitness" style="-fx-font-size: 20px;"/>
+            <Label layoutX="20.0" layoutY="10.0" text="Fitness" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <VBox layoutX="20.0" layoutY="50.0" spacing="8" alignment="CENTER">
+
+                <Button fx:id="swimmingButton" onAction="#onSwimmingClicked" prefWidth="120" prefHeight="120" style="-fx-background-color: white; -fx-border-color: #AAAAAA; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                <Label text="Swimming" style="-fx-font-size: 14px;"/>
+
+            </VBox>
+
+            <VBox layoutX="180.0" layoutY="50.0" spacing="8" alignment="CENTER">
+
+                <Button fx:id="tennisButton" onAction="#onTennisClicked" prefWidth="120" prefHeight="120" style="-fx-background-color: white; -fx-border-color: #AAAAAA; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                <Label text="Tennis" style="-fx-font-size: 14px;"/>
+
+            </VBox>
+
+            <VBox layoutX="340.0" layoutY="50.0" spacing="8" alignment="CENTER">
+
+                <Button fx:id="gymnasticsButton" onAction="#onGymnasticsClicked" prefWidth="120" prefHeight="120" style="-fx-background-color: white; -fx-border-color: #AAAAAA; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                <Label text="Gymnastics" style="-fx-font-size: 14px;"/>
+
+            </VBox>
 
         </AnchorPane>
 
         <AnchorPane fx:id="social" visible="false" managed="false">
 
-            <Label layoutX="30.0" layoutY="30.0" text="Social" style="-fx-font-size: 20px;"/>
+            <Label layoutX="20.0" layoutY="10.0" text="Social" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <VBox layoutX="20.0" layoutY="50.0" spacing="8" alignment="CENTER">
+
+                <Button fx:id="eventButton" onAction="#onEventClicked" prefWidth="120" prefHeight="120" style="-fx-background-color: white; -fx-border-color: #AAAAAA; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                <Label text="Attend an Event" style="-fx-font-size: 14px;"/>
+
+            </VBox>
+
+            <VBox layoutX="180.0" layoutY="50.0" spacing="8" alignment="CENTER">
+
+                <Button fx:id="friendButton" onAction="#onFriendClicked" prefWidth="120" prefHeight="120" style="-fx-background-color: white; -fx-border-color: #AAAAAA; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                <Label text="Meet a Friend" style="-fx-font-size: 14px;"/>
+
+            </VBox>
+
+            <VBox layoutX="340.0" layoutY="50.0" spacing="8" alignment="CENTER">
+
+                <Button fx:id="clubButton" onAction="#onClubClicked" prefWidth="120" prefHeight="120" style="-fx-background-color: white; -fx-border-color: #AAAAAA; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                <Label text="Join a Club" style="-fx-font-size: 14px;"/>
+
+            </VBox>
 
         </AnchorPane>
 
-        <AnchorPane fx:id="study" visible="false" managed="false">
-
-            <Label layoutX="30.0" layoutY="30.0" text="Study" style="-fx-font-size: 20px;"/>
-
-        </AnchorPane>
 
         <AnchorPane fx:id="others" visible="false" managed="false">
 
-            <Label layoutX="30.0" layoutY="30.0" text="Others" style="-fx-font-size: 20px;"/>
+            <Label layoutX="20.0" layoutY="10.0" text="Others" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+            <VBox layoutX="20.0" layoutY="50.0" spacing="8" alignment="CENTER">
+
+                <Button fx:id="studyButton" onAction="#onStudyClicked" prefWidth="120" prefHeight="120" style="-fx-background-color: white; -fx-border-color: #AAAAAA; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                <Label text="Study Session" style="-fx-font-size: 14px;"/>
+
+            </VBox>
+
+            <VBox layoutX="180.0" layoutY="50.0" spacing="8" alignment="CENTER">
+
+                <Button fx:id="choresButton" onAction="#onChoresClicked" prefWidth="120" prefHeight="120" style="-fx-background-color: white; -fx-border-color: #AAAAAA; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                <Label text="Complete Chores" style="-fx-font-size: 14px;"/>
+
+            </VBox>
+
+            <VBox layoutX="340.0" layoutY="50.0" spacing="8" alignment="CENTER">
+
+                <Button fx:id="meditationButton" onAction="#onMeditationClicked" prefWidth="120" prefHeight="120" style="-fx-background-color: white; -fx-border-color: #AAAAAA; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                <Label text="Meditation" style="-fx-font-size: 14px;"/>
+
+            </VBox>
 
         </AnchorPane>
 
