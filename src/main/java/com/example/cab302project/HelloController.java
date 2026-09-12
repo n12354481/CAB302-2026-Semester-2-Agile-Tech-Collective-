@@ -1,5 +1,7 @@
 package com.example.cab302project;
 
+import com.example.cab302project.Authentication.User;
+import com.example.cab302project.Dashboard.DashboardController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -29,9 +31,12 @@ public class HelloController {
     @FXML
     private Button logoutButton;
 
-    @FXML
-    private void initialize()
+    private int userID;
+
+
+    public void setUserID(int userID)
     {
+        this.userID = userID;
         loadPage("Dashboard.fxml");
     }
 
@@ -58,7 +63,7 @@ public class HelloController {
 
     @FXML
     private void onSocialButtonClicked() {
-        loadPage("Socials.fxml");
+        loadPage("socialpostings.fxml");
     }
 
     @FXML
@@ -90,13 +95,18 @@ public class HelloController {
 
 
     private void loadPage(String page) {
+
         try {
             FXMLLoader loader = new FXMLLoader(
-                HelloApplication.class.getResource(page)
+                    HelloApplication.class.getResource(page)
             );
 
             Node content = loader.load();
 
+            if(page.equals("Dashboard.fxml")) {
+                DashboardController controller = loader.getController();
+                controller.setUserId(userID);
+            }
             mainContent.getChildren().setAll(content);
         } catch (IOException e)
         {

@@ -1,56 +1,73 @@
-//import com.example.cab302project.Dashboard.DashboardModel;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//
-//
-//public class DashboardModelTestClass {
-//    @BeforeEach
-//    public void setUp() {
-//
-//    }
-//    //1) Generate community wellbeing statistic: Correct community statistic is calculated
-//    @Test
-//    public  void WeeklyActivities() {
-//        //Given user completed 3 activities
-//        //When
-//        int result = DashboardModel.getWeeklyActivitiesCompleted();
-//        //Then
-//        assertEquals(3, result);
-//        //User: John Smith
-//        //Activities: Monday, tuesday, wednes
-//        //Result: 3
-//    }
-//    //1) Generate community wellbeing statistic: Correct community statistic is calculated
-//    @Test
-//    public  void WellbeingStatistics() {
-//
-//    }
-//
-//    //2) Community statistic excludes opted-out users: Users who disabled contribution aren't included
-//    @Test
-//    public  void CommunityStatsExcludeOptedOutUsers() {
-//
-//    }
-///*
-//Dashboard
-////Have minimal tests ig
-//    1) Calculate weekly activities completed: Returns correct no. of activities completed
-//    2) Calculate weekly activity target/rpocess: Returns correct progress based on completed vs target activities
-//    3) Calculate overall wellbeing progress: Correct percentage is calculated from the user's relevant data
-//    4) Calculate reward count: Returns correct number of rewards earned
-//    5) Dashboard statistics with no activity: Returns 0
-//    6) Dashboard statistics update after activity completion: Statistics increaqse properly
-//
-//
-//    7) Generate community wellbeing statistic: Correct community statistic is calculated
-//    8) Community statistic excludes opted-out users: Users who disabled contribution aren't included
-//    9) Generate community message from statistic: Appropriate message is returned based on community data
-//
-//
-//    10) Generate personalised AI recommendations: Recommendations are based on user's data
-//    11) Recommendation limit:  No more than 4 recommendations are returned.
-//    12) Recommendations with insufficient data: Generic recommendations are returned
-//    13) Different user data produces different recommendations: Recommendations respond to changes in user statistics
-//*/
-//}
+import com.example.cab302project.Dashboard.DashboardModel;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+/**
+ * This class is the test class for the Dashboard feature.
+ */
+public class DashboardModelTestClass {
+    private DashboardModel[] model;
+
+    @BeforeEach
+    public void setUp() {
+        model = new DashboardModel[]{
+                new DashboardModel(4, 6, 17.5, 8.4, 150, 300),
+                new DashboardModel(1, 0, 2.5, 2, 10, 0),
+        };
+    }
+
+    //Overall Statistics Section
+    @Test
+    public void testGetCorrectWeeklyStats()
+    {
+        assertEquals(4, model[0].getWeeklyCheckinsStreak());
+    }
+
+    @Test
+    public void testAverageSleep()
+    {
+        assertEquals(8.4, model[0].getAvgSleep());
+    }
+
+    @Test
+    public void testAverageStudyStress()
+    {
+        assertEquals(17.5, model[0].getAvgStudyStress());
+    }
+
+    @Test
+    public void testGetActivityMinutes()
+    {
+        assertEquals(150, model[0].getActivityMinutes());
+    }
+
+    @Test
+    public void testActivitiesGoals()
+    {
+        assertEquals(300, model[0].getActivityGoal());
+    }
+
+    @Test
+    public void testActivitiesCompleted()
+    {
+        assertEquals(6, model[0].getActivitiesCompleted());
+    }
+
+    @Test
+    public void testCorrectProgressCalculationForMinutes()
+    {
+        assertEquals(150/300, model[0].getActivityMinutes()/model[0].getActivityGoal());
+    }
+
+    @Test
+    public void testNoActivityGoal()
+    {
+        assertEquals(0, model[1].getActivityGoal());
+    }
+
+    public void testAppropriateActivityProgressCalculationWithNoGoal()
+    {
+        assertEquals(10, model[1].getActivityMinutes()/model[1].getActivityGoal());
+    }
+}

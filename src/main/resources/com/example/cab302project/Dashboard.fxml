@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Arc?>
+
+<!--This FXML aims to set the UI of the dashboard feature.-->
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cab302project.Dashboard.DashboardController"
             prefHeight="400.0" prefWidth="600.0">
+    <!--Splitting the dashboard into two parts. Top containing the community quotes and the center containing AI recommendations and overall statistics.-->
     <BorderPane AnchorPane.leftAnchor="0"
                 AnchorPane.topAnchor="0"
                 AnchorPane.rightAnchor="0"
@@ -27,7 +28,7 @@
                     <padding>
                         <Insets top="20" left="20" right="20" bottom="50"/>
                     </padding>
-                    <Label text="THis is the first box"/>
+                    <Label text="This box will represent the overall community quote retrieved from the database in the future."/>
                 </HBox>
 
                 <VBox spacing="20">
@@ -43,7 +44,7 @@
                         <padding>
                             <Insets top="10" left="20" right="20" bottom="10"/>
                         </padding>
-                        <Label text="THis is the second box"/>
+                        <Label text="This box will represent a sub community quote retrieved from the database in the future."/>
                     </HBox>
 
                     <HBox style="-fx-background-color: #C5C6C7;
@@ -54,11 +55,12 @@
                         <padding>
                             <Insets top="10" left="20" right="20" bottom="10"/>
                         </padding>
-                        <Label text="This is the third box"/>
+                        <Label text="This box will represent a sub community quote retrieved from the database in the future."/>
                     </HBox>
                 </VBox>
             </VBox>
         </top>
+
         <center>
             <HBox spacing="20"
                   VBox.vgrow="ALWAYS"
@@ -68,7 +70,7 @@
                     <Insets top="20" bottom="20" left="20" right="20"/>
                 </padding>
 
-                <!--AI Rec-->
+                <!--The section containing AI recommendations.-->
                 <VBox HBox.hgrow="ALWAYS"
                       fillWidth="true"
                       spacing="10"
@@ -80,6 +82,7 @@
                            alignment="CENTER_LEFT"
                            style="-fx-font-size: 20;
                                   -fx-font-weight: bold;"/>
+
                     <VBox VBox.vgrow="ALWAYS"
                           spacing="20"
                           style="-fx-background-color: #fff;
@@ -168,7 +171,7 @@
                     </VBox>
                 </VBox>
 
-                <!--Overall Stats-->
+                <!--The section containing overall statistics.-->
                 <VBox HBox.hgrow="ALWAYS"
                       fillWidth="true"
                       spacing="10"
@@ -203,6 +206,7 @@
                                 <HBox spacing="10"
                                       fillHeight="true"
                                       alignment="CENTER_LEFT">
+
                                     <ProgressBar fx:id="activityCompleted"
                                                  prefHeight="40"
                                                  maxWidth="Infinity"
@@ -327,18 +331,20 @@
                                       spacing="40"
                                       style="-fx-background-color: #F5F3F3;
                                              -fx-background-radius: 15;">
+                                    <!--This aims to overlap a circle and an arc to output a donut like progress bar rather than the standard progress indicator.-->
                                     <Pane fx:id="streakProgressCircle"
-                                            prefWidth="250"
-                                          prefHeight="250">
-                                        <Circle radius="60"
+                                          prefWidth="250"
+                                          prefHeight="250"
+                                          VBox.vgrow="ALWAYS">
+                                        <Circle radius="80"
                                                 centerY="125"
                                                 centerX="125"
                                                 fill="transparent"
                                                 stroke="darkgrey"
                                                 strokeWidth="10"/>
                                         <Arc fx:id="streakArc"
-                                             radiusX="60"
-                                             radiusY="60"
+                                             radiusX="80"
+                                             radiusY="80"
                                              centerY="125"
                                              centerX="125"
                                              startAngle="90"
