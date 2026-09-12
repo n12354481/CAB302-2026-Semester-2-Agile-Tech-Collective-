@@ -1,6 +1,7 @@
 package com.example.cab302project.Authentication;
 
 import com.example.cab302project.Database.DatabaseUserDAO;
+import com.example.cab302project.HelloController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -47,7 +48,7 @@ public class LoginController {
             );
 
             try {
-                goToHomePage();
+                goToHomePage(user);
             } catch (IOException e) {
                 messageLabel.setText("Unable to open the home page.");
                 e.printStackTrace();
@@ -75,7 +76,7 @@ public class LoginController {
         stage.setScene(scene);
     }
 
-    private void goToHomePage() throws IOException {
+    private void goToHomePage(User user) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource(
@@ -84,6 +85,9 @@ public class LoginController {
         );
 
         Scene scene = new Scene(loader.load());
+
+        HelloController controller = loader.getController();
+        controller.setUserID(user.getUserID());
 
         Stage stage =
                 (Stage) usernameField
