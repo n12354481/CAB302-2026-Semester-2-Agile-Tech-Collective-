@@ -5,6 +5,7 @@ module com.example.cab302project {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires java.compiler;
 
     opens com.example.cab302project to javafx.fxml;
     opens com.example.cab302project.Dashboard to javafx.fxml;

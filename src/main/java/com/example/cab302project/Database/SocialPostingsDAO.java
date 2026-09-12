@@ -1,47 +1,48 @@
-//package com.example.cab302project;
-//
-//import com.example.cab302project.SocialPostings.ISocialPostingsDAO;
-//
-//import java.sql.*;
-//
-//public class SocialPostingsDAO implements ISocialPostingsDAO {
-//
-//    private Connection connection;
-//
-//    public SocialPostingsDAO() {
-//        connection = DatabaseConnection.getInstance();
-//        createTables();
-//    }
-//
-//    private void createTables() {
-//
-//        String posts = "CREATE TABLE IF NOT EXISTS posts ("
-//                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-//                + "title TEXT NOT NULL, "
-//                + "description TEXT, "
-//                + "event_date TEXT, "
-//                + "event_time_start TEXT, "
-//                + "event_time_end TEXT, "
-//                + "location_text TEXT, "
-//                + "map_location TEXT, "
-//                + "contact_info TEXT, "
-//                + "register_link TEXT, "
-//                + "status TEXT NOT NULL DEFAULT 'draft'"
-//                + ")";
-//
-//        String images = "CREATE TABLE IF NOT EXISTS post_images ("
-//                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-//                + "post_id INTEGER NOT NULL, "
-//                + "image_path TEXT NOT NULL, "
-//                + "sort_order INTEGER DEFAULT 0, "
-//                + "FOREIGN KEY (post_id) REFERENCES social_posts(id) ON DELETE CASCADE"
-//                + ")";
-//
-//        try (Statement statement = connection.createStatement()) {
-//            statement.executeUpdate(posts);
-//            statement.executeUpdate(images);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//}
+package com.example.cab302project.SocialPostings;
+
+import com.example.cab302project.Database.DatabaseConnection;
+
+import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+/**
+ * uses the databaseconnection to query the posts table
+ */
+public class SocialPostingsDAO implements ISocialPostingsDAO {
+
+    @Override
+    public List<SocialPostings> getAllPosts() throws SQLException {
+        List<SocialPostings> posts = new ArrayList<>();
+
+        String sql = "SELECT postId, userId, title, description, content, image, " + "event_date, start_time, end_time, event_location " + "FROM post ORDER BY postId DESC";
+
+        Connection connection = DatabaseConnection.getInstance();
+
+        try (PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                posts.add(new SocialPostings(
+                        resultSet.getInt("postId"),
+                        resultSet.getInt("userId"),
+                        resultSet.getString("title"),
+                        resultSet.getString("description"),
+                        resultSet.getString("content"),
+                        resultSet.getString("image"),
+                        resultSet.getString("event_date"),
+                        resultSet.getString("start_time"),
+                        resultSet.getString("end_time"),
+                        resultSet.getString("event_location")
+                ));
+            }
+        }
+
+        return posts;
+    }
+
+}
