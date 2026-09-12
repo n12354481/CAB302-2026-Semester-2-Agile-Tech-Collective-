@@ -1,3 +1,5 @@
+package com.example.cab302project;
+
 import com.example.cab302project.Authentication.IUserDAO;
 import com.example.cab302project.Authentication.User;
 import com.example.cab302project.Database.DatabaseSettingsDAO;

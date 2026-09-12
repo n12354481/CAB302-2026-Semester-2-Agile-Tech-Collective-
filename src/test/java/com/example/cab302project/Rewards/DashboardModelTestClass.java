@@ -1,3 +1,5 @@
+package com.example.cab302project.Rewards;
+
 import com.example.cab302project.Dashboard.DashboardModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
