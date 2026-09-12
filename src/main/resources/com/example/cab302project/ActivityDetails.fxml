@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
 <AnchorPane fx:id="detailsRoot" prefHeight="400.0" prefWidth="600.0"
     xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
@@ -15,7 +17,11 @@
 
     <AnchorPane layoutX="60.0" layoutY="60.0" prefWidth="480.0" prefHeight="140.0" style="-fx-background-color: white; -fx-border-color: #AAAAAA; -fx-border-radius:20; -fx-background-radius:20;">
 
-        <Label layoutX="210.0" layoutY="60.0" text="IMAGE" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <ImageView layoutX="0.0" layoutY="0.0" fitWidth="480" fitHeight="140" preserveRatio="false">
+            <image>
+                <Image url="@Activities/Swimming.jpg"/>
+            </image>
+        </ImageView>
 
     </AnchorPane>
 

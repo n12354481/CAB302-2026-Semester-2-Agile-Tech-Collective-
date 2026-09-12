@@ -28,9 +28,6 @@ public class ActivitiesController implements Initializable {
     private AnchorPane detailsRoot;
 
     @FXML
-    private AnchorPane all;
-
-    @FXML
     private AnchorPane fitness;
 
     @FXML
@@ -44,8 +41,7 @@ public class ActivitiesController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (all != null) {
-            panes.add(all);
+        if (fitness != null) {
             panes.add(fitness);
             panes.add(social);
             panes.add(others);
@@ -53,9 +49,6 @@ public class ActivitiesController implements Initializable {
     }
 
     //category navigation
-    @FXML
-    private void onAllButtonClicked() { show(all); }
-
     @FXML
     private void onFitnessButtonClicked() { show(fitness); }
 
