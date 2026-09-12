@@ -68,7 +68,7 @@ public class HelloController {
 
     @FXML
     private void onActivitiesButtonClicked() {
-        loadPage("Activities.fxml");
+        loadPage("ActivityMain.fxml");
     }
 
 
