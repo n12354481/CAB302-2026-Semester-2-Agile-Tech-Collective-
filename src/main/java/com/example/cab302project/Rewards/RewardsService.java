@@ -60,6 +60,16 @@ public final class RewardsService {
                 .toList();
     }
 
+    /** What grew above the ground on one day, for the selected day card. */
+    public List<DayEntry> activitiesOn(int userID, LocalDate date) throws SQLException {
+        return dayTotals.activitiesOn(userID, date);
+    }
+
+    /** What grew below the ground on one day, for the selected day card. */
+    public List<DayEntry> restOn(int userID, LocalDate date) throws SQLException {
+        return dayTotals.restOn(userID, date);
+    }
+
     /** The last {@code days} days ending today - what the panel shows by default. */
     public RewardsSummary summaryForLastDays(int userID, int days, LocalDate today)
             throws SQLException {

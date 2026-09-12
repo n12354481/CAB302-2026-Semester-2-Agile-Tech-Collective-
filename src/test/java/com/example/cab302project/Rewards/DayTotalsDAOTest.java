@@ -122,6 +122,28 @@ class DayTotalsDAOTest {
     }
 
     @Test
+    void activitiesOnADayComeBackWithTheirNameAndCategory() throws SQLException {
+        logActivity(USER, MONDAY, 20);
+        logActivity(USER, MONDAY, 40);
+        logActivity(USER, MONDAY.plusDays(1), 999);
+        logActivity(OTHER_USER, MONDAY, 999);
+
+        assertEquals(List.of(new DayEntry("Walk", "MOVEMENT", 20), new DayEntry("Walk", "MOVEMENT", 40)),
+                dao.activitiesOn(USER, MONDAY));
+    }
+
+    @Test
+    void restOnADayComesBackWithItsLabelAndKind() throws SQLException {
+        logRest(USER, MONDAY, "SLEEP", 420);
+        logRest(USER, MONDAY, "DELIBERATE", 20);
+        logRest(USER, MONDAY.plusDays(1), "SLEEP", 999);
+        logRest(OTHER_USER, MONDAY, "SLEEP", 999);
+
+        assertEquals(List.of(new DayEntry("test", "SLEEP", 420), new DayEntry("test", "DELIBERATE", 20)),
+                dao.restOn(USER, MONDAY));
+    }
+
+    @Test
     void aBackwardsRangeIsRejected() {
         assertThrows(IllegalArgumentException.class,
                 () -> dao.forRange(USER, MONDAY, MONDAY.minusDays(1)));
