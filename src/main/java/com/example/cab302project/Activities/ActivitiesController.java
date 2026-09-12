@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
@@ -35,6 +38,9 @@ public class ActivitiesController implements Initializable {
 
     @FXML
     private AnchorPane others;
+
+    @FXML
+    private ToggleGroup durationGroup;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -103,6 +109,22 @@ public class ActivitiesController implements Initializable {
 
     @FXML
     private void onMeditationClicked() { System.out.println("Meditation selected"); }
+
+    @FXML
+    private void onSelectActivityClicked() {
+        Toggle selectedToggle = durationGroup.getSelectedToggle();
+
+        if (selectedToggle == null) {
+            System.out.println("Please select a duration");
+            return;
+        }
+
+        RadioButton selectedButton = (RadioButton) selectedToggle;
+        String selectedDuration = selectedButton.getText();
+
+        System.out.println("Swimming selected");
+        System.out.println("Duration: " + selectedDuration);
+    }
 
     //back button from activity details
     @FXML
