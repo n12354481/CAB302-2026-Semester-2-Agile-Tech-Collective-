@@ -1,4 +1,4 @@
-package com.example.cab302project;
+package com.example.cab302project.Authentication;
 
 import com.example.cab302project.Database.DatabaseConnection;
 

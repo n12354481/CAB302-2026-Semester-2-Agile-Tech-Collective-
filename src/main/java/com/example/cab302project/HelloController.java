@@ -36,7 +36,7 @@ public class HelloController {
 
     @FXML
     private void onCheckInButtonClicked() {
-        loadPage("CheckIn.fxml");
+        loadPage("mood-checkin.fxml");
     }
 
     @FXML
