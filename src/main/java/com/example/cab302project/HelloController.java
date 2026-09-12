@@ -111,6 +111,7 @@ public class HelloController {
 
     private void loadPage(String page) {
         try {
+
             usernameDisplay.setText(user.getUsername());
 
             FXMLLoader loader = new FXMLLoader(
