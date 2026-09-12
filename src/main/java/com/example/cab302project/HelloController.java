@@ -52,7 +52,7 @@ public class HelloController {
 
     @FXML
     private void onCheckInButtonClicked() {
-        loadPage("CheckIn.fxml");
+        loadPage("mood-checkin.fxml");
     }
 
     @FXML
@@ -68,7 +68,7 @@ public class HelloController {
 
     @FXML
     private void onSocialButtonClicked() {
-        loadPage("Socials.fxml");
+        loadPage("socialpostings.fxml");
     }
 
     @FXML
@@ -90,7 +90,7 @@ public class HelloController {
     @FXML
     private void onLogoutButtonClicked() throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                HelloApplication.class.getResource("Login.fxml")
+                HelloApplication.class.getResource("login.fxml")
         );
         Scene scene = new Scene(loader.load());
         Stage stage = (Stage) logoutButton.getScene().getWindow();
