@@ -1,7 +1,11 @@
 package com.example.cab302project.Settings;
 
+import com.example.cab302project.Authentication.IUserDAO;
+import com.example.cab302project.Authentication.PasswordUtils;
+import com.example.cab302project.Authentication.User;
 import com.example.cab302project.Database.DatabaseSettingsDAO;
 
+import com.example.cab302project.Database.DatabaseUserDAO;
 import com.example.cab302project.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,9 +21,11 @@ import java.io.IOException;
  * The controller class of Settings which handles the integration of the UI and performs appropriate methods based on user's UI interaction.
  */
 public class SettingsController {
-    private int userId = 1;
+    private int userId;
     private SettingsModel settings;
     private ISettingsDAO settingsDAO;
+    private User user;
+    private IUserDAO userDAO;
 
 
     //Account Section fields
@@ -100,13 +106,7 @@ public class SettingsController {
     public SettingsController() {
 
         settingsDAO = new DatabaseSettingsDAO();
-
-        settings = settingsDAO.getSettings(userId);
-
-        if (settings == null) {
-            settingsDAO.insertDefaultSettings(userId);
-            settings = settingsDAO.getSettings(userId);
-        }
+        userDAO = new DatabaseUserDAO();
     }
 
     /**
@@ -188,9 +188,16 @@ public class SettingsController {
      */
     public void setUserId(int userId) {
         this.userId = userId;
+        user = userDAO.getUserId(userId);
 
-        loadSettings();
+        settings = settingsDAO.getSettings(userId);
+
+        if (settings == null) {
+            settingsDAO.insertDefaultSettings(userId);
+            settings = settingsDAO.getSettings(userId);
+        }
         loadUserDetails();
+        loadSettings();
     }
 
     /**
@@ -215,17 +222,11 @@ public class SettingsController {
 
 
     private void loadUserDetails() {
+        emailTextField.setText(user.getEmail());
+        usernameTextField.setText(user.getUsername());
 
-        //Need to update the code once Pahal finishes the UserDAO.
-
-//        UserDAO userDAO = new DatabaseSchema.UserDAO();
-//        User user = userDAO.getUserById(userId);
-//
-//        emailTextField.setText(user.getEmail());
-//        usernameTextField.setText(user.getUsername());
-
-//        emailUpdateButton.setText("Update");
-//        usernameUpdateButton.setText("Update");
+        emailUpdateButton.setText("Update");
+        usernameUpdateButton.setText("Update");
     }
 
     /**
@@ -238,11 +239,19 @@ public class SettingsController {
             emailTextField.requestFocus();
             emailUpdateButton.setText("Done");
         } else {
+            String emailUpdated = emailTextField.getText();
+
+            if(userDAO.updateEmail(userId, emailUpdated))
+            {
+                user.setEmail(emailUpdated);
+                emailTextField.setEditable(false);
+                emailTextField.setText(emailUpdated);
+            }
+
             emailTextField.setEditable(false);
             emailUpdateButton.setText("Update");
 
-            //Need to save the new email to the dao using userDAO.updateEmail or something.
-
+            userDAO.updateEmail(userId, emailTextField.getText());
         }
     }
 
@@ -256,10 +265,18 @@ public class SettingsController {
             usernameTextField.requestFocus();
             usernameUpdateButton.setText("Done");
         } else {
+            String usernameUpdated = usernameTextField.getText();
+
+            if(userDAO.updateUsername(userId, usernameUpdated))
+            {
+                user.setUsername(usernameUpdated);
+                usernameTextField.setEditable(false);
+                usernameTextField.setText(usernameUpdated);
+            }
+
             usernameTextField.setEditable(false);
             usernameUpdateButton.setText("Update");
-
-            //Need to save the new username to the dao using userDAO.updateUsername or something.
+            userDAO.updateUsername(userId, usernameTextField.getText());
         }
     }
 
@@ -307,9 +324,16 @@ public class SettingsController {
             return;
         }
 
+
         //Need to verify current password
         //Need to hash new password and save it to db using the UserDAO.
+        String hashedPassword = PasswordUtils.hashPassword(newPassword);
+        userDAO.updatePassword(userId, hashedPassword);
 
+        if(userDAO.updatePassword(userId, hashedPassword))
+        {
+            user.setPassword(hashedPassword);
+        }
 
         passwordOverlay.setVisible(false);
         passwordOverlay.setManaged(false);

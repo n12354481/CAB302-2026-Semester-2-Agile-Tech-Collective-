@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Stack;
 
+/**
+ * This class acts as the main controller which loads the app pages with a proper sidebar.
+ */
 public class HelloController {
     private int userID;
     @FXML
@@ -32,6 +35,10 @@ public class HelloController {
     @FXML
     private Button logoutButton;
 
+    /**
+     * This method aims to load the dashboard as the initial page with the logged-in user's ID.
+     * @param userID
+     */
     public void setUserID(int userID)
     {
         this.userID = userID;
@@ -77,7 +84,7 @@ public class HelloController {
 
     @FXML
     private void onSettingsButtonClicked() {
-        loadPage("Settings.fxml");
+        loadPage("settings.fxml");
     }
 
     @FXML
@@ -85,10 +92,10 @@ public class HelloController {
         FXMLLoader loader = new FXMLLoader(
                 HelloApplication.class.getResource("Login.fxml")
         );
-
         Scene scene = new Scene(loader.load());
         Stage stage = (Stage) logoutButton.getScene().getWindow();
-
+        stage.setScene(scene);
+        stage.show();
     }
 
 
