@@ -1,5 +1,7 @@
 package com.example.cab302project;
 
+import com.example.cab302project.Dashboard.DashboardController;
+import com.example.cab302project.Settings.SettingsController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,7 +13,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Stack;
 
+/**
+ * This class acts as the main controller which loads the app pages with a proper sidebar.
+ */
 public class HelloController {
+    private int userID;
     @FXML
     private StackPane mainContent;
     @FXML
@@ -29,6 +35,16 @@ public class HelloController {
     @FXML
     private Button logoutButton;
 
+    /**
+     * This method aims to load the dashboard as the initial page with the logged-in user's ID.
+     * @param userID
+     */
+    public void setUserID(int userID)
+    {
+        this.userID = userID;
+        loadPage("Dashboard.fxml");
+    }
+
     @FXML
     private void onHomeButtonClicked() {
         loadPage("Dashboard.fxml");
@@ -36,7 +52,7 @@ public class HelloController {
 
     @FXML
     private void onCheckInButtonClicked() {
-        loadPage("CheckIn.fxml");
+        loadPage("mood-checkin.fxml");
     }
 
     @FXML
@@ -52,7 +68,7 @@ public class HelloController {
 
     @FXML
     private void onSocialButtonClicked() {
-        loadPage("Socials.fxml");
+        loadPage("socialpostings.fxml");
     }
 
     @FXML
@@ -68,28 +84,39 @@ public class HelloController {
 
     @FXML
     private void onSettingsButtonClicked() {
-        loadPage("Settings.fxml");
+        loadPage("settings.fxml");
     }
 
     @FXML
     private void onLogoutButtonClicked() throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                HelloApplication.class.getResource("Login.fxml")
+                HelloApplication.class.getResource("login.fxml")
         );
-
         Scene scene = new Scene(loader.load());
         Stage stage = (Stage) logoutButton.getScene().getWindow();
-
+        stage.setScene(scene);
+        stage.show();
     }
 
 
     private void loadPage(String page) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                HelloApplication.class.getResource(page)
+                    HelloApplication.class.getResource(page)
             );
 
             Node content = loader.load();
+
+            if(page.equals("Dashboard.fxml")) {
+                DashboardController controller = loader.getController();
+                controller.setUserId(userID);
+            }
+
+            if(page.equals("settings.fxml"))
+            {
+                SettingsController controller = loader.getController();
+                controller.setUserId(userID);
+            }
 
             mainContent.getChildren().setAll(content);
         } catch (IOException e)

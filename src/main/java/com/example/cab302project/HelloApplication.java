@@ -1,3 +1,4 @@
+
 package com.example.cab302project;
 
 import com.example.cab302project.Database.DatabaseConnection;
@@ -20,12 +21,10 @@ public class HelloApplication extends Application {
 //        //} catch (SQLException sqlEx) {
 //            throw new RuntimeException("Could not create the database tables", sqlEx);
 //       // }
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 820, 540);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 1000);
         stage.setTitle("STEM App");
         stage.setScene(scene);
         stage.show();
     }
 }
-
-// hello world, test push

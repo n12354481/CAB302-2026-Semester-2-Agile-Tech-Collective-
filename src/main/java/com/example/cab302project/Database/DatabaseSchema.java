@@ -1,6 +1,7 @@
 package com.example.cab302project.Database;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -61,7 +62,6 @@ public final class DatabaseSchema {
                     + "sleep INTEGER, "
                     + "water INTEGER, "
                     + "study_stress INTEGER, "
-                    + "UNIQUE (userID, checkin_date), "
                     + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE)",
 
             "CREATE TABLE IF NOT EXISTS mood ("
@@ -95,6 +95,33 @@ public final class DatabaseSchema {
             statement.execute("PRAGMA foreign_keys = ON");
             for (String ddl : TABLES) {
                 statement.executeUpdate(ddl);
+            }
+        }
+        insertDefaultMoods(connection);
+    }
+
+    private static void insertDefaultMoods(Connection connection)
+            throws SQLException {
+
+        String[] moods = {
+                "Happy",
+                "Calm",
+                "Tired",
+                "Anxious",
+                "Sad",
+                "Sleepy"
+        };
+
+        String query =
+                "INSERT OR IGNORE INTO mood (mood_name) " + "VALUES (?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            for (String mood : moods) {
+                statement.setString(
+                        1,
+                        mood
+                );
+                statement.executeUpdate();
             }
         }
     }
