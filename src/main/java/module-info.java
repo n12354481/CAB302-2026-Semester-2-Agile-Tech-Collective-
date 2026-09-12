@@ -12,4 +12,5 @@ module com.example.cab302project {
     exports com.example.cab302project.Settings;
     exports com.example.cab302project.Database;
     opens com.example.cab302project.Database to javafx.fxml;
+    opens com.example.cab302project.Activities to javafx.fxml;
 }

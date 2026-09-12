@@ -6,19 +6,55 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.cab302project.Activities.ActivitiesController">
-    <ButtonBar layoutX="64.0" layoutY="76.0" prefHeight="83.0" prefWidth="285.0">
+
+    <Label layoutX="64.0" layoutY="30.0" text="Activities" style="-fx-font-size: 35px;"/>
+
+    <ButtonBar layoutX="64.0" layoutY="75.0" prefWidth="285.0">
         <buttons>
-            <Button mnemonicParsing="false"
-                    text="All"
-                    onAction="#onAllButtonClicked"/>
-            <Button layoutX="135.0" layoutY="39.0" mnemonicParsing="false"
-                    text="Activities" onAction="#onAllButtonClicked"/>
-            <Button layoutX="135.0" layoutY="39.0" mnemonicParsing="false"
-                    onAction="#onHobbiesButtonClicked"
-                    text="Hobbies"/>
+
+            <Button text="All" onAction="#onAllButtonClicked"/>
+            <Button text="Fitness" onAction="#onFitnessButtonClicked"/>
+            <Button text="Social" onAction="#onSocialButtonClicked"/>
+            <Button text="Study" onAction="#onStudyButtonClicked"/>
+            <Button text="Others" onAction="#onOthersButtonClicked"/>
+
         </buttons>
     </ButtonBar>
-    <Label layoutX="96.0" layoutY="50.0" text="Activities" style="-fx-font-size: 35px;"/>
-    <StackPane fx:id="activityContent" layoutY="80"/>
+
+    <StackPane layoutX="64.0" layoutY="140.0" prefWidth="500.0" prefHeight="240.0">
+
+        <AnchorPane fx:id="all" visible="true" managed="true">
+
+            <Label layoutX="30.0" layoutY="30.0" text="All Listing" style="-fx-font-size: 20px;"/>
+
+        </AnchorPane>
+
+        <AnchorPane fx:id="fitness" visible="false" managed="false">
+
+            <Label layoutX="30.0" layoutY="30.0" text="Fitness" style="-fx-font-size: 20px;"/>
+
+        </AnchorPane>
+
+        <AnchorPane fx:id="social" visible="false" managed="false">
+
+            <Label layoutX="30.0" layoutY="30.0" text="Social" style="-fx-font-size: 20px;"/>
+
+        </AnchorPane>
+
+        <AnchorPane fx:id="study" visible="false" managed="false">
+
+            <Label layoutX="30.0" layoutY="30.0" text="Study" style="-fx-font-size: 20px;"/>
+
+        </AnchorPane>
+
+        <AnchorPane fx:id="others" visible="false" managed="false">
+
+            <Label layoutX="30.0" layoutY="30.0" text="Others" style="-fx-font-size: 20px;"/>
+
+        </AnchorPane>
+
+    </StackPane>
+
+
 
 </AnchorPane>
