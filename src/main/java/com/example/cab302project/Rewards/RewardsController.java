@@ -1,7 +1,9 @@
 package com.example.cab302project.Rewards;
 
 import com.example.cab302project.Database.DatabaseConnection;
+import com.example.cab302project.HelloApplication;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -9,8 +11,10 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -26,7 +30,7 @@ import java.util.List;
  *
  * Some of it is demo scaffolding until the rest of the app is built. The user is
  * hardcoded because there is no login, the garden is a  placeholder, and the
- * claiming page does not exist yet.
+ * claiming page it links to is hardcoded too.
  */
 public class RewardsController {
 
@@ -106,7 +110,18 @@ public class RewardsController {
 
     @FXML
     private void onViewClaiming() {
-        messageLabel.setText("The claiming page is not built yet.");
+        // The nav shell keeps every page in one StackPane, so swapping its child changes page.
+        Node holder = messageLabel.getScene().lookup("#mainContent");
+        if (!(holder instanceof StackPane pane)) {
+            messageLabel.setText("The claiming page only opens from inside the app's nav.");
+            return;
+        }
+        try {
+            Node claims = FXMLLoader.load(HelloApplication.class.getResource("Claims.fxml"));
+            pane.getChildren().setAll(claims);
+        } catch (IOException ex) {
+            messageLabel.setText("Could not open the claiming page: " + ex.getMessage());
+        }
     }
 
     /** Reads everything again and redraws. Called on open and after anything changes. */

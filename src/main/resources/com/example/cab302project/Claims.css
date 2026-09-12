@@ -1,0 +1,266 @@
+/* Colours from the Stem Wellbeing Claims wireframe. Gold belongs to the ready band only. */
+
+.claims,
+.claims-scroll,
+.claims-scroll > .viewport {
+    -fx-background-color: #f7f9f7;
+}
+
+.claims-scroll {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.back-link {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 4 0;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5c6b63;
+    -fx-cursor: hand;
+}
+
+.back-link:hover {
+    -fx-text-fill: #1d6f59;
+}
+
+.title {
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #182620;
+}
+
+.muted {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: #5c6b63;
+}
+
+/* Band headings */
+
+.heading-gold {
+    -fx-font-size: 10.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8f6a21;
+}
+
+.heading {
+    -fx-font-size: 10.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5c6b63;
+}
+
+.rule {
+    -fx-min-height: 1;
+    -fx-pref-height: 1;
+    -fx-max-height: 1;
+    -fx-background-color: #e3e9e4;
+}
+
+/* Cards */
+
+/* Widths come from the grid columns in Claims.fxml, so cards fill the row. */
+.ready-card {
+    -fx-min-height: 128;
+    -fx-background-color: #f7efdc;
+    -fx-background-radius: 12;
+    -fx-border-color: #e3cd98;
+    -fx-border-radius: 12;
+    -fx-padding: 20 22 20 22;
+}
+
+.counting-card {
+    -fx-min-height: 106;
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #e3e9e4;
+    -fx-border-radius: 12;
+    -fx-padding: 18 20 18 20;
+}
+
+.reward-name {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #182620;
+}
+
+.reward-counts {
+    -fx-font-size: 10.5px;
+    -fx-text-fill: #5c6b63;
+}
+
+.progress-complete {
+    -fx-font-size: 11.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8f6a21;
+}
+
+.progress-counting {
+    -fx-font-size: 10.5px;
+    -fx-text-fill: #5c6b63;
+}
+
+.claim-button {
+    -fx-min-width: 92;
+    -fx-min-height: 36;
+    -fx-background-color: #b8862f;
+    -fx-background-radius: 8;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.claim-button:hover {
+    -fx-background-color: #a5771f;
+}
+
+/* Progress bar, 6px with a green fill on a light track. */
+
+.progress-bar {
+    -fx-min-height: 6;
+    -fx-pref-height: 6;
+    -fx-max-height: 6;
+    -fx-padding: 0;
+}
+
+.progress-bar > .track {
+    -fx-background-color: #e7eae7;
+    -fx-background-radius: 3;
+    -fx-background-insets: 0;
+}
+
+.progress-bar > .bar {
+    -fx-background-color: #2e7d5b;
+    -fx-background-radius: 3;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+/* Claimed pills */
+
+.claimed-pill {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+    -fx-border-color: #e3e9e4;
+    -fx-border-radius: 18;
+    -fx-padding: 8 16 8 12;
+}
+
+.claimed-tick {
+    -fx-min-width: 16;
+    -fx-min-height: 16;
+    -fx-max-width: 16;
+    -fx-max-height: 16;
+    -fx-alignment: center;
+    -fx-background-color: #f7efdc;
+    -fx-background-radius: 8;
+    -fx-border-color: #b8862f;
+    -fx-border-radius: 8;
+    -fx-font-size: 9px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #b8862f;
+}
+
+.claimed-name {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #182620;
+}
+
+.claimed-when {
+    -fx-font-size: 10px;
+    -fx-text-fill: #93a399;
+}
+
+/* Confirm dialog */
+
+.scrim {
+    -fx-background-color: rgba(14, 21, 18, 0.42);
+}
+
+.dialog-card {
+    -fx-background-color: white;
+    -fx-background-radius: 16;
+    -fx-padding: 28 32 28 32;
+    -fx-effect: dropshadow(gaussian, rgba(14, 21, 18, 0.35), 36, 0, 0, 10);
+}
+
+.dialog-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #182620;
+}
+
+.dialog-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #5c6b63;
+}
+
+.cosmetic-box {
+    -fx-background-color: #f4f7f5;
+    -fx-background-radius: 10;
+    -fx-padding: 12 16 12 16;
+}
+
+.cosmetic-tag {
+    -fx-font-size: 9.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #93a399;
+}
+
+.cosmetic-note {
+    -fx-font-size: 10.5px;
+    -fx-text-fill: #5c6b63;
+}
+
+.cancel-button {
+    -fx-min-width: 110;
+    -fx-min-height: 40;
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #cbd6ce;
+    -fx-border-radius: 8;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #5c6b63;
+    -fx-cursor: hand;
+}
+
+.cancel-button:hover {
+    -fx-border-color: #9fb0a5;
+}
+
+.confirm-button {
+    -fx-min-width: 150;
+    -fx-min-height: 40;
+    -fx-background-color: #b8862f;
+    -fx-background-radius: 8;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.confirm-button:hover {
+    -fx-background-color: #a5771f;
+}
+
+/* Toast */
+
+.toast {
+    -fx-background-color: #182620;
+    -fx-background-radius: 12;
+    -fx-padding: 16 24 16 24;
+    -fx-effect: dropshadow(gaussian, rgba(14, 21, 18, 0.35), 24, 0, 0, 8);
+}
+
+.toast-title {
+    -fx-font-size: 12.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.toast-note {
+    -fx-font-size: 10.5px;
+    -fx-text-fill: #a9c4b7;
+}
