@@ -1,14 +1,15 @@
 package com.example.cab302project.Database;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.example.cab302project.Settings.ISettingsDAO;
+import com.example.cab302project.Settings.SettingsModel;
+
+import java.sql.*;
 
 /**
  * The shared tables, from the team's schema document.
  *
  * <p>SQLite has no date type, so dates are ISO-8601 text (YYYY-MM-DD) and times are HH:MM.
- * Foreign keys are off by default, are designed per-connection, and enabled here.
+ * Foreign keys are off by default and are per-connection, so they are enabled here.
  */
 public final class DatabaseSchema {
 
@@ -34,7 +35,7 @@ public final class DatabaseSchema {
                     + "ai_checkin_personalisation INTEGER NOT NULL DEFAULT 0, "
                     + "FOREIGN KEY (user_id) REFERENCES users (userID) ON DELETE CASCADE)",
 
-            // Catalogue of activities, not of time spent (see activity_log).
+            // Catalogue of activities, not a record of time spent -- see activity_log.
             "CREATE TABLE IF NOT EXISTS activity ("
                     + "activityID INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "activity_name TEXT NOT NULL, "
@@ -43,7 +44,7 @@ public final class DatabaseSchema {
                     + "goal INTEGER, "
                     + "points INTEGER NOT NULL DEFAULT 0)",
 
-            // One row per logged instance.
+            // One row per logged instance. Not in the schema doc -- see KNOWN-ISSUES.
             "CREATE TABLE IF NOT EXISTS activity_log ("
                     + "logID INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "userID INTEGER NOT NULL, "
