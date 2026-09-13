@@ -42,15 +42,11 @@ class GardenDemoDataUserTest {
     }
 
     @Test
-    void theDemoUserIsCreatedOnce() throws SQLException {
-        GardenDemoData.ensureUser(connection, USER);
-        GardenDemoData.ensureUser(connection, USER);
-        assertEquals(1, countUsers());
-    }
-
-    @Test
     void seedingWorksOnACompletelyEmptyDatabase() throws SQLException {
         GardenDemoData.ensureUser(connection, USER);
+        GardenDemoData.ensureUser(connection, USER);
+        assertEquals(1, countUsers(), "the demo user is created once");
+
         GardenDemoData.seed(connection, USER, LocalDate.of(2026, 9, 12));
 
         RewardsService service = new RewardsService(connection, new int[]{3, 15});

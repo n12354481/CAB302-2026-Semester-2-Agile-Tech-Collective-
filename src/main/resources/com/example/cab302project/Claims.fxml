@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<!-- The claiming page from the Stem Wellbeing Claims wireframe. The scrim and the toast sit
+<!-- The claiming page from the Stem Wellbeing Claims wireframe. The confirm dialog sits
      over the page, so the whole thing is a StackPane. -->
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
@@ -31,7 +31,7 @@
                 <Label fx:id="monthLabel" styleClass="muted"/>
             </VBox>
 
-            <!-- What wants action. Gold is in the heading and the cards, never the rule. -->
+            <!-- What wants action. -->
             <VBox fx:id="readyBand" spacing="12.0">
                 <Label fx:id="readyHeading" styleClass="heading-gold"/>
                 <Region styleClass="rule"/>
@@ -85,14 +85,4 @@
             </HBox>
         </VBox>
     </StackPane>
-
-    <!-- Quiet confirmation. -->
-    <VBox fx:id="toast" styleClass="toast" spacing="2.0" visible="false" managed="false"
-          maxWidth="-Infinity" maxHeight="-Infinity" StackPane.alignment="BOTTOM_RIGHT">
-        <StackPane.margin>
-            <Insets bottom="32.0" right="32.0"/>
-        </StackPane.margin>
-        <Label fx:id="toastTitle" styleClass="toast-title"/>
-        <Label fx:id="toastNote" styleClass="toast-note"/>
-    </VBox>
 </StackPane>

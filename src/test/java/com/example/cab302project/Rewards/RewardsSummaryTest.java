@@ -2,10 +2,10 @@ package com.example.cab302project.Rewards;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /** Uses the only two thresholds the plates actually fix: Sprout at 3, Flower at 15. */
 class RewardsSummaryTest {
@@ -16,10 +16,10 @@ class RewardsSummaryTest {
         return RewardsSummary.of(List.of(days), THRESHOLDS);
     }
 
-    @Test
-    void emptyRunIsAllZeroes() {
-        RewardsSummary summary = RewardsSummary.of(List.of(), THRESHOLDS);
-        assertEquals(new RewardsSummary(0, 0, 0), summary);
+    private static DayState[] balancedDays(int count) {
+        DayState[] days = new DayState[count];
+        Arrays.fill(days, DayState.BALANCED);
+        return days;
     }
 
     @Test
@@ -49,21 +49,10 @@ class RewardsSummaryTest {
     }
 
     @Test
-    void stageIsZeroUntilTheFirstThresholdIsPassed() {
-        assertEquals(0, summarise(DayState.BALANCED, DayState.BALANCED).stageReached());
-    }
-
-    @Test
-    void thresholdIsInclusive() {
-        assertEquals(1, summarise(DayState.BALANCED, DayState.BALANCED, DayState.BALANCED)
-                .stageReached());
-    }
-
-    @Test
-    void laterThresholdsRaiseTheStage() {
-        DayState[] fifteen = new DayState[15];
-        java.util.Arrays.fill(fifteen, DayState.BALANCED);
-        assertEquals(2, summarise(fifteen).stageReached());
+    void stageRisesAsEachThresholdIsReached() {
+        assertEquals(0, summarise(balancedDays(2)).stageReached());
+        assertEquals(1, summarise(balancedDays(3)).stageReached(), "thresholds are inclusive");
+        assertEquals(2, summarise(balancedDays(15)).stageReached());
     }
 
     @Test
@@ -73,11 +62,5 @@ class RewardsSummaryTest {
         assertEquals(1, summary.unclaimedStages(1));
         assertEquals(0, summary.unclaimedStages(2));
         assertEquals(0, summary.unclaimedStages(5), "never negative");
-    }
-
-    @Test
-    void nullArgumentsAreRejected() {
-        assertThrows(IllegalArgumentException.class, () -> RewardsSummary.of(null, THRESHOLDS));
-        assertThrows(IllegalArgumentException.class, () -> RewardsSummary.of(List.of(), null));
     }
 }

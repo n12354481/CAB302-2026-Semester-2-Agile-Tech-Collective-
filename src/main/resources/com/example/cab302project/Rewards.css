@@ -1,8 +1,8 @@
-/* Colours and sizes from the Rewards Dashboard Wireframe. */
+/* Lo-fi pass of the Rewards Dashboard Wireframe. Greyscale throughout. */
 
 .rewards,
 .rewards > .viewport {
-    -fx-background-color: #f6f6f3;
+    -fx-background-color: #f3f4f4;
 }
 
 .rewards {
@@ -12,42 +12,42 @@
 
 .card {
     -fx-background-color: white;
-    -fx-background-radius: 16;
-    -fx-border-color: #e7e7e1;
-    -fx-border-radius: 16;
+    -fx-background-radius: 8;
+    -fx-border-color: #dfe2e1;
+    -fx-border-radius: 8;
     -fx-padding: 24;
 }
 
 .garden-placeholder {
-    -fx-background-color: #fbfbf9;
-    -fx-background-radius: 16;
-    -fx-border-color: #d6d6cf;
+    -fx-background-color: #f9fafa;
+    -fx-background-radius: 8;
+    -fx-border-color: #cfd3d2;
     -fx-border-width: 2;
     -fx-border-style: dashed;
-    -fx-border-radius: 16;
+    -fx-border-radius: 8;
 }
 
 .garden-placeholder-label {
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-text-fill: #a3a39a;
+    -fx-text-fill: #9a9f9e;
 }
 
 .title {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1a1a18;
+    -fx-text-fill: #1b1d1d;
 }
 
 .muted {
     -fx-font-size: 13px;
-    -fx-text-fill: #9a9a90;
+    -fx-text-fill: #9a9f9e;
 }
 
 .caption {
     -fx-font-size: 11px;
     -fx-font-weight: bold;
-    -fx-text-fill: #9a9a90;
+    -fx-text-fill: #9a9f9e;
 }
 
 .card-title {
@@ -57,19 +57,19 @@
 
 .body {
     -fx-font-size: 14px;
-    -fx-text-fill: #4a4a44;
+    -fx-text-fill: #474b4a;
 }
 
 .small-muted {
     -fx-font-size: 12px;
-    -fx-text-fill: #8a8a82;
+    -fx-text-fill: #858a89;
 }
 
 .divider {
     -fx-min-height: 1;
     -fx-pref-height: 1;
     -fx-max-height: 1;
-    -fx-background-color: #eeeee7;
+    -fx-background-color: #eceeed;
 }
 
 /* Selected day card */
@@ -86,28 +86,24 @@
 
 .entry-detail {
     -fx-font-size: 12px;
-    -fx-text-fill: #8a8a82;
+    -fx-text-fill: #858a89;
 }
 
+/* Just the check, no circle behind it. */
 .tick {
     -fx-min-width: 18;
-    -fx-min-height: 18;
-    -fx-max-width: 18;
-    -fx-max-height: 18;
     -fx-alignment: center;
-    -fx-background-color: #4a7c3f;
-    -fx-background-radius: 9;
-    -fx-text-fill: white;
-    -fx-font-size: 10px;
+    -fx-text-fill: #1b1d1d;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
 
 .cap-note {
-    -fx-background-color: #f7f2fb;
-    -fx-background-radius: 10;
+    -fx-background-color: #eceeed;
+    -fx-background-radius: 5;
     -fx-padding: 10 12;
     -fx-font-size: 12px;
-    -fx-text-fill: #6b5b7a;
+    -fx-text-fill: #666b6a;
 }
 
 /* Rewards summary */
@@ -118,18 +114,18 @@
 }
 
 .link-row {
-    -fx-background-color: #f6f6f3;
-    -fx-background-radius: 10;
+    -fx-background-color: #f3f4f4;
+    -fx-background-radius: 5;
     -fx-padding: 12 14;
     -fx-alignment: center-left;
     -fx-font-size: 13px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1a1a18;
+    -fx-text-fill: #1b1d1d;
     -fx-cursor: hand;
 }
 
 .link-row:hover {
-    -fx-text-fill: #3f7a34;
+    -fx-background-color: #e6e8e7;
 }
 
 /* Streak */
@@ -144,18 +140,18 @@
     -fx-min-height: 10;
     -fx-max-width: 10;
     -fx-max-height: 10;
-    -fx-background-radius: 3;
+    -fx-background-radius: 1;
 }
 
 .key-label {
     -fx-font-size: 11px;
-    -fx-text-fill: #6a6a62;
+    -fx-text-fill: #666b6a;
 }
 
 .weekday {
     -fx-font-size: 11px;
     -fx-font-weight: bold;
-    -fx-text-fill: #b5b5ac;
+    -fx-text-fill: #b5b9b8;
 }
 
 .day-cell {
@@ -163,22 +159,22 @@
     -fx-min-height: 36;
     -fx-pref-width: 36;
     -fx-pref-height: 36;
-    -fx-background-radius: 6;
+    -fx-background-radius: 3;
     -fx-cursor: hand;
 }
 
 /* The outline sits 2px outside the cell like the wireframe outline. */
 .day-cell.selected {
-    -fx-border-color: #1a1a18;
+    -fx-border-color: #1b1d1d;
     -fx-border-width: 2;
     -fx-border-insets: -4;
-    -fx-border-radius: 9;
+    -fx-border-radius: 4;
 }
 
 .today-marker {
     -fx-font-size: 12px;
     -fx-font-weight: bold;
-    -fx-text-fill: #3f7a34;
+    -fx-text-fill: #1b1d1d;
 }
 
 .error {

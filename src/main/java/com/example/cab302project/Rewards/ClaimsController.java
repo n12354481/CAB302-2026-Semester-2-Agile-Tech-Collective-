@@ -1,8 +1,6 @@
 package com.example.cab302project.Rewards;
 
 import com.example.cab302project.HelloApplication;
-import javafx.animation.FadeTransition;
-import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -17,7 +15,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -53,10 +50,6 @@ public class ClaimsController {
     @FXML private StackPane overlay;
     @FXML private Label dialogTitle;
     @FXML private Label dialogText;
-
-    @FXML private VBox toast;
-    @FXML private Label toastTitle;
-    @FXML private Label toastNote;
 
     private final List<Reward> rewards = demoRewards();
 
@@ -104,7 +97,7 @@ public class ClaimsController {
         grid.add(card, placed % columns, placed / columns);
     }
 
-    /** Gold card with a Claim button. The target is met with reward waiting. */
+    /** Grey card with a Claim button. The target is met with reward waiting. */
     private Node readyCard(Reward reward) {
         Label name = new Label(reward.name());
         name.getStyleClass().add("reward-name");
@@ -160,7 +153,7 @@ public class ClaimsController {
         tick.getStyleClass().add("claimed-tick");
         Label name = new Label(reward.name());
         name.getStyleClass().add("claimed-name");
-        Label when = new Label("· " + whenClaimed(reward));
+        Label when = new Label(whenClaimed(reward));
         when.getStyleClass().add("claimed-when");
 
         HBox pill = new HBox(8, tick, name, when);
@@ -198,12 +191,10 @@ public class ClaimsController {
             return;
         }
         pending.claim(LocalDate.now());
-        String name = pending.name();
         pending = null;
 
         show(overlay, false);
         draw();
-        showToast(name + " added", "Find it in your garden collection.");
     }
 
     @FXML
@@ -215,32 +206,14 @@ public class ClaimsController {
     private void swapPage(String page) {
         Node holder = monthLabel.getScene().lookup("#mainContent");
         if (!(holder instanceof StackPane pane)) {
-            showToast("Could not go back", "This page is not inside the nav shell.");
             return;
         }
         try {
             Node loaded = FXMLLoader.load(HelloApplication.class.getResource(page));
             pane.getChildren().setAll(loaded);
         } catch (IOException ex) {
-            showToast("Could not open " + page, ex.getMessage());
+            ex.printStackTrace();
         }
-    }
-
-    /** Bottom right notif. Fades itself out. */
-    private void showToast(String title, String note) {
-        toastTitle.setText(title);
-        toastNote.setText(note);
-        toast.setOpacity(1);
-        show(toast, true);
-
-        FadeTransition fade = new FadeTransition(Duration.millis(400), toast);
-        fade.setFromValue(1);
-        fade.setToValue(0);
-        fade.setOnFinished(event -> show(toast, false));
-
-        PauseTransition wait = new PauseTransition(Duration.seconds(3));
-        wait.setOnFinished(event -> fade.play());
-        wait.play();
     }
 
     /** "Garden gnome" reads better */

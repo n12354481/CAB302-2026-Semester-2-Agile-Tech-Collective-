@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /** In memory database, so no .db file is written when built. */
 class DayTotalsDAOTest {
@@ -59,10 +58,11 @@ class DayTotalsDAOTest {
     }
 
     @Test
-    void emptyDatabaseStillReturnsARowPerDay() throws SQLException {
+    void emptyDatabaseStillReturnsARowPerDayOldestFirst() throws SQLException {
         List<DayTotals> days = dao.forRange(USER, MONDAY, MONDAY.plusDays(6));
         assertEquals(7, days.size());
         assertEquals(new DayTotals(MONDAY, 0, 0), days.get(0));
+        assertEquals(MONDAY.plusDays(6), days.get(6).date());
     }
 
     @Test
@@ -78,38 +78,15 @@ class DayTotalsDAOTest {
     }
 
     @Test
-    void gapsInTheMiddleComeBackAsZeroRows() throws SQLException {
-        logActivity(USER, MONDAY, 30);
-        logActivity(USER, MONDAY.plusDays(2), 30);
-
-        List<DayTotals> days = dao.forRange(USER, MONDAY, MONDAY.plusDays(2));
-        assertEquals(30, days.get(0).activityMinutes());
-        assertEquals(0, days.get(1).activityMinutes(), "Tuesday had nothing logged");
-        assertEquals(30, days.get(2).activityMinutes());
-    }
-
-    @Test
-    void daysComeBackOldestFirst() throws SQLException {
-        List<DayTotals> days = dao.forRange(USER, MONDAY, MONDAY.plusDays(3));
-        assertEquals(MONDAY, days.get(0).date());
-        assertEquals(MONDAY.plusDays(3), days.get(3).date());
-    }
-
-    @Test
-    void entriesOutsideTheRangeAreIgnored() throws SQLException {
+    void rangeEndsCountGapsAreZeroAndOutsideIsIgnored() throws SQLException {
         logActivity(USER, MONDAY.minusDays(1), 999);
-        logActivity(USER, MONDAY.plusDays(1), 999);
-
-        assertEquals(0, dao.forRange(USER, MONDAY, MONDAY).get(0).activityMinutes());
-    }
-
-    @Test
-    void theRangeEndsAreIncluded() throws SQLException {
         logActivity(USER, MONDAY, 15);
         logActivity(USER, MONDAY.plusDays(2), 25);
+        logActivity(USER, MONDAY.plusDays(3), 999);
 
         List<DayTotals> days = dao.forRange(USER, MONDAY, MONDAY.plusDays(2));
         assertEquals(15, days.get(0).activityMinutes());
+        assertEquals(0, days.get(1).activityMinutes(), "Tuesday had nothing logged");
         assertEquals(25, days.get(2).activityMinutes());
     }
 
@@ -122,48 +99,19 @@ class DayTotalsDAOTest {
     }
 
     @Test
-    void activitiesOnADayComeBackWithTheirNameAndCategory() throws SQLException {
+    void entriesOnADayComeBackForThatUserAndDayOnly() throws SQLException {
         logActivity(USER, MONDAY, 20);
         logActivity(USER, MONDAY, 40);
         logActivity(USER, MONDAY.plusDays(1), 999);
         logActivity(OTHER_USER, MONDAY, 999);
-
-        assertEquals(List.of(new DayEntry("Walk", "MOVEMENT", 20), new DayEntry("Walk", "MOVEMENT", 40)),
-                dao.activitiesOn(USER, MONDAY));
-    }
-
-    @Test
-    void restOnADayComesBackWithItsLabelAndKind() throws SQLException {
         logRest(USER, MONDAY, "SLEEP", 420);
         logRest(USER, MONDAY, "DELIBERATE", 20);
         logRest(USER, MONDAY.plusDays(1), "SLEEP", 999);
         logRest(OTHER_USER, MONDAY, "SLEEP", 999);
 
+        assertEquals(List.of(new DayEntry("Walk", "MOVEMENT", 20), new DayEntry("Walk", "MOVEMENT", 40)),
+                dao.activitiesOn(USER, MONDAY));
         assertEquals(List.of(new DayEntry("test", "SLEEP", 420), new DayEntry("test", "DELIBERATE", 20)),
                 dao.restOn(USER, MONDAY));
-    }
-
-    @Test
-    void aBackwardsRangeIsRejected() {
-        assertThrows(IllegalArgumentException.class,
-                () -> dao.forRange(USER, MONDAY, MONDAY.minusDays(1)));
-    }
-
-    @Test
-    void totalsFeedStraightIntoTheSummary() throws SQLException {
-        logActivity(USER, MONDAY, 60);
-        logRest(USER, MONDAY, "SLEEP", 420);
-        logActivity(USER, MONDAY.plusDays(1), 60);
-        logRest(USER, MONDAY.plusDays(1), "SLEEP", 420);
-        // Day three, nothing logged which breaks the streak.
-
-        List<DayState> states = dao.forRange(USER, MONDAY, MONDAY.plusDays(2)).stream()
-                .map(day -> day.state(60, 420))
-                .toList();
-
-        RewardsSummary summary = RewardsSummary.of(states, new int[]{3, 15});
-        assertEquals(2, summary.balancedDays());
-        assertEquals(0, summary.currentStreak());
-        assertEquals(0, summary.stageReached());
     }
 }

@@ -173,8 +173,7 @@ public class RewardsController {
 
         activityList.getChildren().clear();
         for (DayEntry entry : activities) {
-            activityList.getChildren().add(entryRow(entry.name(),
-                    duration(entry.minutes()) + " · " + entry.kind().toLowerCase()));
+            activityList.getChildren().add(entryRow(entry.name(), duration(entry.minutes())));
         }
         if (activities.isEmpty()) {
             activityList.getChildren().add(nothingLogged());
@@ -188,15 +187,14 @@ public class RewardsController {
 
         restList.getChildren().clear();
         for (DayEntry entry : rest) {
-            String root = entry.kind().equals("SLEEP") ? "main root" : "side root";
-            restList.getChildren().add(entryRow(entry.name(), duration(entry.minutes()) + " · " + root));
+            restList.getChildren().add(entryRow(entry.name(), duration(entry.minutes())));
         }
         if (rest.isEmpty()) {
             restList.getChildren().add(nothingLogged());
         }
 
         goalLabel.setText("Goal that day: " + duration(RewardsService.DEFAULT_ACTIVITY_GOAL)
-                + " · " + duration(RewardsService.DEFAULT_REST_GOAL));
+                + " activity, " + duration(RewardsService.DEFAULT_REST_GOAL) + " rest");
     }
 
     /**
@@ -274,12 +272,13 @@ public class RewardsController {
 
     private static String colourFor(DayState state) {
         return switch (state) {
-            case NOTHING_LOGGED -> "#e0e0e0";
-            case REST_ONLY -> "#b3c6e7";
-            case UNDER_BOTH -> "#d9d2b0";
-            case FLOWERED_SHALLOW -> "#e8c07d";
-            case ROOTED_NO_FLOWER -> "#8fae7b";
-            case BALANCED, CAPPED -> "#4a7c3f";
+            // Greyscale. The better the day, the darker the grey.
+            case NOTHING_LOGGED -> "#eceeed";
+            case REST_ONLY -> "#d6d9d8";
+            case UNDER_BOTH -> "#bfc3c2";
+            case FLOWERED_SHALLOW -> "#9a9f9e";
+            case ROOTED_NO_FLOWER -> "#6f7473";
+            case BALANCED, CAPPED -> "#3a3d3c";
         };
     }
 

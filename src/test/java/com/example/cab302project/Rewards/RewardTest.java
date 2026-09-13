@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /** Which band a reward lands in comes from these, so each one is checked. */
@@ -20,34 +21,21 @@ class RewardTest {
     }
 
     @Test
-    void underTheTargetIsStillCounting() {
+    void meetingTheTargetMakesItReadyToClaim() {
         assertFalse(counting().complete());
-    }
-
-    @Test
-    void meetingTheTargetIsReadyToClaim() {
-        Reward reward = finished();
-        assertTrue(reward.complete());
-        assertFalse(reward.claimed(), "ready is not the same as claimed");
+        assertTrue(finished().complete());
+        assertFalse(finished().claimed(), "ready is not the same as claimed");
     }
 
     @Test
     void progressReadsAsDoneOfTarget() {
         assertEquals("7 of 10 sessions", counting().progress());
-    }
-
-    @Test
-    void aFinishedRewardSaysSoInItsProgress() {
         assertEquals("1 of 1 month (complete)", finished().progress());
     }
 
     @Test
-    void fractionIsHowFullTheBarShouldBe() {
+    void fractionIsHowFullTheBarShouldBeAndNeverPastFull() {
         assertEquals(0.7, counting().fraction(), 0.0001);
-    }
-
-    @Test
-    void fractionNeverGoesPastFull() {
         Reward over = new Reward("Eucalyptus", "Physical movement", 20, 15, "sessions", "why");
         assertEquals(1.0, over.fraction());
     }
@@ -55,16 +43,11 @@ class RewardTest {
     @Test
     void claimingRemembersTheDay() {
         Reward reward = finished();
+        assertNull(reward.claimedOn());
+
         LocalDate day = LocalDate.of(2026, 9, 12);
         reward.claim(day);
-
         assertTrue(reward.claimed());
         assertEquals(day, reward.claimedOn());
-    }
-
-    @Test
-    void aRewardIsNotClaimedToStartWith() {
-        assertFalse(finished().claimed());
-        assertEquals(null, finished().claimedOn());
     }
 }
