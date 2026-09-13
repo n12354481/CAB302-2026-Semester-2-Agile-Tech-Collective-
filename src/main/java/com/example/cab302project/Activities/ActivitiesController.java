@@ -1,14 +1,14 @@
 package com.example.cab302project.Activities;
 
+import com.example.cab302project.Database.DatabaseActivityDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -16,140 +16,203 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
 public class ActivitiesController implements Initializable {
-
-    List<Pane> panes = new ArrayList<>();
+    private List<Activity> activities;
+    private Activity selectedActivity;
+    private Pane mainContent;
+    private Node browsePage;
 
     @FXML
     private AnchorPane activityRoot;
 
     @FXML
-    private AnchorPane detailsRoot;
+    private ButtonBar buttonBar;
 
     @FXML
-    private AnchorPane fitness;
+    private FlowPane contentPane;
 
     @FXML
-    private AnchorPane social;
+    private Label activityName;
 
     @FXML
-    private AnchorPane others;
+    private Label categoryLabel;
+
+    @FXML
+    private Label descriptionLabel;
+
+    @FXML
+    private Label goalLabel;
+
+    @FXML
+    private ImageView activityImage;
+
+    @FXML
+    private Label imagePlaceholder;
 
     @FXML
     private ToggleGroup durationGroup;
 
+    @FXML
+    private RadioButton customDuration;
+
+    @FXML
+    private TextField customMinutes;
+
+    @FXML
+    private Label selectionMessage;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (fitness != null) {
-            panes.add(fitness);
-            panes.add(social);
-            panes.add(others);
+        if (contentPane != null) {
+
+            DatabaseActivityDAO dao = new DatabaseActivityDAO();
+
+            activities = dao.LoadActivities();
+
+            List<String> categories = new ArrayList<>();
+            for (Activity activity : activities) {
+                if (!categories.contains(activity.getCategory())) {
+                    categories.add(activity.getCategory());
+                }
+            }
+            for (String category : categories) {
+                Button button = new Button(category);
+                button.setOnAction(event -> changeCategory(category));
+                buttonBar.getButtons().add(button);
+            }
+            if (!categories.isEmpty()) {
+                changeCategory(categories.get(0));
+            }
+        }
+        if (customMinutes != null && customDuration != null) {
+            customMinutes.visibleProperty().bind(customDuration.selectedProperty());
+            customMinutes.managedProperty().bind((customDuration.selectedProperty()));
         }
     }
 
-    //category navigation
-    @FXML
-    private void onFitnessButtonClicked() { show(fitness); }
+        private void changeCategory(String category) {
+            contentPane.getChildren().clear();
 
-    @FXML
-    private void onSocialButtonClicked() { show(social); }
+            for (Node node : buttonBar.getButtons()) {
+                Button button = (Button) node;
+                button.setStyle(button.getText().equals(category) ? "-fx-background-color: #386F65; -fx-text-fill: white;" : "-fx-background-color: #E8EEEE;");
+            }
 
-    @FXML
-    private void onOthersButtonClicked() { show(others); }
+            for (Activity activity : filterByCategory(category)) {
+                Button button = new Button(activity.getName());
+                button.setPrefSize(230, 260);
+                button.setWrapText(true);
+                button.setContentDisplay(ContentDisplay.TOP);
+                button.setGraphicTextGap(10);
+                button.setTooltip(new Tooltip(activity.getDescription()));
 
-    //fitness
-    @FXML
-    private void onSwimmingClicked() {
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource(
-                            "/com/example/cab302project/ActivityDetails.fxml"
-                    )
-            );
+                button.setStyle("-fx-background-color: white; -fx-border-color: #AAAAAA;" + "-fx-border-radius:15; -fx-background-radius: 15; -fx-cursor: hand;" + "-fx-font-weight: bold;");
+                Image image = loadImage(activity);
 
-            Node detailsPage = loader.load();
-            Pane mainContent = (Pane) activityRoot.getParent();
-            mainContent.getChildren().setAll(detailsPage);
+                if (image != null) {
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(185);
+                    imageView.setFitWidth(205);
+                    imageView.setPreserveRatio(true);
+                    button.setGraphic(imageView);
+                } else {
+                    StackPane placeholder = new StackPane(new Label(activity.getCategory()));
+                    placeholder.setPrefSize(205, 185);
+                    placeholder.setStyle("-fx-background-color: #E8EEEE; -fx-background-radius: 10;");
+                    button.setGraphic(placeholder);
+                }
 
-        }catch (IOException e) {
-            e.printStackTrace();
+                button.setOnAction(event -> openActivity(activity));
+                contentPane.getChildren().add(button);
+            }
+        }
+
+        private List<Activity> filterByCategory(String category) {
+            List<Activity> filteredActivities = new ArrayList<>();
+
+            for (Activity activity : activities) {
+                if (activity.getCategory().equalsIgnoreCase(category)) {
+                    filteredActivities.add(activity);
+                }
+            }
+            return filteredActivities;
+        }
+
+        private Image loadImage(Activity activity) {
+            if (activity.getImageFile() == null) return null;
+
+            URL imageUrl = getClass().getResource("/com/example/cab302project/Activities/" + activity.getImageFile());
+
+            if (imageUrl == null) return null;
+            return new Image(imageUrl.toExternalForm(), 480, 220, true,true);
+        }
+        private void openActivity(Activity activity) {
+            try{
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/example/cab302project/ActivityDetails.fxml"));
+
+                Node detailspage = loader.load();
+
+                Pane parent = (Pane) activityRoot.getParent();
+
+                ActivitiesController controller = loader.getController();
+
+                controller.setActivity(activity, parent, activityRoot);
+
+                parent.getChildren().setAll(detailspage);
+            }catch (IOException e ) {
+                e.printStackTrace();
+                new Alert(Alert.AlertType.ERROR, "Unable to open activity details.").showAndWait();
+            }
+        }
+
+        private void setActivity(Activity activity, Pane parent, Node previousPage) {
+            selectedActivity = activity;
+            mainContent = parent;
+            browsePage = previousPage;
+
+            activityName.setText(activity.getName());
+            categoryLabel.setText(activity.getCategory());
+            descriptionLabel.setText(activity.getDescription());
+            goalLabel.setText("Suggested goal: " + activity.getGoal() + " mins");
+
+            activityImage.setImage(loadImage(activity));
+            imagePlaceholder.setText(activity.getCategory());
+            imagePlaceholder.setVisible(activityImage.getImage() == null);
+        }
+
+        @FXML
+        private void onBackClicked() {
+            mainContent.getChildren().setAll(browsePage);
+        }
+
+        @FXML
+        private void onSelectActivityClicked() {
+            Toggle selected = durationGroup.getSelectedToggle();
+            if (selected == null) {
+                selectionMessage.setText("Please select a duration.");
+                return;
+            }
+
+            String duration = ((RadioButton) selected).getText();
+
+            if (selected == customDuration) {
+                try {
+                    int minutes = Integer.parseInt(customMinutes.getText().trim());
+                    if (minutes <= 0) {
+                        selectionMessage.setText("Enter a positive whole number of minutes.");
+                        return;
+                    }
+                    duration = minutes + " mins";
+                } catch (NumberFormatException e) {
+                    selectionMessage.setText("Please enter a number.");
+                    return;
+                }
+            }
+            selectionMessage.setText(selectedActivity.getName()
+                    + " selected for " + duration + ". Not saved yet.");
         }
     }
 
-    @FXML
-    private void onTennisClicked() { System.out.println("Tennis selected"); }
 
-    @FXML
-    private void onGymnasticsClicked() { System.out.println("Gymnastics selected"); }
-
-    //social
-    @FXML
-    private void onEventClicked() { System.out.println("Attend an Event selected"); }
-
-    @FXML
-    private void onFriendClicked() { System.out.println("Meet a Friend selected"); }
-
-    @FXML
-    private void onClubClicked() { System.out.println("Join a Club selected"); }
-
-    //others
-    @FXML
-    private void onStudyClicked() { System.out.println("Study Session selected"); }
-
-    @FXML
-    private void onChoresClicked() { System.out.println("Complete Chores selected"); }
-
-    @FXML
-    private void onMeditationClicked() { System.out.println("Meditation selected"); }
-
-    @FXML
-    private void onSelectActivityClicked() {
-        Toggle selectedToggle = durationGroup.getSelectedToggle();
-
-        if (selectedToggle == null) {
-            System.out.println("Please select a duration");
-            return;
-        }
-
-        RadioButton selectedButton = (RadioButton) selectedToggle;
-        String selectedDuration = selectedButton.getText();
-
-        System.out.println("Swimming selected");
-        System.out.println("Duration: " + selectedDuration);
-    }
-
-    //back button from activity details
-    @FXML
-    private void onBackClicked() {
-        try {
-
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource(
-                            "/com/example/cab302project/ActivityMain.fxml"
-                    )
-            );
-
-            Node activityPage = loader.load();
-            Pane mainContent = (Pane) detailsRoot.getParent();
-            mainContent.getChildren().setAll(activityPage);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private void show(AnchorPane pane) {
-
-        for (Pane p : panes) {
-            p.setManaged(false);
-            p.setVisible(false);
-        }
-
-        pane.setVisible(true);
-        pane.setManaged(true);
-    }
-
-}
 
