@@ -11,6 +11,8 @@ module com.example.cab302project {
     opens com.example.cab302project.Dashboard to javafx.fxml;
     opens com.example.cab302project.Settings to javafx.fxml;
     opens com.example.cab302project.Authentication to javafx.fxml;
+    opens com.example.cab302project.Rewards to javafx.fxml;
+    exports com.example.cab302project.Rewards;
     exports com.example.cab302project;
     exports com.example.cab302project.Settings;
     exports com.example.cab302project.Authentication;
