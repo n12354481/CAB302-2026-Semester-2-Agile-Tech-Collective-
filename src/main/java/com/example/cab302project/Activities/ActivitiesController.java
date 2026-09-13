@@ -1,7 +1,6 @@
 package com.example.cab302project.Activities;
 
 import com.example.cab302project.Database.DatabaseActivityDAO;
-import com.example.cab302project.Database.DatabaseConnection;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,7 +12,6 @@ import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
