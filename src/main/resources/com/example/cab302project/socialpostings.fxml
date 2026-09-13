@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cab302project.SocialPostingsController" stylesheets="@socialstyle.css" styleClass="social-root">
+
+    <top>
+        <VBox styleClass="header-card">
+            <padding>
+                <Insets top="16" right="20" bottom="16" left="20"/>
+            </padding>
+            <BorderPane.margin>
+                <Insets bottom="16"/>
+            </BorderPane.margin>
+
+            <Label text="STEM Social Community" styleClass="header-title"/>
+            <Label text="Connect and discover like-minded students in your city!" styleClass="header-subtitle"/>
+        </VBox>
+    </top>
+
+    <center>
+        <HBox spacing="16">
+
+        <VBox styleClass="feed-card" HBox.hgrow="ALWAYS">
+
+            <!-- filter bar for users -->
+            <HBox styleClass="filter-bar" spacing="8" alignment="CENTER_LEFT">
+                <padding><Insets top="12" right="16" bottom="12" left="16"/></padding>
+                <Label text="Filter posts by:" styleClass="filter-label"/>
+                <Button text="CLEAR FILTERS" styleClass="clear-filters-btn" onAction="#onClearFiltersClicked"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Hyperlink text="FILTERS" styleClass="filters-link" onAction="#onFiltersClicked"/>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" styleClass="feed-scroll" VBox.vgrow="ALWAYS">
+                <VBox fx:id="postsContainer" spacing="16">
+                    <padding><Insets top="12" right="16" bottom="16" left="16"/></padding>
+                </VBox>
+            </ScrollPane>
+        </VBox>
+
+            <VBox spacing="16" prefWidth="220" minWidth="220">
+                <Button text="+ Create a Post" styleClass="create-post-btn" onAction="#onCreatePostClicked" maxWidth="Infinity"/>
+
+                <VBox styleClass="panel-card">
+                    <Label text="Past Events" styleClass="panel-title"/>
+                    <Region styleClass="placeholder-bar"/>
+                    <Region styleClass="placeholder-bar"/>
+                    <Region styleClass="placeholder-bar"/>
+                </VBox>
+
+                <VBox styleClass="panel-card">
+                    <Label text="Reommendations" styleClass="panel-title"/>
+                    <Region styleClass="placeholder-bar"/>
+                    <Region styleClass="placeholder-bar"/>
+                    <Region styleClass="placeholder-bar"/>
+                </VBox>
+            </VBox>
+
+        </HBox>
+    </center>
+
+</BorderPane>

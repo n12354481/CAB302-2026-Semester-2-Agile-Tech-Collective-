@@ -1,17 +1,31 @@
-import com.example.cab302project.Settings.ISettingsDAO;
-import com.example.cab302project.Settings.SettingsModel;
+package com.example.cab302project.Settings;
+
+import com.example.cab302project.Authentication.IUserDAO;
+import com.example.cab302project.Authentication.User;
+import com.example.cab302project.Database.DatabaseSettingsDAO;
+import com.example.cab302project.Database.DatabaseUserDAO;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
+/**
+ * This class is the test class for the Settings feature.
+ */
 public class SettingsTestClass {
     private SettingsModel settings;
+    private ISettingsDAO settingsDAO;
+    private IUserDAO userDAO;
+    private User user;
+
     @BeforeEach
     public void setUp() {
-        settings = new SettingsModel(new MockContactDAO());
 
+        settings = new SettingsModel(false, false, false, false, false, false);
+        user = new User(4, "test2@example.com", "testUser", "password123");
+        userDAO = new DatabaseUserDAO();
+        settingsDAO = new DatabaseSettingsDAO();
     }
 
     //Privacy
@@ -78,11 +92,31 @@ public class SettingsTestClass {
         assertEquals(false, result.isCommunityCheckinParticipation());
         assertEquals(true, result.isCommunityActivityParticipation());
     }
-    //Data
-
 
     //Profile
+    @Test
+    public void testUsernameUpdate()
+    {
+        userDAO.updateUsername(4, "testingUpdated4");
+        User result = userDAO.getUserId(4);
+        assertEquals("testingUpdated4", result.getUsername());
+    }
 
-    //Common
-    //        5) Preferences are saved - Settings remain after being saved
+    @Test
+    public void testEmailUpdate()
+    {
+        userDAO.updateEmail(4, "testingUpdated4@gmail.com");
+        User result = userDAO.getUserId(4);
+        assertEquals("testingUpdated4@gmail.com", result.getEmail());
+    }
+
+    @Test
+    public void testPasswordUpdate()
+    {
+        userDAO.updatePassword(4, "passwordUpdated1");
+        User result = userDAO.getUserId(4);
+        assertEquals("passwordUpdated1", result.getPassword());
+    }
+
+    //Data
 }

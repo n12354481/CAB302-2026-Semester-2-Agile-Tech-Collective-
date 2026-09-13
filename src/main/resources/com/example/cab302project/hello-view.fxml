@@ -118,7 +118,8 @@
               fx:id="userProfileButton"
               spacing="5"
               alignment="CENTER">
-            <Button text="AnonymousRhino"
+            <Button fx:id="usernameDisplay"
+                    text=""
                     onAction="#onUserProfileButtonClicked"
                     prefWidth="170"
                     prefHeight="45"

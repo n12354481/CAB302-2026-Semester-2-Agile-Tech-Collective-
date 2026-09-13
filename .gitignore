@@ -37,11 +37,3 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-### SQLite ###
-# The database is written every time the app runs and binary files cannot be
-# merged. Everyone keeps their own local copy (avoids us overriding one another's data).
-*.db
-*.db-journal
-*.db-wal
-*.db-shm
