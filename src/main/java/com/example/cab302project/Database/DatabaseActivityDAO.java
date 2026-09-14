@@ -58,14 +58,13 @@ public class DatabaseActivityDAO {
     public int insert(Activity activity) {
         int insertId = -1;
 
-        String sql = "INSERT INTO activity" + "(activity_name, category, activity_description, goal) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO activity" + "(activity_name, category, activity_description, goal) " + "VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, activity.getName());
             stmt.setString(2, activity.getCategory());
             stmt.setString(3, activity.getDescription());
             stmt.setInt(4, activity.getGoal());
-            stmt.setString(5, activity.getImageFile());
 
             int affectedRows = stmt.executeUpdate();
 
@@ -81,32 +80,34 @@ public class DatabaseActivityDAO {
         }
         return insertId;
     }
+
     public Activity findByName(String name) {
         String query = "SELECT * FROM activity WHERE activity_name = ?";
+
         try {
             PreparedStatement statement = connection.prepareStatement(query);
+
             statement.setString(1, name);
+
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
                 return marshallActivity(rs);
-            } else {
+            }else  {
                 return null;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public  int delete(int id) {
-        String query = "DELETE FROM activity WHERE activityID = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, id);
-
-            return  statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    public Activity getOrCreateActivity(Activity activity) {
+        Activity existing = findByName(activity.getName());
+        if (existing != null) {
+            return existing;
         }
+        int id = insert(activity);
+
+        return new Activity(id, activity.getName(), activity.getCategory(), activity.getDescription(), activity.getGoal(), activity.getImageFile());
     }
 }
 

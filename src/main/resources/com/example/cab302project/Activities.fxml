@@ -63,8 +63,8 @@
                 <Label text="Choose duration" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
 
                 <FlowPane hgap="20" vgap="10">
-                    <RadioButton text="15 mins" toggleGroup="$durationGroup"/>
-                    <RadioButton text="30 mins" toggleGroup="$durationGroup"/>
+                    <RadioButton fx:id="duration15" text="15 mins" toggleGroup="$durationGroup"/>
+                    <RadioButton fx:id="duration30" text="30 mins" toggleGroup="$durationGroup"/>
                     <RadioButton fx:id="customDuration" text="custom" toggleGroup="$durationGroup"/>
                 </FlowPane>
                 <TextField fx:id="customMinutes" promptText="Duratin in minutes" maxWidth="220"/>

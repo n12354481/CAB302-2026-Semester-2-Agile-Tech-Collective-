@@ -1,5 +1,6 @@
 package com.example.cab302project.Activities;
 
+import com.example.cab302project.Database.DatabaseActivityDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -15,6 +16,8 @@ import java.util.ResourceBundle;
 public class ActivitiesController implements Initializable {
     private List<Activity> activities;
     private Activity selectedActivity;
+
+    private final DatabaseActivityDAO activityDAO = new DatabaseActivityDAO();
 
     @FXML
     private VBox browsePane;
@@ -48,6 +51,12 @@ public class ActivitiesController implements Initializable {
 
     @FXML
     private ToggleGroup durationGroup;
+
+    @FXML
+    private RadioButton duration15;
+
+    @FXML
+    private RadioButton duration30;
 
     @FXML
     private  RadioButton customDuration;
@@ -253,7 +262,7 @@ public class ActivitiesController implements Initializable {
                 try {
                     minutes = Integer.parseInt(customMinutes.getText().trim());
                     if (minutes <= 0) {
-                        selectionMessage.setText("Enter a number of minutes.");
+                        selectionMessage.setText("Enter number of minutes.");
                         return;
                     }
                 } catch (NumberFormatException e) {
@@ -261,13 +270,18 @@ public class ActivitiesController implements Initializable {
                     return;
                 }
             }else {
-                String durationText = ((RadioButton) selected).getText();
-                if(durationText.startsWith("15")){
+                if (selected == duration15) {
                     minutes = 15;
-                }else{
+                } else if (selected == duration30) {
                     minutes = 30;
+                } else {
+                    selectionMessage.setText("Please select a duration.");
+                    return;
                 }
             }
+
+            activityDAO.getOrCreateActivity(selectedActivity);
+
             selectionMessage.setText(selectedActivity.getName()
                     + " selected for " + minutes + "mins.");
         }
