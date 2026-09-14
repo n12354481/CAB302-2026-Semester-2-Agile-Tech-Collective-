@@ -1,4 +1,4 @@
-package com.example.cab302project.CheckIn;
+package CheckInTests;
 
 import com.example.cab302project.Database.DatabaseCheckInDAO;
 import com.example.cab302project.MoodForm.CheckIn;

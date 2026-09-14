@@ -1,5 +1,7 @@
 package com.example.cab302project.SocialPostings;
 
+import com.example.cab302project.Database.SocialPostingsDAO;
+
 import com.example.cab302project.HelloApplication;
 
 import javafx.event.ActionEvent;

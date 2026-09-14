@@ -1,4 +1,3 @@
-package com.example.cab302project;
 
 import com.example.cab302project.Activities.Activity;
 import com.example.cab302project.Database.DatabaseActivityDAO;

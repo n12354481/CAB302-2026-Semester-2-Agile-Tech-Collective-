@@ -1,5 +1,7 @@
-package com.example.cab302project.Rewards;
+package RewardsTests;
 
+import com.example.cab302project.Rewards.DayState;
+import com.example.cab302project.Rewards.RewardsSummary;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

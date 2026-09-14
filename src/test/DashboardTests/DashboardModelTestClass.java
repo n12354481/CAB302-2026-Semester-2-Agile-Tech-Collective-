@@ -1,5 +1,6 @@
-package com.example.cab302project.Dashboard;
+package DashboardTests;
 
+import com.example.cab302project.Dashboard.DashboardModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,10 +1,12 @@
-package com.example.cab302project.Settings;
+package SettingsTests;
 
 import com.example.cab302project.Authentication.IUserDAO;
 import com.example.cab302project.Authentication.User;
 import com.example.cab302project.Database.DatabaseSettingsDAO;
 import com.example.cab302project.Database.DatabaseUserDAO;
 
+import com.example.cab302project.Settings.ISettingsDAO;
+import com.example.cab302project.Settings.SettingsModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,5 +1,3 @@
-package com.example.cab302project;
-
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;

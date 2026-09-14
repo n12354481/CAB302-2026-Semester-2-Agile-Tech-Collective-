@@ -4,7 +4,7 @@ import com.example.cab302project.SocialPostings.ISocialPostingsDAO;
 import com.example.cab302project.SocialPostings.SocialPostings;
 import com.example.cab302project.SocialPostings.CreatePostController;
 
-import com.example.cab302project.SocialPostings.SocialPostingsDAO;
+import com.example.cab302project.Database.SocialPostingsDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
@@ -31,7 +31,7 @@ public class SocialPostingsController {
     @FXML
     private VBox postsContainer;
 
-    private final ISocialPostingsDAO socialPostingsDAO = new com.example.cab302project.SocialPostings.SocialPostingsDAO();
+    private final SocialPostingsDAO socialPostingsDAO = new SocialPostingsDAO();
 
     /**
      * Called automatically once the FXML file has finiished loading and this
