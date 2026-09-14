@@ -1,0 +1,182 @@
+/* Lo-fi pass of the Rewards Dashboard Wireframe. Greyscale throughout. */
+
+.rewards,
+.rewards > .viewport {
+    -fx-background-color: #f3f4f4;
+}
+
+.rewards {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #dfe2e1;
+    -fx-border-radius: 8;
+    -fx-padding: 24;
+}
+
+.garden-placeholder {
+    -fx-background-color: #f9fafa;
+    -fx-background-radius: 8;
+    -fx-border-color: #cfd3d2;
+    -fx-border-width: 2;
+    -fx-border-style: dashed;
+    -fx-border-radius: 8;
+}
+
+.garden-placeholder-label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #9a9f9e;
+}
+
+.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b1d1d;
+}
+
+.muted {
+    -fx-font-size: 13px;
+    -fx-text-fill: #9a9f9e;
+}
+
+.caption {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #9a9f9e;
+}
+
+.card-title {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+}
+
+.body {
+    -fx-font-size: 14px;
+    -fx-text-fill: #474b4a;
+}
+
+.small-muted {
+    -fx-font-size: 12px;
+    -fx-text-fill: #858a89;
+}
+
+.divider {
+    -fx-min-height: 1;
+    -fx-pref-height: 1;
+    -fx-max-height: 1;
+    -fx-background-color: #eceeed;
+}
+
+/* Selected day card */
+
+.selected-date {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.entry-name {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.entry-detail {
+    -fx-font-size: 12px;
+    -fx-text-fill: #858a89;
+}
+
+/* Just the check, no circle behind it. */
+.tick {
+    -fx-min-width: 18;
+    -fx-alignment: center;
+    -fx-text-fill: #1b1d1d;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.cap-note {
+    -fx-background-color: #eceeed;
+    -fx-background-radius: 5;
+    -fx-padding: 10 12;
+    -fx-font-size: 12px;
+    -fx-text-fill: #666b6a;
+}
+
+/* Rewards summary */
+
+.count {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.link-row {
+    -fx-background-color: #f3f4f4;
+    -fx-background-radius: 5;
+    -fx-padding: 12 14;
+    -fx-alignment: center-left;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b1d1d;
+    -fx-cursor: hand;
+}
+
+.link-row:hover {
+    -fx-background-color: #e6e8e7;
+}
+
+/* Streak */
+
+.streak-number {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+}
+
+.key-swatch {
+    -fx-min-width: 10;
+    -fx-min-height: 10;
+    -fx-max-width: 10;
+    -fx-max-height: 10;
+    -fx-background-radius: 1;
+}
+
+.key-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: #666b6a;
+}
+
+.weekday {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #b5b9b8;
+}
+
+.day-cell {
+    -fx-min-width: 36;
+    -fx-min-height: 36;
+    -fx-pref-width: 36;
+    -fx-pref-height: 36;
+    -fx-background-radius: 3;
+    -fx-cursor: hand;
+}
+
+/* The outline sits 2px outside the cell like the wireframe outline. */
+.day-cell.selected {
+    -fx-border-color: #1b1d1d;
+    -fx-border-width: 2;
+    -fx-border-insets: -4;
+    -fx-border-radius: 4;
+}
+
+.today-marker {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b1d1d;
+}
+
+.error {
+    -fx-text-fill: #b00020;
+}

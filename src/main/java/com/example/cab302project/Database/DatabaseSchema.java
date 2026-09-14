@@ -37,12 +37,13 @@ public final class DatabaseSchema {
 
             // Catalogue of activities, not of time spent (see activity_log).
             "CREATE TABLE IF NOT EXISTS activity ("
-                    + "activityID INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "activity_name TEXT NOT NULL, "
+                    + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "name TEXT NOT NULL, "
                     + "category TEXT NOT NULL, "
-                    + "activity_description TEXT, "
+                    + "description TEXT, "
                     + "goal INTEGER, "
-                    + "points INTEGER NOT NULL DEFAULT 0)",
+                    + "points INTEGER NOT NULL DEFAULT 0,"
+                    + "image_file Text)",
 
             // One row per logged instance.
             "CREATE TABLE IF NOT EXISTS activity_log ("

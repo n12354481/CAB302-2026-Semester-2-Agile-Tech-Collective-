@@ -1,6 +1,9 @@
 package com.example.cab302project;
 
+import com.example.cab302project.Authentication.IUserDAO;
+import com.example.cab302project.Authentication.User;
 import com.example.cab302project.Dashboard.DashboardController;
+import com.example.cab302project.Database.DatabaseUserDAO;
 import com.example.cab302project.Settings.SettingsController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,8 +21,15 @@ import java.util.Stack;
  */
 public class HelloController {
     private int userID;
+    private User user;
+    private IUserDAO userDAO = new DatabaseUserDAO();
+
     @FXML
     private StackPane mainContent;
+
+    @FXML
+    private Button usernameDisplay;
+
     @FXML
     private Button homeButton;
     @FXML
@@ -42,6 +52,7 @@ public class HelloController {
     public void setUserID(int userID)
     {
         this.userID = userID;
+        user = userDAO.getUserId(userID);
         loadPage("Dashboard.fxml");
     }
 
@@ -57,7 +68,7 @@ public class HelloController {
 
     @FXML
     private void onActivitiesButtonClicked() {
-        loadPage("Activities.fxml");
+        loadPage("ActivityMain.fxml");
     }
 
 
@@ -105,6 +116,9 @@ public class HelloController {
 
     private void loadPage(String page) {
         try {
+
+            usernameDisplay.setText(user.getUsername());
+
             FXMLLoader loader = new FXMLLoader(
                     HelloApplication.class.getResource(page)
             );
