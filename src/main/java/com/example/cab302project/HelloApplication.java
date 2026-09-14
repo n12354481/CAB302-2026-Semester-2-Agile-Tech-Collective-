@@ -3,6 +3,7 @@ package com.example.cab302project;
 
 import com.example.cab302project.Database.DatabaseConnection;
 import com.example.cab302project.Database.DatabaseSchema;
+import com.example.cab302project.Rewards.GardenSchema;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,6 +22,11 @@ public class HelloApplication extends Application {
 //        //} catch (SQLException sqlEx) {
 //            throw new RuntimeException("Could not create the database tables", sqlEx);
 //       // }
+        try {
+            GardenSchema.create(connection);
+        } catch (SQLException sqlEx) {
+            throw new RuntimeException("Could not create the rewards tables", sqlEx);
+        }
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 1000);
         stage.setTitle("STEM App");

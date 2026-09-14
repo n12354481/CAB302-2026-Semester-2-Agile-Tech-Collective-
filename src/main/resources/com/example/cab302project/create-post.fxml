@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.cab302project.SocialPostings.CreatePostController" spacing="14" style="-fx-background-color: #f2f2f2;">
+
+        <padding><Insets top="24" bottom="24" left="28" right="28" /></padding>
+        <VBox style="-fx-background-color: white; -fx-border-color: #2b8570; -fx-border-width: 1.5; -fx-border-radius: 4; -fx-background-radius: 4; -fx-padding: 14;">
+            <Label text="STEM Social Community" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+            <Label text="Connect and discover with like-minded students in your city!" style="-fx-font-style: italic; -fx-text-fill: #6b6b6b;" />
+        </VBox>
+
+    <Button text="← Back to Community Feed" onAction="#onBackClicked" style="-fx-background-color: transparent; -fx-text-fill: #2B8570; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" />
+
+        <Label text="Create a Post for Your Event" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-underline: true;" />
+
+        <HBox spacing="20">
+
+            <!-- Form column -->
+            <VBox spacing="12" style="-fx-background-color: white; -fx-border-color: #2b8570; -fx-border-width: 1.5; -fx-border-radius: 4; -fx-background-radius: 4; -fx-padding: 16;" HBox.hgrow="ALWAYS">
+
+                <!-- Image upload placeholder -->
+                <VBox alignment="CENTER" prefHeight="180" style="-fx-background-color: #e0e0e0; -fx-border-color: #999999; -fx-border-style: dashed;">
+                    <Label text="Drag or upload images here" style="-fx-text-fill: #6b6b6b;" />
+                </VBox>
+
+                <HBox spacing="16">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Event Name" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                        <TextField fx:id="eventNameField" promptText="e.g. Brisbane Hackathon, Animal Studies Trivia"
+                                   style="-fx-border-color: #2b8570;" />
+                    </VBox>
+                    <VBox spacing="4" prefWidth="230">
+                        <Label text="Map Location" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                        <Region prefHeight="70" style="-fx-background-color: white; -fx-border-color: #2b8570;" />
+                    </VBox>
+                </HBox>
+
+                <VBox spacing="4">
+                    <Label text="Event Description" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                    <TextArea fx:id="eventDescriptionField" prefHeight="70" wrapText="true"
+                              promptText="e.g. Join us for our monthly Hackathon at the University of Queensland. Every first saturday of every month, we host a hackathon to all university students. Register alone and meet new people or register up a team!"
+                              style="-fx-border-color: #2b8570;" />
+                </VBox>
+
+                <HBox spacing="16">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Event Date" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                        <TextField fx:id="eventDateField" promptText="DD/MM/YYYY" style="-fx-border-color: #2b8570;" />
+                    </VBox>
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Event Time" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                        <HBox spacing="6" alignment="CENTER_LEFT">
+                            <TextField fx:id="startTimeField" promptText="Start" style="-fx-border-color: #2b8570;" HBox.hgrow="ALWAYS" />
+                            <Label text="to" />
+                            <TextField fx:id="endTimeField" promptText="End" style="-fx-border-color: #2b8570;" HBox.hgrow="ALWAYS" />
+                        </HBox>
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="16">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Event Location" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                        <TextField fx:id="eventLocationField" promptText="Block C, Level 8, Lecture Room C01, University of Queensland, St Lucia"
+                                   style="-fx-border-color: #2b8570;" />
+                    </VBox>
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Event Tags" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                        <HBox spacing="6">
+                            <Label text="X Coding" style="-fx-background-color: #e0e0e0; -fx-padding: 4 10; -fx-background-radius: 12;" />
+                            <Label text="X Hackathon" style="-fx-background-color: #e0e0e0; -fx-padding: 4 10; -fx-background-radius: 12;" />
+                        </HBox>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+
+            <!-- Action buttons column -->
+            <VBox spacing="16" prefWidth="180">
+                <Button fx:id="saveDraftButton" text="Save Post as Draft" onAction="#onSaveDraftClicked"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: white; -fx-border-color: #2b8570; -fx-border-radius: 4; -fx-padding: 10;" />
+                <Button fx:id="postEventButton" text="Post Event" onAction="#onPostEventClicked"
+                        maxWidth="Infinity"
+                        style="-fx-background-color: white; -fx-border-color: #2b8570; -fx-border-radius: 4; -fx-padding: 10;" />
+                <Label fx:id="statusLabel" style="-fx-text-fill: #c0392b; -fx-font-size: 11px;" wrapText="true" />
+            </VBox>
+        </HBox>
+    </VBox>

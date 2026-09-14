@@ -45,4 +45,36 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
         return posts;
     }
 
+    /**
+     * inserts a new post into the database
+     */
+    @Override
+    public int createPost(SocialPostings post) throws SQLException {
+        String sql = "INSERT INTO post (userId, title, description, content, image, " + "event_date, start_time, end_time, event_location) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        Connection connection = DatabaseConnection.getInstance();
+
+        try (PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            statement.setInt(1, post.userId());
+            statement.setString(2, post.title());
+            statement.setString(3, post.description());
+            statement.setString(4, post.content());
+            statement.setString(5, post.image());
+            statement.setString(6, post.eventDate());
+            statement.setString(7, post.startTime());
+            statement.setString(8, post.endTime());
+            statement.setString(9, post.eventLocation());
+
+            statement.executeUpdate();
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                }
+            }
+        }
+
+        return -1;
+    }
+
 }
