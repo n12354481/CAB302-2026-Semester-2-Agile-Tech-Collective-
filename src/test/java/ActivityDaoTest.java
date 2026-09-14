@@ -1,4 +1,3 @@
-
 import com.example.cab302project.Activities.Activity;
 import com.example.cab302project.Database.DatabaseActivityDAO;
 import com.example.cab302project.Database.DatabaseConnection;
