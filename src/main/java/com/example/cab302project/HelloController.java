@@ -82,6 +82,10 @@ public class HelloController {
         loadPage("socialpostings.fxml");
     }
 
+    public void loadSocialPage() {
+        loadPage("socialpostings.fxml");
+    }
+
     @FXML
     private void onUserProfileButtonClicked() {
 
