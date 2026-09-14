@@ -31,7 +31,7 @@ public class SocialPostingsController {
     @FXML
     private VBox postsContainer;
 
-    private final ISocialPostingsDAO socialPostingsDAO = new com.example.cab302project.SocialPostings.SocialPostingsDAO();
+    private final SocialPostingsDAO socialPostingsDAO = new SocialPostingsDAO();
 
     /**
      * Called automatically once the FXML file has finiished loading and this
