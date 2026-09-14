@@ -18,6 +18,8 @@ module com.example.cab302project {
     exports com.example.cab302project.Authentication;
     exports com.example.cab302project.Database;
     exports com.example.cab302project.Dashboard;
+    exports com.example.cab302project.SocialPostings;
+    exports com.example.cab302project.Activities;
     opens com.example.cab302project.Database to javafx.fxml;
     opens com.example.cab302project.Activities to javafx.fxml;
     opens com.example.cab302project.MoodForm to javafx.fxml;

@@ -1,5 +1,6 @@
-package com.example.cab302project.Authentication;
+package AuthenticationTests;
 
+import com.example.cab302project.Authentication.User;
 import com.example.cab302project.Database.DatabaseConnection;
 import com.example.cab302project.Database.DatabaseSchema;
 import com.example.cab302project.Database.DatabaseUserDAO;

@@ -1,6 +1,10 @@
-package com.example.cab302project.Rewards;
+package RewardsTests;
 
 import com.example.cab302project.Database.DatabaseSchema;
+import com.example.cab302project.Rewards.DayEntry;
+import com.example.cab302project.Rewards.DayTotals;
+import com.example.cab302project.Rewards.DayTotalsDAO;
+import com.example.cab302project.Rewards.GardenSchema;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

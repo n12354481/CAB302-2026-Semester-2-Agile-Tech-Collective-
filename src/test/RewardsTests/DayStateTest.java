@@ -1,5 +1,6 @@
-package com.example.cab302project.Rewards;
+package RewardsTests;
 
+import com.example.cab302project.Rewards.DayState;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

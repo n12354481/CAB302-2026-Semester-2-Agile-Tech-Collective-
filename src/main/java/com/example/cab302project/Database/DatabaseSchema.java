@@ -24,7 +24,7 @@ public final class DatabaseSchema {
                     + "username TEXT NOT NULL UNIQUE, "
                     + "password TEXT NOT NULL)",
 
-            // Column names match DatabaseSettingsDAO.
+            // One row per logged instance.
             "CREATE TABLE IF NOT EXISTS settings ("
                     + "user_id INTEGER PRIMARY KEY, "
                     + "community_participation INTEGER NOT NULL DEFAULT 0, "
@@ -35,7 +35,6 @@ public final class DatabaseSchema {
                     + "ai_checkin_personalisation INTEGER NOT NULL DEFAULT 0, "
                     + "FOREIGN KEY (user_id) REFERENCES users (userID) ON DELETE CASCADE)",
 
-            // Catalogue of activities, not of time spent (see activity_log).
             "CREATE TABLE IF NOT EXISTS activity ("
                     + "activityID INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "activity_name TEXT NOT NULL, "
@@ -89,7 +88,7 @@ public final class DatabaseSchema {
                     + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE)"
     };
 
-    /** Creates the shared tables if they are not already there. Safe to call on startup. */
+    /** Creates the shared tables if they are not already there. */
     public static void createAll(Connection connection) throws SQLException {
         try (Statement statement = connection.createStatement()) {
             statement.execute("PRAGMA foreign_keys = ON");

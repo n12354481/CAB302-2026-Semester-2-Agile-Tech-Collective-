@@ -1,6 +1,7 @@
-package com.example.cab302project.Rewards;
+package RewardsTests;
 
 import com.example.cab302project.Database.DatabaseSchema;
+import com.example.cab302project.Rewards.GardenSchema;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;

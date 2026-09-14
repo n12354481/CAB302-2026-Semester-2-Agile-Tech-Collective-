@@ -1,5 +1,3 @@
-package com.example.cab302project;
-
 // copied and pasted from 6.3 workshop
 import com.example.cab302project.SocialPostings.SocialPostings;
 import org.junit.jupiter.api.BeforeEach;
