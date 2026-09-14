@@ -6,38 +6,29 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * handles database operations related to activities
+ *
+ * used to insert activities, retrieve saved activities and check whether
+ * an activity already exists in database
+ */
+
 public class DatabaseActivityDAO {
     private final Connection connection = DatabaseConnection.getInstance();
 
-    public List<Activity> LoadActivities() {
-        String query = "SELECT activityID, activity_name, category, activity_description, goal FROM activity";
-        List<Activity> activities = new ArrayList<>();
-
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(query);
-
-            while(rs.next()) {
-                Activity activity = marshallActivity(rs);
-                activities.add(activity);
-            }
-            return  activities;
-        }catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    // converts a database result into an activity object
     private static Activity marshallActivity(ResultSet rs) throws SQLException {
         int id = rs.getInt("activityID");
         String name = rs.getString("activity_name");
         String category = rs.getString("category");
         String description = rs.getString("activity_description");
         int goal = rs.getInt("goal");
-        String imageFile = null;
+        String imageFile = null; // not stored yet
 
         return new Activity(id, name, category, description, goal, imageFile);
     }
 
+    // finds activity using database id
     public Activity getActivityById(int id) {
         String query = "SELECT * FROM activity WHERE activityID = ?";
         try {
@@ -45,30 +36,30 @@ public class DatabaseActivityDAO {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
 
-            if (rs.next()) {
-                return  marshallActivity(rs);
-            }else  {
-                return null;
-            }
+            if (rs.next()) return marshallActivity(rs);
+            return null;
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * inserts a new activity into db, returns the generated or -1 on failure
+     */
     public int insert(Activity activity) {
         int insertId = -1;
 
-        String sql = "INSERT INTO activity" + "(activity_name, category, activity_description, goal) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO activity" + "(activity_name, category, activity_description, goal) " + "VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, activity.getName());
             stmt.setString(2, activity.getCategory());
             stmt.setString(3, activity.getDescription());
             stmt.setInt(4, activity.getGoal());
-            stmt.setString(5, activity.getImageFile());
 
             int affectedRows = stmt.executeUpdate();
 
+            // retrieves id created by database
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()){
                     if (generatedKeys.next()) {
@@ -81,8 +72,17 @@ public class DatabaseActivityDAO {
         }
         return insertId;
     }
+
+    /**
+     * searches for activity using its name
+     *
+     * @param name activity name to search for
+     * @return matching activity or null if it does not exist
+     */
+
     public Activity findByName(String name) {
         String query = "SELECT * FROM activity WHERE activity_name = ?";
+
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, name);
@@ -90,23 +90,21 @@ public class DatabaseActivityDAO {
 
             if (rs.next()) {
                 return marshallActivity(rs);
-            } else {
-                return null;
             }
+                return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public  int delete(int id) {
-        String query = "DELETE FROM activity WHERE activityID = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, id);
 
-            return  statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    // returns existing activity or inserts new one if it doesn't exist yet
+    public Activity getOrCreateActivity(Activity activity) {
+        Activity existing = findByName(activity.getName());
+        if (existing != null) return existing;
+
+        int id = insert(activity);
+
+        return new Activity(id, activity.getName(), activity.getCategory(), activity.getDescription(), activity.getGoal(), activity.getImageFile());
     }
 }
 

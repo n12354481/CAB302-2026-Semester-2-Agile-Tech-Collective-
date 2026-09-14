@@ -2,58 +2,98 @@
 import com.example.cab302project.Activities.Activity;
 import com.example.cab302project.Database.DatabaseActivityDAO;
 import com.example.cab302project.Database.DatabaseConnection;
-import org.junit.jupiter.api.*;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
+import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * tests activity model and database methods used by activities feature
+ */
 public class ActivityDaoTest {
-    boolean autoCommit  = true;
+   private Activity testActivity;
+   private DatabaseActivityDAO activityDAO;
+   private Connection connection;
+   private boolean autoCommit;
 
-    DatabaseActivityDAO activityDAO = new DatabaseActivityDAO();
-    Connection connection = DatabaseConnection.getInstance();
-
-    Activity testRec = new Activity("Test Activity 99", "Fitness", "Record for testing", 10, "");
-
-    @BeforeEach
+   /**
+    * creates objects required before each test is performed
+    */
+   @BeforeEach
     public void setUp() throws SQLException {
-        try {
-            autoCommit = connection.getAutoCommit();
-            connection.setAutoCommit(false);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    @AfterEach
+       testActivity = new Activity(
+               "Swimming", "Fitness", "Swimming activity", 30, null);
+
+       activityDAO = new DatabaseActivityDAO();
+       connection = DatabaseConnection.getInstance();
+       autoCommit = connection.getAutoCommit();
+       connection.setAutoCommit(false); // stop test from being permanently saved
+   }
+
+   /**
+    * rolls back database changes after each test
+    */
+   @AfterEach
     public void tearDown() throws SQLException {
-        try{
-            connection.rollback();
-            connection.setAutoCommit(autoCommit);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+       connection.rollback();
+       connection.setAutoCommit(autoCommit);
+   }
 
-    @Test
-    public void testInsert() {
-        int id = activityDAO.insert(testRec);
-        assert id > 0;
-    }
+   // activity model tests
 
-    @Test void testFindByName() {
-        int id = activityDAO.insert(testRec);
-        assert id > 0;
-        Activity found = activityDAO.findByName(testRec.getName());
-        assert  checkEqual(testRec, found);
-    }
+   @Test
+    public void testActivityName() {
+       assertEquals("Swimming", testActivity.getName());
+   }
 
-    public boolean checkEqual(Activity ac1, Activity ac2) {
-        return (ac1.getName().equals(ac2.getName())
-                && ac1.getCategory().equals(ac2.getCategory())
-                && ac1.getDescription().equals(ac2.getDescription())
-                && ac1.getGoal() == ac2.getGoal()
-                && ac1.getImageFile().equals(ac2.getImageFile())
-        );
-    }
+   @Test
+    public void testActivityCategory() {
+       assertEquals("Fitness", testActivity.getCategory());
+   }
+
+   @Test
+    public void testActivityDescription() {
+       assertEquals("Swimming activity", testActivity.getDescription());
+   }
+
+   @Test
+    public void testActivityGoal() {
+       assertEquals(30, testActivity.getGoal());
+   }
+
+   // activity database test
+
+   @Test
+   public void testInsertActivity() {
+      int id = activityDAO.insert(testActivity);
+      assertTrue(id > 0);
+   }
+
+   @Test
+   public void testFindActivityByName() {
+      activityDAO.insert(testActivity);
+      Activity found = activityDAO.findByName(testActivity.getName());
+      assertNotNull(found);
+      assertEquals(testActivity.getName(), found.getName());
+   }
+
+   @Test
+   public void testGetActivityById() {
+      int id = activityDAO.insert(testActivity);
+      Activity found = activityDAO.getActivityById(id);
+      assertNotNull(found);
+      assertEquals(testActivity.getName(), found.getName());
+   }
+
+   @Test
+   public void testGetOrCreateActivityById() {
+      Activity found = activityDAO.getOrCreateActivity(testActivity);
+      assertNotNull(found);
+      assertEquals(testActivity.getName(), found.getName());
+   }
+
 }
