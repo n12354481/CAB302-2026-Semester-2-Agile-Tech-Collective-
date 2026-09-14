@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * controller for activities feature
+ * handles activity browsing, category filtering, and activity details
+ */
 public class ActivitiesController implements Initializable {
     private List<Activity> activities;
     private Activity selectedActivity;
@@ -67,6 +71,9 @@ public class ActivitiesController implements Initializable {
     @FXML
     private Label selectionMessage;
 
+    /**
+     * initialises the activities page when the FXML is loaded
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadDefaultActivities();
@@ -77,10 +84,8 @@ public class ActivitiesController implements Initializable {
     }
 
     /**
-     * loads the activities
-     *
+     * creates the default activities that are displayed in activities page
      */
-
     private void loadDefaultActivities() {
 
         activities = new ArrayList<>();
@@ -115,8 +120,11 @@ public class ActivitiesController implements Initializable {
 
     }
 
+    // creates category buttons based on category found in activity list
     private void createCategoryButtons() {
         List<String> categories = new ArrayList<>();
+
+        // avoids creaing duplicate category buttons
         for (Activity activity : activities) {
             if (!categories.contains(activity.getCategory())) {
                 categories.add(activity.getCategory());
@@ -127,18 +135,21 @@ public class ActivitiesController implements Initializable {
             button.setOnAction(event -> changeCategory(category));
             buttonBar.getButtons().add(button);
         }
+
+        // displays the first category when first page opens
         if (!categories.isEmpty()) {
             changeCategory(categories.get(0));
         }
     }
 
-        private void changeCategory(String category) {
+    // updates displayed activities when different category is selected
+    private void changeCategory(String category) {
             contentPane.getChildren().clear();
 
             for (javafx.scene.Node node: buttonBar.getButtons()) {
                 Button button = (Button) node;
                 if (button.getText().equals(category)) {
-                    button.setStyle("-fx-background-color: #386F65;" +
+                    button.setStyle("-fx-background-color: #1F6F64;" +
                                     "-fx-text-fill: white;" +
                                     "-fx-font-weight: bold;" +
                                     "-fx-background-radius: 10;");
@@ -149,13 +160,19 @@ public class ActivitiesController implements Initializable {
                 }
             }
 
+            // creates card for each activity in selected category
             for (Activity activity : filterByCategory(category)) {
-                Button activityButton = createActivityCard(activity);
-                contentPane.getChildren().add(activityButton);
+                contentPane.getChildren().add(createActivityCard(activity));
             }
         }
 
-        private Button createActivityCard(Activity activity) {
+    /**
+     * creates clickable card for an activity
+     *
+     * @param activity activity shown on card
+     * @return button containing the activity information
+     */
+    private Button createActivityCard(Activity activity) {
         Button button = new Button(activity.getName());
         button.setPrefSize(230, 260);
         button.setMinSize(230, 260);
@@ -173,6 +190,8 @@ public class ActivitiesController implements Initializable {
                 "-fx-font-size: 15;" +
                 "-fx-font-weight: bold;");
 
+        // shows an image if one exists
+        // otherwise displays activity category
         Image image = loadImage(activity);
         if (image != null) {
             ImageView imageView = new ImageView(image);
@@ -188,11 +207,19 @@ public class ActivitiesController implements Initializable {
             placeholder.setStyle("-fx-background-color: #E8EEEE;" + "-fx-background-radius: 10;");
             button.setGraphic(placeholder);
         }
+
+        // opens selected activity details page
         button.setOnAction(event -> openActivity(activity));
         return button;
         }
 
-        private List<Activity> filterByCategory(String category) {
+    /**
+     * returns activities that belong to selected category
+     *
+     * @param category category used for filtering
+     * @return list of activities matching category
+     */
+    private List<Activity> filterByCategory(String category) {
             List<Activity> filteredActivities = new ArrayList<>();
 
             for (Activity activity : activities) {
@@ -201,8 +228,14 @@ public class ActivitiesController implements Initializable {
                 }
             }
             return filteredActivities;
-        }
+    }
 
+    /**
+     * loads image for an activity if an image file has been provided
+     *
+     * @param activity activity containing the image file name
+     * @return loaded image or null when no image available
+     */
     private Image loadImage(Activity activity) {
         if (activity.getImageFile() == null
                 || activity.getImageFile().isBlank()) {
@@ -214,6 +247,8 @@ public class ActivitiesController implements Initializable {
         return new Image(imageUrl.toExternalForm(), 480, 220, true, true);
     }
 
+        // opens details view and displays selected activity information
+        // activity images have not been added yet. method will load them once available
         private void openActivity(Activity activity) {
             selectedActivity = activity;
             activityName.setText(activity.getName());
@@ -224,12 +259,15 @@ public class ActivitiesController implements Initializable {
             Image image = loadImage(activity);
             activityImage.setImage(image);
 
+            // uses category as placeholder when no image is available
             if(image == null) {
                 imagePlaceholder.setText(activity.getCategory());
                 imagePlaceholder.setVisible(true);
             }else{
                 imagePlaceholder.setVisible(false);
             }
+
+            // clears previous duration selections
             durationGroup.selectToggle(null);
             customMinutes.clear();
             selectionMessage.setText("");
@@ -240,15 +278,17 @@ public class ActivitiesController implements Initializable {
             detailsPane.setManaged(true);
         }
 
-        @FXML
-        private void onBackClicked() {
+    // returns user from details view to activity browsing view
+    @FXML
+    private void onBackClicked() {
             detailsPane.setVisible(false);
             detailsPane.setManaged(false);
             browsePane.setVisible(true);
             browsePane.setManaged(true);
         }
 
-        @FXML
+    // checks the chosen duration and selects current activity
+    @FXML
         private void onSelectActivityClicked() {
             Toggle selected = durationGroup.getSelectedToggle();
             if (selected == null) {
@@ -280,6 +320,7 @@ public class ActivitiesController implements Initializable {
                 }
             }
 
+            // checks whether the activity already exists before adding it to database
             activityDAO.getOrCreateActivity(selectedActivity);
 
             selectionMessage.setText(selectedActivity.getName()

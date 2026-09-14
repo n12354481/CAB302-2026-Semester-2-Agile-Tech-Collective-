@@ -11,12 +11,18 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * tests activity model and database methods used by activities feature
+ */
 public class ActivityDaoTest {
    private Activity testActivity;
    private DatabaseActivityDAO activityDAO;
    private Connection connection;
    private boolean autoCommit;
 
+   /**
+    * creates objects required before each test is performed
+    */
    @BeforeEach
     public void setUp() throws SQLException {
 
@@ -26,14 +32,19 @@ public class ActivityDaoTest {
        activityDAO = new DatabaseActivityDAO();
        connection = DatabaseConnection.getInstance();
        autoCommit = connection.getAutoCommit();
-       connection.setAutoCommit(false);
+       connection.setAutoCommit(false); // stop test from being permanently saved
    }
 
+   /**
+    * rolls back database changes after each test
+    */
    @AfterEach
     public void tearDown() throws SQLException {
        connection.rollback();
        connection.setAutoCommit(autoCommit);
    }
+
+   // activity model tests
 
    @Test
     public void testActivityName() {
@@ -54,6 +65,8 @@ public class ActivityDaoTest {
     public void testActivityGoal() {
        assertEquals(30, testActivity.getGoal());
    }
+
+   // activity database test
 
    @Test
    public void testInsertActivity() {

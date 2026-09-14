@@ -12,20 +12,26 @@
            prefWidth="900"
            prefHeight="650"
            style="-fx-background-color: white;">
+    <!-- Groups duration options together so only one can be selected -->
     <fx:define>
         <ToggleGroup fx:id="durationGroup"/>
     </fx:define>
 
+    <!-- main browsing section for viewing activities by category -->
     <VBox fx:id="browsePane" visible="true" managed="true" spacing="20">
         <padding>
             <Insets top="30" right="35" bottom="30" left="35"/>
         </padding>
 
+        <!-- activities page heading and description -->
         <Label text="Activities" style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
         <Label text="Choose an activity to support your wellbeing." wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #666666;"/>
 
-        <ButtonBar fx:id="buttonBar"/>
+        <HBox alignment="CENTER_LEFT">
+            <ButtonBar fx:id="buttonBar"/>
+        </HBox>
 
+        <!-- displays the activity cards for selected category -->
         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS" style="-fx-background: white; -fx-background-color: white;">
             <content>
                 <FlowPane fx:id="contentPane" hgap="20" vgap="20" prefWrapLength="750">
@@ -37,6 +43,7 @@
         </ScrollPane>
     </VBox>
 
+    <!-- activity details section which is shown after an activity is clicked -->
     <ScrollPane fx:id="detailsPane" visible="false" managed="false" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: white; -fx-background-color: white;">
         <content>
             <VBox spacing="18">
@@ -46,6 +53,7 @@
 
                 <Button text="← Back" onAction="#onBackClicked" prefWidth="90" style="-fx-background-color: #E8EEEE; -fx-background-radius: 8; -fx-cursor: hand;"/>
 
+                <!-- Activity image section. Images have not been added yet, category used as placeholder -->
                 <StackPane prefHeight="250" minHeight="250" maxHeight="250" style="-fx-background-color: #E8EEEE; -fx-background-radius: 15;">
                     <ImageView fx:id="activityImage" fitWidth="600" fitHeight="240" preserveRatio="true"/>
                     <Label fx:id="imagePlaceholder" style="-fx-font-size: 20px; -fx-text-fill: #666666;"/>
@@ -53,9 +61,9 @@
 
                 <Label fx:id="activityName" wrapText="true" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
 
-                <Label fx:id="categoryLabel" style="-fx-background-color: #E8EEEE; -fx-padding: 6 12; -fx-background-radius: 12; -fx-font-size: 14px;"/>
+                <Label fx:id="categoryLabel" style="-fx-background-color: #DEF3F0; -fx-padding: 6 12; -fx-background-radius: 12; -fx-font-size: 14px;"/>
 
-                <Label fx:id="descriptionLabel" wrapText="true" maxWidth="700" style="-fx-font-size: 15px; -fx-line-spacing: 3;"/>
+                <Label fx:id="descriptionLabel" wrapText="true" prefWidth="10000" maxWidth="Infinity" style="-fx-font-size: 15px; -fx-line-spacing: 3;"/>
 
                 <Label fx:id="goalLabel" style="-fx-font-size: 17px; -fx-font-weight: bold;"/>
                 <Separator/>
@@ -68,8 +76,8 @@
                     <RadioButton fx:id="customDuration" text="custom" toggleGroup="$durationGroup"/>
                 </FlowPane>
                 <TextField fx:id="customMinutes" promptText="Duratin in minutes" maxWidth="220"/>
-                <Button text="Select Activity" onAction="#onSelectActivityClicked" prefWidth="180" prefHeight="42" style="-fx-background-color: #386F65;-fx-text-fill: white;-fx-font-size: 15px;-fx-font-weight: bold;-fx-background-radius: 8; -fx-cursor: hand;"/>
-                <Label fx:id="selectionMessage" wrapText="true" style="-fx-font-size: 14px; -fx-text-fill: #386F65;"/>
+                <Button text="Select Activity" onAction="#onSelectActivityClicked" prefWidth="180" prefHeight="42" style="-fx-background-color: #1F6F64;-fx-text-fill: white;-fx-font-size: 15px;-fx-font-weight: bold;-fx-background-radius: 8; -fx-cursor: hand;"/>
+                <Label fx:id="selectionMessage" wrapText="true" style="-fx-font-size: 14px; -fx-text-fill: #1F6F64;"/>
             </VBox>
         </content>
     </ScrollPane>
