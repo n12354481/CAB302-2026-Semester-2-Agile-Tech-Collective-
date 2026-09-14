@@ -2,16 +2,21 @@ package com.example.cab302project;
 
 import com.example.cab302project.SocialPostings.ISocialPostingsDAO;
 import com.example.cab302project.SocialPostings.SocialPostings;
+import com.example.cab302project.SocialPostings.CreatePostController;
 
 import com.example.cab302project.SocialPostings.SocialPostingsDAO;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.Parent;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -99,7 +104,21 @@ public class SocialPostingsController {
 
     @FXML
     private void onCreatePostClicked() {
-        // create a post button
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/cab302project/create-post.fxml")
+            );
+            Parent createPostView = loader.load();
+
+            StackPane mainContent = (StackPane) postsContainer.getScene().lookup("#mainContent");
+
+            CreatePostController controller = loader.getController();
+            controller.setMainContent(mainContent);
+
+            mainContent.getChildren().setAll(createPostView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
