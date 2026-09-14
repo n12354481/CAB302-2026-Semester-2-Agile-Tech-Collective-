@@ -68,7 +68,7 @@ public class HelloController {
 
     @FXML
     private void onActivitiesButtonClicked() {
-        loadPage("ActivityMain.fxml");
+        loadPage("Activities.fxml");
     }
 
 
@@ -79,6 +79,10 @@ public class HelloController {
 
     @FXML
     private void onSocialButtonClicked() {
+        loadPage("socialpostings.fxml");
+    }
+
+    public void loadSocialPage() {
         loadPage("socialpostings.fxml");
     }
 

@@ -8,4 +8,9 @@ public interface ISocialPostingsDAO {
      * fetches all posts from the database
      */
     List<SocialPostings> getAllPosts () throws SQLException;
+
+    /**
+     * inserts a new post from the user into the database
+     */
+    int createPost(SocialPostings post) throws SQLException;
 }
