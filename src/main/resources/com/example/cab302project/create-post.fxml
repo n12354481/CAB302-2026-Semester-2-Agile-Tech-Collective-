@@ -74,8 +74,7 @@
                     <VBox spacing="4" HBox.hgrow="ALWAYS">
                         <Label text="Event Tags" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
                         <HBox spacing="6">
-                            <Label text="X Coding" style="-fx-background-color: #e0e0e0; -fx-padding: 4 10; -fx-background-radius: 12;" />
-                            <Label text="X Hackathon" style="-fx-background-color: #e0e0e0; -fx-padding: 4 10; -fx-background-radius: 12;" />
+                            <Label text="+ Add Tags" style="-fx-background-color: #e0e0e0; -fx-padding: 4 10; -fx-background-radius: 12;" />
                         </HBox>
                     </VBox>
                 </HBox>

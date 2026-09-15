@@ -48,14 +48,21 @@
                 <Button text="+ Create a Post" styleClass="create-post-btn" onAction="#onCreatePostClicked" maxWidth="Infinity"/>
 
                 <VBox styleClass="panel-card">
-                    <Label text="Past Events" styleClass="panel-title"/>
+                    <Label text="Upcoming Events" styleClass="panel-title"/>
                     <Region styleClass="placeholder-bar"/>
                     <Region styleClass="placeholder-bar"/>
                     <Region styleClass="placeholder-bar"/>
                 </VBox>
 
                 <VBox styleClass="panel-card">
-                    <Label text="Reommendations" styleClass="panel-title"/>
+                    <Label text="Your Posts" styleClass="panel-title"/>
+                    <Region styleClass="placeholder-bar"/>
+                    <Region styleClass="placeholder-bar"/>
+                    <Region styleClass="placeholder-bar"/>
+                </VBox>
+
+                <VBox styleClass="panel-card">
+                    <Label text="Past Events" styleClass="panel-title"/>
                     <Region styleClass="placeholder-bar"/>
                     <Region styleClass="placeholder-bar"/>
                     <Region styleClass="placeholder-bar"/>
