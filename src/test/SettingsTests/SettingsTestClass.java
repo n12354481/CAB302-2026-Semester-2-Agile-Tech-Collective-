@@ -83,6 +83,7 @@ public class SettingsTestClass {
         assertEquals(false, settings.AIActivityPersonalisationEnabled());
     }
 
+
     @Test
     public void testSettingsCanBeSavedAndRetrieved() {
         int userId = 1;
