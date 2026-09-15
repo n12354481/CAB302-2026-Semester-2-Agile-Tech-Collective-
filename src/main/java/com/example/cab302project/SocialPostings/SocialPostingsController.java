@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -46,7 +47,7 @@ public class SocialPostingsController {
      * Pulls all the posts from the database and rebuilds the feed
      * safe to call again and again to refresh what's displayed e.g applying filters
      */
-    private void loadPosts() {
+    /** private void loadPosts() {
         postsContainer.getChildren().clear();
 
         try {
@@ -68,14 +69,13 @@ public class SocialPostingsController {
             errorLabel.getStyleClass().add("post-desc");
             postsContainer.getChildren().add(errorLabel);
         }
-    }
-
+    } **/
 
     private VBox buildPostCard(SocialPostings post) {
         VBox card = new VBox();
         card.getStyleClass().add("post-card");
 
-    Region image = new Region();
+        Region image = new Region();
         image.getStyleClass().add("post-image");
         image.setPrefHeight(160);
 
@@ -100,6 +100,72 @@ public class SocialPostingsController {
         card.getChildren().addAll(image, body);
 
         return card;
+    }
+
+    private void loadPosts() {
+        postsContainer.getChildren().clear();
+
+        try {
+            List<SocialPostings> posts = socialPostingsDAO.getAllPosts();
+
+            // sample posts for the community feed
+            List<SocialPostings> mockPosts = List.of(
+                    new SocialPostings(
+                            -1, 1,
+                            "Science Trivia Night",
+                            "Come test your knowledge about everything science!",
+                            "Either come alone or with a team to challenge other science students and go head to head!",
+                            null,
+                            "20/09/2026",
+                            "16:00",
+                            "20:00",
+                            "QUT Gardens Point, V Block, Level 3"
+                    ),
+
+                    new SocialPostings(
+                            -2, 2,
+                            "Robotics Design Challenge",
+                            "Come along to build robots!",
+                            "Learn how to design, code, and build robots.",
+                            null,
+                            "25/09/2026",
+                            "12:00",
+                            "17:00",
+                            "QUT Gardens Point, P Block, Room 413A"
+                    ),
+
+                    new SocialPostings(
+                            -3, 3,
+                            "Beach Walk",
+                            "Come along for a casual and chill beach walk",
+                            "Join the Social Brisbane Club for a chill walk along the beach to take a break from university!",
+                            null,
+                            "01/10/2026",
+                            "07:00",
+                            "10:00",
+                            "Redcliffe Jetty"
+                    )
+            );
+
+            List<SocialPostings> allPosts = new ArrayList<>(mockPosts);
+            allPosts.addAll(posts);
+
+            if (allPosts.isEmpty()) {
+                Label emptyLabel = new Label("No posts on the community feed to display.");
+                emptyLabel.getStyleClass().add("post-desc");
+                postsContainer.getChildren().add(emptyLabel);
+                return;
+            }
+
+            for (SocialPostings post : allPosts) {
+                postsContainer.getChildren().add(buildPostCard(post));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Label errorLabel = new Label("Couldn't load posts right now.");
+            errorLabel.getStyleClass().add("post-desc");
+            postsContainer.getChildren().add(errorLabel);
+        }
     }
 
     @FXML
