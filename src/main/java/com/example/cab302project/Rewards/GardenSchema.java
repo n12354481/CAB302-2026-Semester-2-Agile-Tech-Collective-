@@ -47,7 +47,17 @@ public final class GardenSchema {
             "CREATE TABLE IF NOT EXISTS growth_stage ("
                     + "stage_number INTEGER PRIMARY KEY, "
                     + "stage_name TEXT NOT NULL UNIQUE, "
-                    + "balanced_days_required INTEGER NOT NULL)"
+                    + "balanced_days_required INTEGER NOT NULL)",
+
+            // One row per reward a user has claimed, so a claim survives closing the app.
+            // Keyed by the reward's name while the rewards themselves are still hardcoded.
+            "CREATE TABLE IF NOT EXISTS reward_claim ("
+                    + "claimID INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "userID INTEGER NOT NULL, "
+                    + "reward_name TEXT NOT NULL, "
+                    + "claimed_on TEXT NOT NULL, "
+                    + "UNIQUE (userID, reward_name), "
+                    + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE)"
     };
 
     /** Creates the garden tables if they are not already there. Safe to call on startup. */

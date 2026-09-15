@@ -34,8 +34,8 @@ import java.util.List;
  */
 public class RewardsController {
 
-    /** The panel always shows the same user. */
-    private static final int DEMO_USER_ID = 1;
+    /** The panel always shows the same user. The claiming page uses it too. */
+    static final int DEMO_USER_ID = 1;
 
     /** A fortnight that matches the preconfigured run */
     private static final int WINDOW_DAYS = 14;

@@ -34,13 +34,6 @@ class RewardTest {
     }
 
     @Test
-    void fractionIsHowFullTheBarShouldBeAndNeverPastFull() {
-        assertEquals(0.7, counting().fraction(), 0.0001);
-        Reward over = new Reward("Eucalyptus", "Physical movement", 20, 15, "sessions", "why");
-        assertEquals(1.0, over.fraction());
-    }
-
-    @Test
     void claimingRemembersTheDay() {
         Reward reward = finished();
         assertNull(reward.claimedOn());

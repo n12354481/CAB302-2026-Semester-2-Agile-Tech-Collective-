@@ -1,5 +1,6 @@
 package com.example.cab302project.Rewards;
 
+import com.example.cab302project.Database.DatabaseConnection;
 import com.example.cab302project.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,16 +18,18 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The claiming page
  *
- * The rewards are hardcoded for this iteration. Nothing counts real activities yet,
- * it is forgotten when the window closes.
+ * The rewards are hardcoded for this iteration and nothing counts real activities yet,
+ * but claims are saved to the database so they are still there after the app closes.
  */
 public class ClaimsController {
 
@@ -53,12 +56,25 @@ public class ClaimsController {
 
     private final List<Reward> rewards = demoRewards();
 
+    private RewardClaimDAO claims;
+
     /** The reward the confirm dialog is asking for, null when the dialog is closed. */
     private Reward pending;
 
     @FXML
     public void initialize() {
         monthLabel.setText(LocalDate.now().format(MONTH));
+        try {
+            claims = new RewardClaimDAO(DatabaseConnection.getInstance());
+            Map<String, LocalDate> saved = claims.claimsFor(RewardsController.DEMO_USER_ID);
+            for (Reward reward : rewards) {
+                if (saved.containsKey(reward.name())) {
+                    reward.claim(saved.get(reward.name()));
+                }
+            }
+        } catch (SQLException | RuntimeException ex) {
+            System.err.println("Could not read saved claims: " + ex.getMessage());
+        }
         draw();
     }
 
@@ -190,7 +206,19 @@ public class ClaimsController {
         if (pending == null) {
             return;
         }
-        pending.claim(LocalDate.now());
+        LocalDate today = LocalDate.now();
+        try {
+            if (claims == null) {
+                throw new SQLException("no database connection");
+            }
+            GardenDemoData.ensureUser(DatabaseConnection.getInstance(), RewardsController.DEMO_USER_ID);
+            claims.claim(RewardsController.DEMO_USER_ID, pending.name(), today);
+        } catch (SQLException ex) {
+            // Only show it as claimed once it is saved.
+            dialogText.setText("Could not save the claim: " + ex.getMessage());
+            return;
+        }
+        pending.claim(today);
         pending = null;
 
         show(overlay, false);
