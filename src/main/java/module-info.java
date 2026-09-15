@@ -1,4 +1,4 @@
-module com.example.cab302project {
+module cab302project {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -7,18 +7,24 @@ module com.example.cab302project {
     requires org.xerial.sqlitejdbc;
     requires java.compiler;
 
-    opens com.example.cab302project to javafx.fxml;
-    opens com.example.cab302project.Dashboard to javafx.fxml;
-    opens com.example.cab302project.Settings to javafx.fxml;
-    opens com.example.cab302project.Authentication to javafx.fxml;
-    opens com.example.cab302project.Rewards to javafx.fxml;
-    exports com.example.cab302project.Rewards;
-    exports com.example.cab302project;
-    exports com.example.cab302project.Settings;
-    exports com.example.cab302project.Authentication;
-    exports com.example.cab302project.Database;
-    exports com.example.cab302project.Dashboard;
-    opens com.example.cab302project.Database to javafx.fxml;
-    opens com.example.cab302project.Activities to javafx.fxml;
-    opens com.example.cab302project.MoodForm to javafx.fxml;
+    // FXML needs every package with a controller opened to it.
+    opens App to javafx.fxml;
+    opens Activities to javafx.fxml;
+    opens Authentication to javafx.fxml;
+    opens Dashboard to javafx.fxml;
+    opens Database to javafx.fxml;
+    opens MoodForm to javafx.fxml;
+    opens Rewards to javafx.fxml;
+    opens Settings to javafx.fxml;
+    opens SocialPostings to javafx.fxml;
+
+    exports App;
+    exports Activities;
+    exports Authentication;
+    exports Dashboard;
+    exports Database;
+    exports MoodForm;
+    exports Rewards;
+    exports Settings;
+    exports SocialPostings;
 }

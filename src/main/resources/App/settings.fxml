@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Settings.SettingsController"
+            prefHeight="650.0" prefWidth="1100.0"
+            style="-fx-background-color: #fff;">
+    <children>
+        <!-- Sidebar for the settings page which handles the relevant sub-settings pages. -->
+        <VBox prefWidth="205.0"
+              AnchorPane.topAnchor="0.0"
+              AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0"
+              style="-fx-background-color: #F7F8F7">
+
+            <children>
+                <!--Navigation bar which shows the four buttons for switching between pages.-->
+                <VBox VBox.vgrow="ALWAYS"
+                      style="-fx-padding: 45 0 0 0"
+                      alignment="TOP_CENTER"
+                      spacing="12"
+                      fillWidth="true"
+                      prefWidth="205">
+
+                    <children>
+                        <!--Button for the setting's account page.-->
+                        <Button text="Account"
+                                fx:id="accountButton"
+                                onAction="#onAccountButtonClicked"
+                                prefWidth="170"
+                                prefHeight="45"
+                                style="-fx-background-color: #F7F8F7;
+                                       -fx-text-fill: black;
+                                       -fx-font-size: 20px;
+                                       -fx-font-family: 'Arial';
+                                       -fx-font-weight: bold;
+                                       -fx-background-insets: 0;
+                                       -fx-background-radius: 8px;
+                                       -fx-border-color: transparent;
+                                       -fx-effect: none;
+                                       -fx-cursor: hand;"/>
+
+                        <!--Button for the setting's data page.-->
+                        <Button text="Data"
+                                fx:id="dataButton"
+                                onAction="#onDataButtonClicked"
+                                prefWidth="170"
+                                prefHeight="45"
+                                style="-fx-background-color: #F7F8F7;
+                                       -fx-text-fill: black;
+                                       -fx-font-size: 20px;
+                                       -fx-font-family: 'Arial';
+                                       -fx-font-weight: bold;
+                                       -fx-background-insets: 0;
+                                       -fx-background-radius: 8px;
+                                       -fx-border-color: transparent;
+                                       -fx-effect: none;
+                                       -fx-cursor: hand;"/>
+
+                        <!--Button for the setting's privacy page.-->
+                        <Button text="Privacy"
+                                fx:id="privacyButton"
+                                onAction="#onPrivacyButtonClicked"
+                                prefWidth="170"
+                                prefHeight="45"
+                                style="-fx-background-color: #F7F8F7;
+                                       -fx-text-fill: black;
+                                       -fx-font-size: 20px;
+                                       -fx-font-family: 'Arial';
+                                       -fx-font-weight: bold;
+                                       -fx-background-insets: 0;
+                                       -fx-background-radius: 8px;
+                                       -fx-border-color: transparent;
+                                       -fx-effect: none;
+                                       -fx-cursor: hand;"/>
+
+                        <!--Button for the setting's AI page.-->
+                        <Button text="AI"
+                                fx:id="aiButton"
+                                onAction="#onAIButtonClicked"
+                                prefWidth="170"
+                                prefHeight="45"
+                                style="-fx-background-color: #F7F8F7;
+                                       -fx-text-fill: black;
+                                       -fx-font-size: 20px;
+                                       -fx-font-family: 'Arial';
+                                       -fx-font-weight: bold;
+                                       -fx-background-insets: 0;
+                                       -fx-background-radius: 8px;
+                                       -fx-border-color: transparent;
+                                       -fx-effect: none;"/>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+
+        <!--Setting's main content section's fxml is shown below.-->
+        <StackPane AnchorPane.leftAnchor="205.0"
+                   AnchorPane.topAnchor="0.0"
+                   AnchorPane.rightAnchor="0.0"
+                   AnchorPane.bottomAnchor="0.0">
+            <children>
+                <!--Account section FXML.-->
+                <AnchorPane fx:id="account"
+                            visible="true"
+                            managed="true">
+
+                    <!--Splits the account section into top, center, and bottom, where top is used for the headers, center for the content, and bottom for saving the details.-->
+                    <BorderPane AnchorPane.leftAnchor="0"
+                                AnchorPane.topAnchor="0"
+                                AnchorPane.bottomAnchor="0"
+                                AnchorPane.rightAnchor="0">
+                        <top>
+                            <VBox>
+                                <Label text="PROFILE"
+                                       style="-fx-font-size: 25">
+                                    <padding>
+                                        <Insets top="40" right="36" bottom="12" left="36"/>
+                                    </padding>
+                                </Label>
+                            </VBox>
+                        </top>
+
+                        <center>
+                            <!--Section for updating username or email..-->
+                            <VBox>
+                                <VBox spacing="25">
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="20" left="36"/>
+                                    </padding>
+
+                                    <VBox>
+                                        <Label text="Email"
+                                               style="-fx-font-weight: bold; -fx-font-size: 20;"/>
+                                        <HBox spacing="10">
+                                            <TextField fx:id="emailTextField"
+                                                       editable="false"
+                                                       prefHeight="40"
+                                                       HBox.hgrow="ALWAYS"
+                                                       style="-fx-background-color: #F7F5F5;
+                                                               -fx-font-size: 16;"/>
+                                            <Button fx:id="emailUpdateButton"
+                                                    text="Update"
+                                                    onAction="#onEmailUpdateClicked"
+                                                    prefHeight="40"
+                                                    prefWidth="90"
+                                                    style="-fx-background-color: #C8EEE9"/>
+                                        </HBox>
+                                    </VBox>
+
+                                    <VBox spacing="8">
+                                        <Label text="Username"
+                                               style="-fx-font-weight: bold; -fx-font-size: 20;"/>
+                                        <HBox spacing="10">
+                                            <TextField fx:id="usernameTextField"
+                                                       editable="false"
+                                                       prefHeight="40"
+                                                       HBox.hgrow="ALWAYS"
+                                                       style="-fx-background-color: #F7F5F5;
+                                                              -fx-font-size: 16"/>
+                                            <Button fx:id="usernameUpdateButton"
+                                                    text="Update"
+                                                    onAction="#onUsernameUpdateClicked"
+                                                    prefWidth="90"
+                                                    prefHeight="40"
+                                                    style="-fx-background-color: #C8EEE9"/>
+                                        </HBox>
+
+                                    <!--Section for updating the user's password.-->
+                                    </VBox>
+                                    <VBox spacing="8">
+                                        <Label text="UPDATE PASSWORD"
+                                               style="-fx-font-size: 25;">
+                                            <padding>
+                                                <Insets top="15" right="0" bottom="5" left="0"/>
+                                            </padding>
+                                        </Label>
+
+                                        <Button text="Change Password"
+
+                                                prefHeight="40"
+                                                prefWidth="250"
+                                                onAction="#onChangePasswordClicked"
+                                                style="-fx-background-color: #C8EEE9;
+                                                       -fx-font-size: 20;"/>
+                                    </VBox>
+                                </VBox>
+                            </VBox>
+                        </center>
+
+                        <bottom>
+                            <HBox alignment="CENTER_LEFT">
+                                <padding>
+                                    <Insets top="20" right="36" bottom="30" left="36"/>
+                                </padding>
+                                <Button text="Save"
+                                        onAction="#onSaveSettings"
+                                        style="-fx-background-color: #77DD77"
+                                        prefWidth="150"
+                                        prefHeight="40"/>
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </AnchorPane>
+                <!--Privacy section FXML-->
+
+                <AnchorPane fx:id="privacy"
+                            visible="false"
+                            managed="false">
+                    <!--Splits the account section into top, center, and bottom, where top is used for the headers, center for the content, and bottom for saving the details.-->
+                    <BorderPane AnchorPane.leftAnchor="0"
+                                AnchorPane.topAnchor="0"
+                                AnchorPane.bottomAnchor="0"
+                                AnchorPane.rightAnchor="0">
+                        <top>
+                            <VBox>
+                                <Label text="COMMUNITY STATISTICS INFORMATION"
+                                       style="-fx-font-size: 25">
+                                    <padding>
+                                        <Insets top="40" right="22" bottom="12" left="22"/>
+                                    </padding>
+                                </Label>
+                            </VBox>
+                        </top>
+                        <center>
+                            <VBox spacing="32">
+                                <padding>
+                                    <Insets top="10" right="36" bottom="30" left="36"/>
+                                </padding>
+                                <!--Has both the main and sub-checkboxes needed for the user to tick for enabling their personalised statistics in community quotes.-->
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Contribute to Community Statistics"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="Turning this ON will allow us to use your data when generating communtiy statistics."
+                                               style="-fx-font-size: 15;
+                                                       -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="communityParticipationCheckBox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Activity Data"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="This will allow us to use your data from the activities page when generating community statistics."
+                                               style="-fx-font-size: 15
+                                                      -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="activityParticipationCheckbox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Check-in Data"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="This will allow us to use your data from the check-in page when generating community statistics."
+                                               style="-fx-font-size: 15
+                                                      -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="checkinParticipationCheckbox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <VBox>
+                                <padding>
+                                    <Insets top="30" right="36" bottom="30" left="35"/>
+                                </padding>
+                                <Button text="Save"
+                                        style="-fx-background-color: #77DD77"
+                                        prefWidth="150"
+                                        prefHeight="40"
+                                        onAction="#onSaveSettings"/>
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </AnchorPane>
+
+                <!--Data section FXMl. This section still needs to be written.-->
+                <AnchorPane fx:id="data"
+                            visible="false"
+                            managed="false">
+                    <!--Splits the account section into top, center, and bottom, where top is used for the headers, center for the content, and bottom for saving the details.-->
+                    <BorderPane AnchorPane.leftAnchor="0"
+                                AnchorPane.topAnchor="0"
+                                AnchorPane.bottomAnchor="0"
+                                AnchorPane.rightAnchor="0">
+                        <top>
+                            <VBox>
+                                <Label text="ACTIVITY"
+                                       style="-fx-font-size: 25">
+                                    <padding>
+                                        <Insets top="40" right="22" bottom="12" left="22"/>
+                                    </padding>
+                                </Label>
+                            </VBox>
+                        </top>
+                        <center>
+                            <VBox spacing="32">
+                                <padding>
+                                    <Insets top="10" right="36" bottom="30" left="36"/>
+                                </padding>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <VBox>
+                                <padding>
+                                    <Insets top="30" right="36" bottom="30" left="35"/>
+                                </padding>
+                                <Button text="Save"
+                                        style="-fx-background-color: #77DD77"
+                                        prefWidth="150"
+                                        prefHeight="40"
+                                        onAction="#onSaveSettings"/>
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </AnchorPane>
+
+                <!--AI section FXML.-->
+                <AnchorPane fx:id="ai"
+                            visible="false"
+                            managed="false">
+
+                    <!--Splits the account section into top, center, and bottom, where top is used for the headers, center for the content, and bottom for saving the details.-->
+                    <BorderPane AnchorPane.leftAnchor="0"
+                                AnchorPane.topAnchor="0"
+                                AnchorPane.bottomAnchor="0"
+                                AnchorPane.rightAnchor="0">
+                        <top>
+                            <VBox>
+                                <Label text="PERSONALISATION"
+                                       style="-fx-font-size: 25">
+                                    <padding>
+                                        <Insets top="40" right="22" bottom="12" left="22"/>
+                                    </padding>
+                                </Label>
+                            </VBox>
+                        </top>
+                        <center>
+                            <VBox spacing="32">
+                                <padding>
+                                    <Insets top="10" right="36" bottom="30" left="36"/>
+                                </padding>
+                                <!--Has both the main and sub-checkboxes needed for the user to tick for enabling their personalised statistics.-->
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="AI Personalisation"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="Turning this ON will allow our AI chatbot to access your data for recommending personal tips on improving your well-being."
+                                               style="-fx-font-size: 15;
+                                                       -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="aiCheckbox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Check-in Data"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="Turning this ON will allow our AI chatbot to access your check-in data for recommending personal tips on improving your mental well-being."
+                                               style="-fx-font-size: 15
+                                                      -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="aiCheckinCheckbox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Activity Data"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="Turning this ON will allow Maven to access your activities data for recommending personal tips on improving your physical well-being."
+                                               style="-fx-font-size: 15
+                                                      -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <CheckBox fx:id="aiActivityCheckbox"/>
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+                            </VBox>
+                        </center>
+                        <bottom>
+                            <HBox alignment="CENTER_LEFT">
+                                <padding>
+                                    <Insets top="30" right="36" bottom="30" left="35"/>
+                                </padding>
+                                <Button text="Save"
+                                        style="-fx-background-color: #77DD77"
+                                        prefWidth="150"
+                                        prefHeight="40"
+                                        onAction="#onSaveSettings"/>
+                            </HBox>
+                        </bottom>
+                    </BorderPane>
+                </AnchorPane>
+
+                <!--Password Changing overlay box's FXML is written here.-->
+                <AnchorPane fx:id="passwordOverlay"
+                            visible="false"
+                            managed="false"
+                            AnchorPane.leftAnchor="0"
+                            AnchorPane.topAnchor="0"
+                            AnchorPane.bottomAnchor="0"
+                            AnchorPane.rightAnchor="0"
+                            style="-fx-background-color: rgba(0,0,0,0.45);">
+
+                    <!--Creates the three password boxes (current, new, and confirm) for the user to change their password with validations.-->
+                    <VBox alignment="CENTER"
+                          spacing="15"
+                          prefWidth="450"
+                          prefHeight="400"
+                          AnchorPane.leftAnchor="0"
+                          AnchorPane.topAnchor="0"
+                          AnchorPane.bottomAnchor="0"
+                          AnchorPane.rightAnchor="0">
+                        <VBox maxWidth="400"
+                              spacing="12"
+                              style="-fx-background-color: white;
+                                     -fx-background-radius: 12;
+                                     -fx-padding: 30;">
+                            <Label text="Update Password"
+                                   style="-fx-font-size: 24;
+                                          -fx-font-weight: bold;"/>
+
+                            <Label text="Current Password"
+                                   style="-fx-font-size: 15;
+                                          -fx-font-weight: bold;"/>
+
+                            <PasswordField fx:id="currentPasswordField"
+                                           promptText="Current Password"
+                                           prefHeight="40"/>
+
+                            <Label text="New Password"
+                                   style="-fx-font-size: 15;
+                                          -fx-font-weight: bold;"/>
+
+                            <PasswordField fx:id="newPasswordField"
+                                           promptText="New Password"
+                                           prefHeight="40"/>
+
+                            <Label text="Confirm Password"
+                                   style="-fx-font-size: 15;
+                                          -fx-font-weight: bold;"/>
+
+                            <PasswordField fx:id="confirmPasswordField"
+                                           promptText="Confirm Password"
+                                           prefHeight="40"/>
+
+                            <Label fx:id="passwordError"
+                                   text=""
+                                   wrapText="true"
+                                   visible="false"
+                                   managed="false"
+                                   style="-fx-text-fill: red;
+                                          -fx-font-size: 13"/>
+
+                            <HBox spacing="10"
+                                  alignment="CENTER_RIGHT">
+                                <Button text="Cancel"
+                                        onAction="#onCancelPasswordClicked"
+                                        prefWidth="100"
+                                        prefHeight="40"
+                                        style="-fx-background-color: white;
+                                               -fx-border-weight: 1"/>
+
+                                <Button text="Change Password"
+                                        onAction="#onConfirmPasswordClicked"
+                                        prefWidth="100"
+                                        prefHeight="40"
+                                        style="-fx-background-color: #1F6F64;
+                                               -fx-border-weight: 1"/>
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                </AnchorPane>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>

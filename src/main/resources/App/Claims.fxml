@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- The claiming page from the Stem Wellbeing Claims wireframe. The confirm dialog sits
+     over the page, so the whole thing is a StackPane. -->
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="Rewards.ClaimsController"
+           styleClass="claims" stylesheets="@Claims.css">
+
+    <ScrollPane fitToWidth="true" styleClass="claims-scroll">
+        <VBox spacing="30.0">
+            <padding>
+                <Insets top="32.0" right="32.0" bottom="48.0" left="32.0"/>
+            </padding>
+
+            <VBox spacing="4.0">
+                <Button text="← Rewards" styleClass="back-link" onAction="#onBack"/>
+                <Label text="Rewards" styleClass="title"/>
+                <Label fx:id="monthLabel" styleClass="muted"/>
+            </VBox>
+
+            <!-- What wants action. -->
+            <VBox fx:id="readyBand" spacing="12.0">
+                <Label fx:id="readyHeading" styleClass="heading-gold"/>
+                <Region styleClass="rule"/>
+                <!-- Even columns, so a full row of cards reaches both edges. -->
+                <GridPane fx:id="readyList" hgap="20.0" vgap="20.0">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50.0"/>
+                        <ColumnConstraints percentWidth="50.0"/>
+                    </columnConstraints>
+                </GridPane>
+            </VBox>
+
+            <!-- What is still counting. -->
+            <VBox fx:id="countingBand" spacing="12.0">
+                <Label fx:id="countingHeading" styleClass="heading"/>
+                <Region styleClass="rule"/>
+                <GridPane fx:id="countingList" hgap="20.0" vgap="20.0">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="33.33"/>
+                        <ColumnConstraints percentWidth="33.33"/>
+                        <ColumnConstraints percentWidth="33.33"/>
+                    </columnConstraints>
+                </GridPane>
+            </VBox>
+
+            <!-- What is already done. -->
+            <VBox fx:id="claimedBand" spacing="12.0">
+                <Label fx:id="claimedHeading" styleClass="heading"/>
+                <Region styleClass="rule"/>
+                <FlowPane fx:id="claimedList" hgap="12.0" vgap="12.0"/>
+            </VBox>
+        </VBox>
+    </ScrollPane>
+
+    <!-- Confirm dialog. Cosmetics ask before they are added. -->
+    <StackPane fx:id="overlay" styleClass="scrim" visible="false" managed="false">
+        <VBox styleClass="dialog-card" spacing="14.0" maxWidth="460.0" maxHeight="-Infinity">
+            <Label fx:id="dialogTitle" styleClass="dialog-title" wrapText="true"/>
+            <Label fx:id="dialogText" styleClass="dialog-text" wrapText="true"/>
+
+            <VBox styleClass="cosmetic-box" spacing="6.0">
+                <Label text="COSMETIC" styleClass="cosmetic-tag"/>
+                <Label text="Doesn't affect your streak or count" styleClass="cosmetic-note"
+                       wrapText="true"/>
+            </VBox>
+
+            <HBox spacing="12.0">
+                <Button text="Cancel" styleClass="cancel-button" onAction="#onCancel"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="confirmButton" text="Confirm claim" styleClass="confirm-button" onAction="#onConfirm"/>
+            </HBox>
+        </VBox>
+    </StackPane>
+</StackPane>

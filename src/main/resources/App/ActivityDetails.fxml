@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+<AnchorPane fx:id="detailsRoot" prefHeight="400.0" prefWidth="600.0"
+    xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="Activities.ActivitiesController">
+
+    <fx:define>
+        <ToggleGroup fx:id="durationGroup"/>
+    </fx:define>
+
+    <Button layoutX="25.0" layoutY="20.0" text="← Back" onAction="#onBackClicked"/>
+
+    <AnchorPane layoutX="60.0" layoutY="60.0" prefWidth="480.0" prefHeight="140.0" style="-fx-background-color: white; -fx-border-color: #AAAAAA; -fx-border-radius:20; -fx-background-radius:20;">
+
+        <ImageView layoutX="0.0" layoutY="0.0" fitWidth="480" fitHeight="140" preserveRatio="false">
+            <image>
+                <Image url="@Activities/Swimming.jpg"/>
+            </image>
+        </ImageView>
+
+    </AnchorPane>
+
+    <Label layoutX="60.0" layoutY="215.0" text="Swimming" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+    <Label layoutX="60.0" layoutY="250.0" text="Fitness" style="-fx-font-size: 13px; -fx-background-color: #E8EEEE; -fx-padding:4 10 4 10; -fx-background-radius:12;"/>
+
+    <Label layoutX="60.0" layoutY="290.0" text="Swimming is a full-body activity that can help improve fitness and reduce stress." prefWidth="470.0" wrapText="true" style="-fx-font-size: 14px;"/>
+
+    <Label layoutX="60.0" layoutY="335.0" text="Suggested goal" style="-fx-font-size: 16px; -fx-font-weight:bold;"/>
+
+    <RadioButton layoutX="60.0" layoutY="368.0" text="15 min" toggleGroup="$durationGroup"/>
+    <RadioButton layoutX="140.0" layoutY="368.0" text="30 mins" toggleGroup="$durationGroup"/>
+    <RadioButton layoutX="255.0" layoutY="368.0" text="Custom" toggleGroup="$durationGroup"/>
+
+    <Button layoutX="240.0" layoutY="415.0" prefWidth="120.0" text="Select activity" onAction="#onSelectActivityClicked"/>
+
+</AnchorPane>

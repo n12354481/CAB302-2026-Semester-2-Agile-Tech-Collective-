@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="MoodForm.CheckInController"
+            prefHeight="720.0"
+            prefWidth="1000.0">
+
+    <fx:define>
+        <ToggleGroup fx:id="emotionGroup" />
+        <ToggleGroup fx:id="sleepGroup" />
+    </fx:define>
+
+    <!-- ==================== TITLE ==================== -->
+
+    <Label layoutX="35.0"
+           layoutY="30.0"
+           text="Emotions and Wellbeing Check"
+           style="-fx-font-size: 24px;
+                  -fx-font-weight: bold;
+                  -fx-text-fill: #222222;"/>
+
+
+    <!-- ==================== EMOTION ==================== -->
+
+    <Label layoutX="35.0"
+           layoutY="85.0"
+           text="How are you feeling today?"
+           style="-fx-font-size: 17px;
+                  -fx-font-weight: bold;"/>
+
+    <HBox layoutX="35.0"
+          layoutY="120.0"
+          spacing="15.0">
+
+        <RadioButton fx:id="strugglingRadio"
+                     text="Struggling"
+                     toggleGroup="$emotionGroup"
+                     prefWidth="155.0"
+                     prefHeight="45.0"
+                     alignment="CENTER"
+                     style="-fx-background-color: #F2F2F2;
+                            -fx-background-radius: 12;
+                            -fx-padding: 10;"/>
+
+        <RadioButton fx:id="notGreatRadio"
+                     text="Not Great"
+                     toggleGroup="$emotionGroup"
+                     prefWidth="155.0"
+                     prefHeight="45.0"
+                     alignment="CENTER"
+                     style="-fx-background-color: #F2F2F2;
+                            -fx-background-radius: 12;
+                            -fx-padding: 10;"/>
+
+        <RadioButton fx:id="okayRadio"
+                     text="Okay"
+                     toggleGroup="$emotionGroup"
+                     prefWidth="155.0"
+                     prefHeight="45.0"
+                     alignment="CENTER"
+                     style="-fx-background-color: #F2F2F2;
+                            -fx-background-radius: 12;
+                            -fx-padding: 10;"/>
+
+        <RadioButton fx:id="goodRadio"
+                     text="Good"
+                     toggleGroup="$emotionGroup"
+                     prefWidth="155.0"
+                     prefHeight="45.0"
+                     alignment="CENTER"
+                     style="-fx-background-color: #F2F2F2;
+                            -fx-background-radius: 12;
+                            -fx-padding: 10;"/>
+
+        <RadioButton fx:id="greatRadio"
+                     text="Great"
+                     toggleGroup="$emotionGroup"
+                     prefWidth="155.0"
+                     prefHeight="45.0"
+                     alignment="CENTER"
+                     style="-fx-background-color: #F2F2F2;
+                            -fx-background-radius: 12;
+                            -fx-padding: 10;"/>
+
+    </HBox>
+
+
+    <!-- ==================== SLEEP ==================== -->
+
+    <Label layoutX="35.0"
+           layoutY="195.0"
+           text="How much sleep did you get?"
+           style="-fx-font-size: 17px;
+                  -fx-font-weight: bold;"/>
+
+    <HBox layoutX="35.0"
+          layoutY="230.0"
+          spacing="15.0">
+
+        <RadioButton fx:id="noSleepRadio"
+                     text="No Sleep&#10;(0 Hours)"
+                     toggleGroup="$sleepGroup"
+                     prefWidth="195.0"
+                     prefHeight="60.0"
+                     alignment="CENTER"
+                     wrapText="true"
+                     style="-fx-background-color: #F2F2F2;
+                            -fx-background-radius: 12;
+                            -fx-padding: 10;"/>
+
+        <RadioButton fx:id="lessSleepRadio"
+                     text="Less Sleep&#10;(1-5 Hours)"
+                     toggleGroup="$sleepGroup"
+                     prefWidth="195.0"
+                     prefHeight="60.0"
+                     alignment="CENTER"
+                     wrapText="true"
+                     style="-fx-background-color: #F2F2F2;
+                            -fx-background-radius: 12;
+                            -fx-padding: 10;"/>
+
+        <RadioButton fx:id="goodSleepRadio"
+                     text="Good Sleep&#10;(6-8 Hours)"
+                     toggleGroup="$sleepGroup"
+                     prefWidth="195.0"
+                     prefHeight="60.0"
+                     alignment="CENTER"
+                     wrapText="true"
+                     style="-fx-background-color: #F2F2F2;
+                            -fx-background-radius: 12;
+                            -fx-padding: 10;"/>
+
+        <RadioButton fx:id="excellentSleepRadio"
+                     text="Excellent Sleep&#10;(9+ Hours)"
+                     toggleGroup="$sleepGroup"
+                     prefWidth="195.0"
+                     prefHeight="60.0"
+                     alignment="CENTER"
+                     wrapText="true"
+                     style="-fx-background-color: #F2F2F2;
+                            -fx-background-radius: 12;
+                            -fx-padding: 10;"/>
+
+    </HBox>
+
+
+    <!-- ==================== WATER ==================== -->
+
+    <Label layoutX="35.0"
+           layoutY="330.0"
+           text="How much water have you drunk in the past 24 hours?"
+           style="-fx-font-size: 17px;
+                  -fx-font-weight: bold;"/>
+
+    <ComboBox fx:id="waterComboBox"
+              layoutX="500.0"
+              layoutY="320.0"
+              prefWidth="130.0"
+              prefHeight="35.0"
+              promptText="Select"/>
+
+    <Label layoutX="640.0"
+           layoutY="329.0"
+           text="Litres"
+           style="-fx-font-size: 14px;"/>
+
+
+    <!-- ==================== STUDY STRESS ==================== -->
+
+    <Label layoutX="35.0"
+           layoutY="390.0"
+           text="Study stress level?"
+           style="-fx-font-size: 17px;
+                  -fx-font-weight: bold;"/>
+
+    <Slider fx:id="stressSlider"
+            layoutX="125.0"
+            layoutY="430.0"
+            prefWidth="620.0"
+            min="1.0"
+            max="5.0"
+            value="3.0"
+            blockIncrement="1.0"
+            majorTickUnit="1.0"
+            minorTickCount="0"
+            snapToTicks="true"/>
+
+    <Label layoutX="115.0"
+           layoutY="460.0"
+           text="Not Stressed"
+           style="-fx-font-size: 13px;"/>
+
+    <Label layoutX="690.0"
+           layoutY="460.0"
+           text="Very Stressed"
+           style="-fx-font-size: 13px;"/>
+
+
+    <!-- ==================== MOODS ==================== -->
+
+    <Label layoutX="35.0"
+           layoutY="510.0"
+           text="Words that describe your mood right now?"
+           style="-fx-font-size: 17px;
+                  -fx-font-weight: bold;"/>
+
+    <HBox layoutX="35.0"
+          layoutY="550.0"
+          spacing="15.0">
+
+        <CheckBox fx:id="happyCheckBox"
+                  text="Happy"
+                  prefWidth="125.0"
+                  prefHeight="42.0"
+                  alignment="CENTER"
+                  style="-fx-background-color: #F2F2F2;
+                         -fx-background-radius: 12;
+                         -fx-padding: 10;"/>
+
+        <CheckBox fx:id="calmCheckBox"
+                  text="Calm"
+                  prefWidth="125.0"
+                  prefHeight="42.0"
+                  alignment="CENTER"
+                  style="-fx-background-color: #F2F2F2;
+                         -fx-background-radius: 12;
+                         -fx-padding: 10;"/>
+
+        <CheckBox fx:id="tiredCheckBox"
+                  text="Tired"
+                  prefWidth="125.0"
+                  prefHeight="42.0"
+                  alignment="CENTER"
+                  style="-fx-background-color: #F2F2F2;
+                         -fx-background-radius: 12;
+                         -fx-padding: 10;"/>
+
+        <CheckBox fx:id="anxiousCheckBox"
+                  text="Anxious"
+                  prefWidth="125.0"
+                  prefHeight="42.0"
+                  alignment="CENTER"
+                  style="-fx-background-color: #F2F2F2;
+                         -fx-background-radius: 12;
+                         -fx-padding: 10;"/>
+
+        <CheckBox fx:id="sadCheckBox"
+                  text="Sad"
+                  prefWidth="125.0"
+                  prefHeight="42.0"
+                  alignment="CENTER"
+                  style="-fx-background-color: #F2F2F2;
+                         -fx-background-radius: 12;
+                         -fx-padding: 10;"/>
+
+        <CheckBox fx:id="sleepyCheckBox"
+                  text="Sleepy"
+                  prefWidth="125.0"
+                  prefHeight="42.0"
+                  alignment="CENTER"
+                  style="-fx-background-color: #F2F2F2;
+                         -fx-background-radius: 12;
+                         -fx-padding: 10;"/>
+
+    </HBox>
+
+
+    <!-- ==================== MESSAGE ==================== -->
+
+    <Label fx:id="messageLabel"
+           layoutX="35.0"
+           layoutY="615.0"
+           text=""
+           style="-fx-font-size: 13px;"/>
+
+
+    <!-- ==================== SUBMIT ==================== -->
+
+    <Button fx:id="submitButton"
+            layoutX="35.0"
+            layoutY="650.0"
+            prefWidth="150.0"
+            prefHeight="42.0"
+            text="Submit"
+            onAction="#handleSubmit"
+            style="-fx-background-color: #2A9D8F;
+                   -fx-background-radius: 10;
+                   -fx-text-fill: white;
+                   -fx-font-size: 15px;
+                   -fx-font-weight: bold;"/>
+</AnchorPane>
