@@ -59,7 +59,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
      */
     @Override
     public int createPost(SocialPostings post) throws SQLException {
-        String sql = "INSERT INTO post (userId, title, description, content, image, " + "event_date, start_time, end_time, event_location) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO post (userID, title, description, content, image, " + "event_date, start_time, end_time, event_location) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
          try (PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, post.userId());
@@ -89,7 +89,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
      */
     public void addPostsFeed() throws SQLException {
         String sql = "INSERT INTO post "
-                + "(userId, title, description, content, image, event_date, "
+                + "(userID, title, description, content, image, event_date, "
                 + "start_time, end_time, event_location) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
