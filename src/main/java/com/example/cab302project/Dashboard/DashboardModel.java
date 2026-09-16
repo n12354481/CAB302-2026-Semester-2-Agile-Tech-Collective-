@@ -83,4 +83,22 @@ public class DashboardModel {
     {
         return activityGoal;
     }
+
+    /**
+     * Method for calculating progress
+     * @return: Returns the spent activity minutes
+     */
+    public double getTotalActivityMinutes()
+    {
+        double progress;
+
+        if(activityGoal<=0)
+        {
+            progress = activityMinutes;
+        }
+        else{
+            progress = activityMinutes/activityGoal;
+        }
+        return progress;
+    }
 }

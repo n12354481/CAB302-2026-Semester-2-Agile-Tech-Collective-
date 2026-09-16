@@ -106,14 +106,14 @@ public class DashboardController {
         //To update the activities minutes completed.
         double retrievedActivityGoal = Integer.valueOf(dashboard.getActivityGoal());
         double retrievedActivityMinutes = Integer.valueOf(dashboard.getActivityMinutes());
-        double progress;
-        if(retrievedActivityGoal>0) {
-            progress = retrievedActivityMinutes / retrievedActivityGoal;
-        } else {
-            progress = retrievedActivityMinutes;
-        }
+//        double progress;
+//        if(retrievedActivityGoal>0) {
+//            progress = retrievedActivityMinutes / retrievedActivityGoal;
+//        } else {
+//            progress = retrievedActivityMinutes;
+//        }
         activitiesMinutesCompletedLabel.setText(String.valueOf(retrievedActivityMinutes) + "/" + String.valueOf(retrievedActivityGoal) + " min");
-        activitiesMinutesCompleted.setProgress(Math.min(progress, 1.0));
+        activitiesMinutesCompleted.setProgress(Math.min(dashboard.getTotalActivityMinutes(), 1.0));
 
         //To update the average sleep.
         String retrievedAvgSleep = String.valueOf(dashboard.getAvgSleep());

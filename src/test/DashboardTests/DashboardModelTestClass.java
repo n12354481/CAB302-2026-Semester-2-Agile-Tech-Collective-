@@ -68,8 +68,10 @@ public class DashboardModelTestClass {
         assertEquals(0, model[1].getActivityGoal());
     }
 
+    @Test
     public void testAppropriateActivityProgressCalculationWithNoGoal()
     {
-        assertEquals(10, model[1].getActivityMinutes()/model[1].getActivityGoal());
+        double progress = model[1].getTotalActivityMinutes();
+        assertEquals(10, progress);
     }
 }
