@@ -1,6 +1,7 @@
-package com.example.cab302project.SocialPostings;
+package SocialPostingsTest;
 
 import com.example.cab302project.Database.SocialPostingsDAO;
+import com.example.cab302project.SocialPostings.SocialPostings;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
