@@ -1,5 +1,7 @@
 package com.example.cab302project.Dashboard;
 
+import java.util.List;
+
 /**
  * This class aims to set the dashboard model's fields.
  */
@@ -10,6 +12,8 @@ public class DashboardModel {
     private double avgSleep;
     private int activityMinutes;
     private int activityGoal;
+
+    private List<String> recommendations;
 
     /**
      * Constructs the dashboard model's fields.
@@ -28,6 +32,8 @@ public class DashboardModel {
         this.avgStudyStress = avgStudyStress;
         this.activityMinutes = activityMinutes;
         this.activityGoal = activityGoal;
+
+        this.recommendations = List.of();
     }
 
     /**
@@ -100,5 +106,13 @@ public class DashboardModel {
             progress = activityMinutes/activityGoal;
         }
         return progress;
+    }
+
+    public List<String> getREcommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(List<String> recommendations) {
+        this.recommendations = recommendations;
     }
 }

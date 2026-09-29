@@ -4,6 +4,7 @@ import com.example.cab302project.Dashboard.Ollama.Connection;
 import com.example.cab302project.Dashboard.Ollama.Response;
 import com.example.cab302project.Dashboard.Recommendations.IRecommendationsDAO;
 import com.example.cab302project.Dashboard.Recommendations.RecommendationData;
+import com.example.cab302project.Dashboard.Recommendations.RecommendationService;
 import com.example.cab302project.Database.DatabaseRecommendationsDAO;
 import com.example.cab302project.MoodForm.CheckIn;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,6 +44,10 @@ public class AIRecommendationsTests {
          dao = new DatabaseRecommendationsDAO();
     }
 
+
+    /*
+        DAO tests
+    */
     //A test to check wehther the model appropriately returns recent user activity data for creating recommendations
     @Test
     void testGetActivityDataForUser() {
@@ -74,30 +81,47 @@ public class AIRecommendationsTests {
         assertEquals(3, checkin.getStudyStress());
     }
 
+    /*
+    Ollama tests
+    */
     @Test
-    void ollamaConnection() {
+    void testOllamaConnection() {
         Connection connection = new Connection("http://localhost:11434/api/generate");
-
-        Response response = connection.fetchOllamaResponse("llama3.2", "Give me one short wellbeing recommendation.");
-
-        assertNotNull(response);
-        assertNotNull(response.getResponse());
-
-        System.out.println(response.getResponse());
+        connection.fetchAsynchronousOllamaResponse("llama3.2", "Give me one short wellbeing recommendation.", response -> {
+            assertNotNull(response);
+            assertNotNull(response.getResponse());
+            System.out.println(response.getResponse());
+        });
     }
 
-//    //Prompt stuff
-//    //No void prompt given.
-//    @Test
-//    void testEnsurePromptNotEmpty() {
-//        String prompt = "";
-//        assertFalse(prompt.isBlank());
-//    }
-//
-//    //No
-//    @Test
-//    void testEnsurePromptNotEmpty() {
-//        String prompt = "";
-//        assertFalse(prompt.isBlank());
-//    }
+    @Test
+    void testRecommendationService() throws InterruptedException {
+        RecommendationService service = new RecommendationService();
+
+        List<Map<String, Object>> activityData = new ArrayList<>();
+        Map<String, Object> walking = new HashMap<>();
+
+        walking.put("name", "Walking");
+        walking.put("minutes", 30);
+
+        activityData.add(walking);
+
+        List<CheckIn> checkinData = new ArrayList<>();
+
+        checkinData.add(new CheckIn(1,8, LocalDate.now(), 6, 5, 4, 8, List.of("Anxious")));
+
+        RecommendationData data = new RecommendationData(activityData, checkinData);
+
+        CountDownLatch latch = new CountDownLatch(1);
+        service.generateRecommendations(data, response -> {
+            assertNotNull(response);
+            assertNotNull(response.getResponse());
+            System.out.println("Recommendations:");
+            System.out.println(response.getResponse());
+            latch.countDown();
+        });
+
+        assertTrue(latch.await(30, TimeUnit.SECONDS), "Ollama did not respond in 30 sec.");
+
+    }
 }

@@ -27,8 +27,8 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
     {
         List<Map<String, Object>> activityData = new ArrayList<>();
 
-        LocalDate startDate = LocalDate.now();
-        LocalDate endDate = startDate.minusDays(7);
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(7);
 
         String query = """
                 SELECT
@@ -62,11 +62,11 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
                 activity.put("logID", result.getInt("logID"));
                 activity.put("userID", result.getInt("userID"));
                 activity.put("activityID", result.getInt("activityID"));
-                activity.put("date", result.getInt("log_date"));
+                activity.put("date", result.getString("log_date"));
                 activity.put("minutes", result.getInt("minutes"));
-                activity.put("name", result.getInt("activity_name"));
-                activity.put("category", result.getInt("category"));
-                activity.put("description", result.getInt("description"));
+                activity.put("name", result.getString("activity_name"));
+                activity.put("category", result.getString("category"));
+                activity.put("description", result.getString("activity_description"));
                 activity.put("goal", result.getInt("goal"));
                 activity.put("points", result.getInt("points"));
 
@@ -85,8 +85,8 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
     {
         List<CheckIn> checkinData = new ArrayList<>();
 
-        LocalDate startDate = LocalDate.now();
-        LocalDate endDate = startDate.minusDays(7);
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(7);
 
         String query = "SELECT * FROM checkin WHERE userId = ? AND checkin_date BETWEEN ? AND ? ORDER BY checkin_date DESC;" ;
         try {
@@ -101,7 +101,7 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
             {
                int checkinId = result.getInt("checkinID");
                int DBuserId = result.getInt("userID");
-               LocalDate checkin_date = result.getDate("checkin_date").toLocalDate();
+               LocalDate checkin_date = LocalDate.parse(result.getString("checkin_date"));
                int emotion_today = result.getInt("emotion_today");
                int sleep = result.getInt("sleep");
                int water = result.getInt("water");

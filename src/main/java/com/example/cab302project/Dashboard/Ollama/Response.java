@@ -17,5 +17,4 @@ public class Response {
         Response response = gson.fromJson(body, Response.class);
         return response;
     }
-
 }

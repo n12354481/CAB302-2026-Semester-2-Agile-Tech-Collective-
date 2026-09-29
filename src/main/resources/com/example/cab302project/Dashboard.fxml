@@ -110,7 +110,11 @@
                                                 offsetY="-1"
                                                 color="#D9A441"/>
                                 </effect>
-                                <Label text="First"/>
+                                <Label fx:id="recommendationOne"
+                                       text="Loading recommendation..."
+                                       wrapText="true"
+                                       style="-fx-font-size: 16;
+                                              -fx-font-weight: bold;"/>
                             </VBox>
                         </VBox>
 
@@ -137,7 +141,11 @@
                                                 color="#D9A441"/>
                                 </effect>
 
-                                <Label text="Second"/>
+                                <Label fx:id="recommendationTwo"
+                                       text="Loading recommendation..."
+                                       wrapText="true"
+                                       style="-fx-font-size: 16;
+                                              -fx-font-weight: bold;"/>
                             </VBox>
                         </VBox>
 
@@ -164,7 +172,11 @@
                                                 color="#D9A441"/>
                                 </effect>
 
-                                <Label text="Third"/>
+                                <Label fx:id="recommendationThree"
+                                       text="Loading recommendation..."
+                                       wrapText="true"
+                                       style="-fx-font-size: 16;
+                                              -fx-font-weight: bold;"/>
                             </VBox>
                         </VBox>
 

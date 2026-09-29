@@ -1,4 +1,7 @@
 package com.example.cab302project.Dashboard.Ollama;
+import com.google.gson.Gson;
+import javafx.application.Platform;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -81,6 +84,8 @@ public class Connection {
         // tested with model llava v1.6 - for documentation on how to format the JSON request https://ollama.com/library/llava
 
         //String imageContents = JollamaImageUtil.imageToBase64(image);
+        Gson gson = new Gson();
+
         String simpleJsonObj = String.format("""
                  {
                    "model": "%s",
@@ -99,6 +104,7 @@ public class Connection {
                 responseListener.onResponseReceived(response);
             }
         };
+        thread.setDaemon(true);
         thread.start();
     }
 
