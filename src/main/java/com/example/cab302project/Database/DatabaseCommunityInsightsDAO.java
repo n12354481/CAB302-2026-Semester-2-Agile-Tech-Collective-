@@ -226,8 +226,9 @@ public class DatabaseCommunityInsightsDAO implements ICommunityInsightsDAO {
         String query = """
                 SELECT m.mood_name, COUNT(*) AS mood_count
                 FROM checkin_mood cm
-                JOIN mood m ON cm.checkinID = m.checkinID
-                JOIN settings s ON al.userID = s.user_id
+                JOIN mood m ON cm.moodID = m.moodID
+                JOIN checkin c ON cm.checkinID = c.checkinID
+                JOIN settings s ON c.userID = s.user_id
                 WHERE s.community_participation = 1
                 AND s.checkin_data_participation = 1
                 GROUP BY m.mood_name

@@ -175,7 +175,7 @@
                                                     style="-fx-background-color: #C8EEE9"/>
                                         </HBox>
 
-                                    <!--Section for updating the user's password.-->
+                                        <!--Section for updating the user's password.-->
                                     </VBox>
                                     <VBox spacing="8">
                                         <Label text="UPDATE PASSWORD"
@@ -304,7 +304,7 @@
                     </BorderPane>
                 </AnchorPane>
 
-                <!--Data section FXMl. This section still needs to be written.-->
+                <!--Data section FXMl.-->
                 <AnchorPane fx:id="data"
                             visible="false"
                             managed="false">
@@ -328,20 +328,88 @@
                                 <padding>
                                     <Insets top="10" right="36" bottom="30" left="36"/>
                                 </padding>
+                                <!--Has both the main and sub-checkboxes needed for the user to tick for enabling their personalised statistics in community quotes.-->
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Delete Activities Data"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="Doing this will delete all your activities data entered into this app. "
+                                               style="-fx-font-size: 15;
+                                                       -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <Button text="Proceed to delete"
+                                            onAction="#onDeleteActivitiesClicked"
+                                            style="-fx-background-color: #800517;
+                                                   -fx-font-size: 14;
+                                                   -fx-text-fill: white;"
+                                            prefHeight="40"
+                                            prefWidth="140"
+                                    />
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+
+                                <HBox alignment="CENTER_LEFT"
+                                      spacing="20"
+                                      style="-fx-background-color: #F6F6F6">
+                                    <VBox spacing="4"
+                                          HBox.hgrow="ALWAYS">
+                                        <Label text="Delete Check-in Data"
+                                               style="-fx-font-size: 20"/>
+                                        <Label text="Doing this will delete all your check-in data entered into this app. "
+                                               style="-fx-font-size: 15;
+                                                       -fx-text-fill: grey"/>
+                                    </VBox>
+                                    <Button text="Proceed to delete"
+                                            onAction="#onDeleteCheckInClicked"
+                                            style="-fx-background-color: #800517;
+                                                   -fx-font-size: 14;
+                                                   -fx-text-fill: white;"
+                                            prefHeight="40"
+                                            prefWidth="140"
+                                    />
+                                    <padding>
+                                        <Insets top="10" right="36" bottom="30" left="50"/>
+                                    </padding>
+                                </HBox>
+                                <VBox>
+
+                                    <VBox>
+                                        <Label text="ACCOUNT"
+                                               style="-fx-font-size: 25">
+                                        </Label>
+                                    </VBox>
+                                    <HBox alignment="CENTER_LEFT"
+                                          spacing="20"
+                                          style="-fx-background-color: #F6F6F6">
+                                        <VBox spacing="4"
+                                              HBox.hgrow="ALWAYS">
+                                            <Label text="Delete Account"
+                                                   style="-fx-font-size: 20"/>
+                                            <Label text="Doing this will permanently delete your account and all of your data in STEM Well-being"
+                                                   style="-fx-font-size: 15;
+                                                       -fx-text-fill: grey"/>
+                                        </VBox>
+                                        <Button text="Proceed to delete"
+                                                onAction="#onDeleteAccountClicked"
+                                                style="-fx-background-color: #800517;
+                                                   -fx-font-size: 14;
+                                                   -fx-text-fill: white;"
+                                                prefHeight="40"
+                                                prefWidth="140"
+                                        />
+                                        <padding>
+                                            <Insets top="10" right="36" bottom="30" left="50"/>
+                                        </padding>
+                                    </HBox>
+
+                                </VBox>
                             </VBox>
                         </center>
-                        <bottom>
-                            <VBox>
-                                <padding>
-                                    <Insets top="30" right="36" bottom="30" left="35"/>
-                                </padding>
-                                <Button text="Save"
-                                        style="-fx-background-color: #77DD77"
-                                        prefWidth="150"
-                                        prefHeight="40"
-                                        onAction="#onSaveSettings"/>
-                            </VBox>
-                        </bottom>
                     </BorderPane>
                 </AnchorPane>
 
@@ -518,6 +586,55 @@
                     </VBox>
                 </AnchorPane>
             </children>
+            <AnchorPane fx:id="deleteOverlay"
+                        visible="false"
+                        managed="false"
+                        AnchorPane.rightAnchor="0"
+                        AnchorPane.bottomAnchor="0"
+                        AnchorPane.topAnchor="0"
+                        AnchorPane.leftAnchor="0"
+                        style="-fx-background-color: rgba(0,0,0,0.45);">
+                <VBox alignment="CENTER"
+                      AnchorPane.rightAnchor="0"
+                      AnchorPane.bottomAnchor="0"
+                      AnchorPane.topAnchor="0"
+                      AnchorPane.leftAnchor="0">
+                    <VBox maxWidth="450"
+                          spacing="15"
+                          style="-fx-background-color: white;
+                                 -fx-background-radius: 12;
+                                 -fx-padding: 30; ">
+                        <Label fx:id="deleteTitle"
+                               text="Delete Data"
+                               style="-fx-font-size: 24;
+                                      -fx-font-weight: bold;"/>
+
+                        <Label fx:id="deleteMessage"
+                               text=""
+                               wrapText="true"
+                               style="-fx-font-size: 15;"/>
+
+                        <HBox>
+                            <Button text="Cancel"
+                                    onAction="#onCancelDeleteClicked"
+                                    prefWidth="100"
+                                    prefHeight="40"
+                                    style="
+                                            -fx-border-color: #cccccc;
+                                            -fx-background-color: white;"/>
+
+                            <Button text="Delete"
+                                    onAction="#onConfirmDeleteClicked"
+                                    prefWidth="100"
+                                    prefHeight="40"
+                                    style="
+                                            -fx-border-color: #8005;
+                                            -fx-background-color: white;"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+
+            </AnchorPane>
         </StackPane>
     </children>
 </AnchorPane>

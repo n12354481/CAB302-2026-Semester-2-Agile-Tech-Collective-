@@ -1,5 +1,7 @@
 package com.example.cab302project.Settings;
 
+import java.time.LocalDate;
+
 /**
  * This class aims to represent the main logic used for the Setting's feature in the app.
  */
@@ -162,5 +164,4 @@ public class SettingsModel {
         return AIPersonalise && AICheckinPersonalise;
     }
 
-    //Data
 }

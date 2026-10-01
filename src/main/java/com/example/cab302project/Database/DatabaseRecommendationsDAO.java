@@ -106,8 +106,8 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
         LocalDate startDate = endDate.minusDays(7);
 
         String query = """
-                SELECT * FROM checkin  
-                JOIN settings s ON al.userID = s.user_id
+                SELECT * FROM checkin c
+                JOIN settings s ON c.userID = s.user_id
                 WHERE userId = ?
                 AND s.ai_personalisation = 1
                 AND s.ai_checkin_personalisation = 1
