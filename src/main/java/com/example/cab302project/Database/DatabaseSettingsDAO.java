@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 public class DatabaseSettingsDAO implements ISettingsDAO {
     private Connection connection;
@@ -99,6 +100,66 @@ public class DatabaseSettingsDAO implements ISettingsDAO {
             statement.executeUpdate();
 
         } catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteActivities(int userId)
+    {
+        String query = """
+            DELETE FROM activity_log
+            WHERE userID = ?
+            """;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+
+            statement.executeUpdate();
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteCheckin(int userId)
+    {
+        String query = """
+            DELETE FROM checkin
+            WHERE userID = ?
+            """;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+
+            statement.executeUpdate();
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteAccount(int userId)
+    {
+        String query = """
+            DELETE FROM users
+            WHERE userID = ?
+            """;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+
+            statement.executeUpdate();
+
+        } catch (Exception e)
         {
             e.printStackTrace();
         }

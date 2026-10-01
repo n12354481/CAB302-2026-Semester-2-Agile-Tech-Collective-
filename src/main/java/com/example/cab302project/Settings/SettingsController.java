@@ -11,9 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -99,7 +101,15 @@ public class SettingsController {
     @FXML
     private CheckBox aiCheckinCheckbox;
 
+    //Data section fields
+    @FXML
+    private AnchorPane deleteOverlay;
+    @FXML
+    private Label deleteTitle;
+    @FXML
+    private Label deleteMessage;
 
+    private String deleteType;
     /**
      * Constructs the DAO for Settings, retrieving the user's settings and initialises the DAO if null.
      */
@@ -410,4 +420,90 @@ public class SettingsController {
 
         System.out.println("Settings saved for user: " + userId);
     }
+
+    /**
+     * This method opens the overlay for deleting activities.
+     */
+    @FXML
+    private void onDeleteActivitiesClicked()
+    {
+        deleteType = "activities";
+        deleteTitle.setText("Delete Activity Data");
+        deleteMessage.setText("Are you sure you want to delete all your activities data?");
+
+        deleteOverlay.setVisible(true);
+        deleteOverlay.setManaged(true);
+    }
+
+
+    /**
+     * This method opens the overlay for deleting checkins.
+     */
+    @FXML
+    private void onDeleteCheckInClicked()
+    {
+        deleteType = "checkin";
+        deleteTitle.setText("Delete Check-in Data");
+        deleteMessage.setText("Are you sure you want to delete all your check-in data?");
+
+        deleteOverlay.setVisible(true);
+        deleteOverlay.setManaged(true);
+    }
+
+
+    /**
+     * This method opens the overlay for deleting the user's account.
+     */
+    @FXML
+    private void onDeleteAccountClicked()
+    {
+        deleteType = "account";
+        deleteTitle.setText("Delete Account Data");
+        deleteMessage.setText("Are you sure you want to permenantly delete your account and all associated data? This action cannot be undone.");
+
+        deleteOverlay.setVisible(true);
+        deleteOverlay.setManaged(true);
+    }
+
+
+    /**
+     * This method aims to confirm the delete action.
+     */
+    @FXML
+    private void onConfirmDeleteClicked() throws IOException
+    {
+        if(deleteType.equals("activities"))
+        {
+            settingsDAO.deleteActivities(userId);
+        } else if (deleteType.equals("checkin"))
+        {
+            settingsDAO.deleteCheckin(userId);
+        } else if (deleteType.equals("account")) {
+            settingsDAO.deleteAccount(userId);
+            FXMLLoader loader = new FXMLLoader(
+                    HelloApplication.class.getResource("login.fxml")
+            );
+            Scene scene = new Scene(loader.load());
+            Stage stage = (Stage) deleteOverlay.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
+
+        deleteOverlay.setVisible(false);
+        deleteOverlay.setManaged(false);
+    }
+
+
+    /**
+     * This method cancels the delete action if the user wishes to.
+     */
+    @FXML
+    private void onCancelDeleteClicked()
+    {
+        deleteOverlay.setVisible(false);
+        deleteOverlay.setManaged(false);
+        deleteType = null;
+    }
+
+
 }
