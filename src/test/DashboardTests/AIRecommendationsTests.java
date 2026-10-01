@@ -3,7 +3,7 @@ package DashboardTests;
 import com.example.cab302project.Dashboard.Ollama.Connection;
 import com.example.cab302project.Dashboard.Recommendations.IRecommendationsDAO;
 import com.example.cab302project.Dashboard.Recommendations.RecommendationData;
-//import com.example.cab302project.Dashboard.Recommendations.RecommendationService;
+import com.example.cab302project.Dashboard.Recommendations.RecommendationService;
 import com.example.cab302project.MoodForm.CheckIn;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -90,93 +90,93 @@ public class AIRecommendationsTests {
     }
 
     //A test to check whether the service returning Ollama's response returns appropriate recommendations needed.
-//    @Test
-//    void testRecommendationService() throws InterruptedException {
-//        RecommendationService service = new RecommendationService();
-//
-//        List<Map<String, Object>> activityData = new ArrayList<>();
-//        Map<String, Object> walking = new HashMap<>();
-//
-//        walking.put("name", "Walking");
-//        walking.put("minutes", 30);
-//
-//        activityData.add(walking);
-//
-//        List<CheckIn> checkinData = new ArrayList<>();
-//
-//        checkinData.add(new CheckIn(1,8, LocalDate.now(), 6, 5, 4, 8, List.of("Anxious")));
-//
-//        RecommendationData data = new RecommendationData(activityData, checkinData);
-//
-//        //To ensure that Ollama has enoguh time to respond before the test is finished.
-//        CountDownLatch latch = new CountDownLatch(1);
-//
-//        service.generateRecommendations(data, response -> {
-//            assertNotNull(response);
-//            assertNotNull(response.getResponse());
-//            System.out.println("Recommendations:");
-//            System.out.println(response.getResponse());
-//            latch.countDown();
-//        });
-//
-//        //Ensuring that the test did wait for 30 sec.
-//        assertTrue(latch.await(30, TimeUnit.SECONDS), "Ollama did not respond in 30 sec.");
-//    }
-//
-//    //A test to check whether the service returning Ollama's response returns appropriate recommendations needed if there is no activity data.
-//    @Test
-//    void testRecommendationDataWithEmptyActivityData()
-//    {
-//        List<Map<String, Object>> activityData = new ArrayList<>();
-//        List<CheckIn> checkinData = new ArrayList<>();
-//        checkinData.add(new CheckIn(1,8, LocalDate.now(), 6, 5, 4, 8, List.of("Anxious")));        checkinData.add(new CheckIn(1,8, LocalDate.now(), 6, 5, 4, 8, List.of("Anxious")));
-//        RecommendationData data = new RecommendationData(activityData, checkinData);
-//
-//        assertNotNull(data.getActivityData());
-//        assertTrue(data.getActivityData().isEmpty());
-//    }
-//
-//    //A test to check whether the service returning Ollama's response returns appropriate recommendations needed if there is no checkin data.
-//    @Test
-//    void testRecommendationDataWithEmptyCheckinData()
-//    {
-//        List<Map<String, Object>> activityData = new ArrayList<>();
-//        Map<String, Object> activity = new HashMap<>();
-//        activity.put("name", "Walking");
-//        activity.put("minutes", 30);
-//        activityData.add(activity);
-//        List<CheckIn> checkIns = new ArrayList<>();
-//
-//        RecommendationData data = new RecommendationData(activityData, checkIns);
-//
-//        assertNotNull(data.getCheckinData());
-//        assertTrue(data.getCheckinData().isEmpty());
-//    }
-//
-//    //A test to check whether the service returning Ollama's response returns appropriate recommendations needed if there is multiple activity data.
-//    @Test
-//    void testMultipleActivities() {
-//        List<Map<String, Object>> activityData = new ArrayList<>();
-//        Map<String, Object> walking = new HashMap<>();
-//        walking.put("name", "Walking");
-//        walking.put("minutes", 30);
-//
-//        Map<String, Object> running = new HashMap<>();
-//        running.put("name", "Running");
-//        running.put("minutes", 10);
-//
-//        Map<String, Object> swimming = new HashMap<>();
-//        swimming.put("name", "Swimming");
-//        swimming.put("minutes", 50);
-//
-//        activityData.add(walking);
-//        activityData.add(running);
-//        activityData.add(swimming);
-//
-//        RecommendationData data = new RecommendationData(activityData, new ArrayList<>());
-//
-//        assertEquals(3, data.getActivityData().size());
-//        assertEquals("Walking", data.getActivityData().get(0).get("name"));
-//        assertEquals(50, data.getActivityData().get(2).get("minutes"));
-//    }
+    @Test
+    void testRecommendationService() throws InterruptedException {
+        RecommendationService service = new RecommendationService();
+
+        List<Map<String, Object>> activityData = new ArrayList<>();
+        Map<String, Object> walking = new HashMap<>();
+
+        walking.put("name", "Walking");
+        walking.put("minutes", 30);
+
+        activityData.add(walking);
+
+        List<CheckIn> checkinData = new ArrayList<>();
+
+        checkinData.add(new CheckIn(1,8, LocalDate.now(), 6, 5, 4, 8, List.of("Anxious")));
+
+        RecommendationData data = new RecommendationData(activityData, checkinData);
+
+        //To ensure that Ollama has enoguh time to respond before the test is finished.
+        CountDownLatch latch = new CountDownLatch(1);
+
+        service.generateRecommendations(data, response -> {
+            assertNotNull(response);
+            assertNotNull(response.getResponse());
+            System.out.println("Recommendations:");
+            System.out.println(response.getResponse());
+            latch.countDown();
+        });
+
+        //Ensuring that the test did wait for 30 sec.
+        assertTrue(latch.await(30, TimeUnit.SECONDS), "Ollama did not respond in 30 sec.");
+    }
+
+    //A test to check whether the service returning Ollama's response returns appropriate recommendations needed if there is no activity data.
+    @Test
+    void testRecommendationDataWithEmptyActivityData()
+    {
+        List<Map<String, Object>> activityData = new ArrayList<>();
+        List<CheckIn> checkinData = new ArrayList<>();
+        checkinData.add(new CheckIn(1,8, LocalDate.now(), 6, 5, 4, 8, List.of("Anxious")));        checkinData.add(new CheckIn(1,8, LocalDate.now(), 6, 5, 4, 8, List.of("Anxious")));
+        RecommendationData data = new RecommendationData(activityData, checkinData);
+
+        assertNotNull(data.getActivityData());
+        assertTrue(data.getActivityData().isEmpty());
+    }
+
+    //A test to check whether the service returning Ollama's response returns appropriate recommendations needed if there is no checkin data.
+    @Test
+    void testRecommendationDataWithEmptyCheckinData()
+    {
+        List<Map<String, Object>> activityData = new ArrayList<>();
+        Map<String, Object> activity = new HashMap<>();
+        activity.put("name", "Walking");
+        activity.put("minutes", 30);
+        activityData.add(activity);
+        List<CheckIn> checkIns = new ArrayList<>();
+
+        RecommendationData data = new RecommendationData(activityData, checkIns);
+
+        assertNotNull(data.getCheckinData());
+        assertTrue(data.getCheckinData().isEmpty());
+    }
+
+    //A test to check whether the service returning Ollama's response returns appropriate recommendations needed if there is multiple activity data.
+    @Test
+    void testMultipleActivities() {
+        List<Map<String, Object>> activityData = new ArrayList<>();
+        Map<String, Object> walking = new HashMap<>();
+        walking.put("name", "Walking");
+        walking.put("minutes", 30);
+
+        Map<String, Object> running = new HashMap<>();
+        running.put("name", "Running");
+        running.put("minutes", 10);
+
+        Map<String, Object> swimming = new HashMap<>();
+        swimming.put("name", "Swimming");
+        swimming.put("minutes", 50);
+
+        activityData.add(walking);
+        activityData.add(running);
+        activityData.add(swimming);
+
+        RecommendationData data = new RecommendationData(activityData, new ArrayList<>());
+
+        assertEquals(3, data.getActivityData().size());
+        assertEquals("Walking", data.getActivityData().get(0).get("name"));
+        assertEquals(50, data.getActivityData().get(2).get("minutes"));
+    }
 }
