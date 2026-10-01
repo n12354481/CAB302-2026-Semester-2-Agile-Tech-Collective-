@@ -12,6 +12,7 @@ target/
 *.iws
 *.iml
 *.ipr
+contacts.db
 
 ### Eclipse ###
 .apt_generated
