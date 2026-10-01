@@ -14,14 +14,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class aims to create the DAO for the recommendations data.
+ */
 public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
     private Connection connection;
 
+    /**
+     * Constructs database connection.
+     */
     public DatabaseRecommendationsDAO()
     {
         connection = DatabaseConnection.getInstance();
     }
 
+    /**
+     * Method which aims to fetch the recent activity of the participating users.
+     * @return: Returns the recent activity of participating users.
+     */
     @Override
     public List<Map<String, Object>> getRecentActivityData(int userId)
     {
@@ -44,7 +54,10 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
                     a.points
                 FROM activity_log al
                 JOIN activity a ON al.activityID = a.activityID
+                JOIN settings s ON al.userID = s.user_id
                 WHERE al.userID = ?
+                AND s.ai_personalisation = 1
+                AND s.ai_activity_personalisation = 1
                 AND al.log_date BETWEEN ? AND ?
                 ORDER BY al.log_date DESC
                 """ ;
@@ -80,6 +93,10 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
         return activityData;
     }
 
+    /**
+     * Method which aims to fetch the recent checkin of the participating users.
+     * @return: Returns the recent checkin of participating users.
+     */
     @Override
     public List<CheckIn> getRecentCheckinData(int userId)
     {
@@ -88,7 +105,15 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(7);
 
-        String query = "SELECT * FROM checkin WHERE userId = ? AND checkin_date BETWEEN ? AND ? ORDER BY checkin_date DESC;" ;
+        String query = """
+                SELECT * FROM checkin  
+                JOIN settings s ON al.userID = s.user_id
+                WHERE userId = ?
+                AND s.ai_personalisation = 1
+                AND s.ai_checkin_personalisation = 1
+                AND checkin_date BETWEEN ? 
+                AND ? ORDER BY checkin_date DESC
+                """ ;
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, userId);
@@ -129,11 +154,22 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
         return checkinData;
     }
 
+    /**
+     * Method which aims to fetch the recent checkin moods of the participating users.
+     * @return: Returns the recent moods of participating users.
+     */
     private List<String> getCheckinRecentMoods(int checkinId)
     {
         List<String> mood = new ArrayList<>();
 
-        String query = "SELECT m.mood_name FROM mood m JOIN checkin_mood cm ON m.moodID = cm.moodID WHERE cm.checkinID = ?";
+        String query = """
+                SELECT m.mood_name FROM mood m 
+                JOIN checkin_mood cm ON m.moodID = cm.moodID 
+                JOIN settings s ON al.userID = s.user_id
+                WHERE cm.checkinID = ?
+                AND s.ai_personalisation = 1
+                AND s.ai_checkin_personalisation = 1
+                """;
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);

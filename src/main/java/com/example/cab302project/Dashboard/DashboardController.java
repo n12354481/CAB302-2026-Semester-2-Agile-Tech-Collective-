@@ -1,14 +1,21 @@
 package com.example.cab302project.Dashboard;
 
+import com.example.cab302project.Dashboard.CommunityInsights.CommunityInsightsData;
+import com.example.cab302project.Dashboard.CommunityInsights.CommunityService;
+import com.example.cab302project.Dashboard.CommunityInsights.ICommunityInsightsDAO;
 import com.example.cab302project.Dashboard.Ollama.Response;
 import com.example.cab302project.Dashboard.Recommendations.IRecommendationsDAO;
 import com.example.cab302project.Dashboard.Recommendations.RecommendationData;
 import com.example.cab302project.Dashboard.Recommendations.RecommendationService;
 import com.example.cab302project.Database.DashboardDatabaseDAO;
+import com.example.cab302project.Database.DatabaseCommunityInsightsDAO;
 import com.example.cab302project.Database.DatabaseRecommendationsDAO;
 import com.example.cab302project.MoodForm.CheckIn;
+import com.example.cab302project.MoodForm.CheckInController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
@@ -63,8 +70,20 @@ public class DashboardController {
     @FXML
     private Label recommendationThree;
 
+    @FXML
+    private Label communityQuote;
+
+    @FXML
+    private Label communityInsightsOne;
+
+    @FXML
+    private Label communityInsightsTwo;
+
     private IRecommendationsDAO recommendationsDAO;
     private RecommendationService recommendationService;
+
+    private ICommunityInsightsDAO communityInsightsDAO;
+    private CommunityService communityService;
 
     /**
      * Constructs the dashboard dao for the dashboard.
@@ -74,15 +93,10 @@ public class DashboardController {
         dashboardDAO = new DashboardDatabaseDAO();
         recommendationsDAO = new DatabaseRecommendationsDAO();
         recommendationService = new RecommendationService();
-    }
 
-    /**
-     * This method initialises the FXML page through proper checks.
-     */
-    @FXML
-//    public void initialize() {
-//        setUserId(userId);
-//    }
+        communityInsightsDAO = new DatabaseCommunityInsightsDAO();
+        communityService = new CommunityService();
+    }
 
     /**
      * This method loads the dashboard based on the user's data.
@@ -105,6 +119,28 @@ public class DashboardController {
         LocalDate startDate = today.minusDays(today.getDayOfWeek().getValue() - 1);
         LocalDate endDate = startDate.plusDays(6);
 
+        List<Map<String, Object>> activityData = recommendationsDAO.getRecentActivityData(userId);
+        List<CheckIn> checkinData = recommendationsDAO.getRecentCheckinData(userId);
+
+        RecommendationData reccData = new RecommendationData(
+                activityData,
+                checkinData
+        );
+
+        int totalParticipatingUsers = communityInsightsDAO.getParticipatingUserCount();
+        double avgSleep = communityInsightsDAO.getAverageSleep();
+        double avgEmotion = communityInsightsDAO.getAverageEmotion();
+        double avgStudyStress = communityInsightsDAO.getAverageStudyStress();
+        double avgWater = communityInsightsDAO.getAverageWater();
+        int activityMinutes = communityInsightsDAO.getTotalActivityMinutes();
+        String popularActivity = communityInsightsDAO.getMostPopularActivityCategory();
+        String popularMood = communityInsightsDAO.getMostPopularMood();
+
+        CommunityInsightsData commData = new CommunityInsightsData(totalParticipatingUsers,
+                avgSleep, avgStudyStress, avgEmotion, avgWater, activityMinutes,
+                popularActivity, popularMood
+        );
+
         //Loading the dashboard model.
         dashboard = new DashboardModel(
                 dashboardDAO.getWeeklyCheckInStreak(userId, startDate, endDate),
@@ -112,11 +148,14 @@ public class DashboardController {
                 dashboardDAO.averageStudyStress(userId),
                 dashboardDAO.averageSleep(userId),
                 dashboardDAO.totalActivityMinutes(userId),
-                dashboardDAO.userActivityGoal(userId)
+                dashboardDAO.userActivityGoal(userId),
+                reccData,
+                commData
         );
 
         FXMLUpdateOverallStats();
-        loadRecommendations(userId);
+        loadRecommendations();
+        loadInsights();
     }
 
     /**
@@ -131,21 +170,16 @@ public class DashboardController {
         //To update the activities minutes completed.
         double retrievedActivityGoal = Integer.valueOf(dashboard.getActivityGoal());
         double retrievedActivityMinutes = Integer.valueOf(dashboard.getActivityMinutes());
-//        double progress;
-//        if(retrievedActivityGoal>0) {
-//            progress = retrievedActivityMinutes / retrievedActivityGoal;
-//        } else {
-//            progress = retrievedActivityMinutes;
-//        }
+
         activitiesMinutesCompletedLabel.setText(String.valueOf(retrievedActivityMinutes) + "/" + String.valueOf(retrievedActivityGoal) + " min");
         activitiesMinutesCompleted.setProgress(Math.min(dashboard.getTotalActivityMinutes(), 1.0));
 
         //To update the average sleep.
-        String retrievedAvgSleep = String.valueOf(dashboard.getAvgSleep());
+        String retrievedAvgSleep = String.format("%.2f", dashboard.getAvgSleep());
         avgSleep.setText(retrievedAvgSleep);
 
         //To update the average study stress
-        String retrievedAvgStudyStress = String.valueOf(dashboard.getAvgStudyStress());
+        String retrievedAvgStudyStress = String.format("%.2f", dashboard.getAvgStudyStress());
         avgStudyStress.setText(retrievedAvgStudyStress);
 
         //To update the weekly checkins completed.
@@ -154,19 +188,18 @@ public class DashboardController {
         weeklyStreakLabel.setText(checkinsCompleted + "/7");
     }
 
-    private void loadRecommendations(int userId) {
+    /**
+     * A method to load the recommendations from its service.
+     */
+    private void loadRecommendations() {
         recommendationOne.setText("Generating recommendation..");
         recommendationTwo.setText("");
         recommendationThree.setText("");
 
-        List<Map<String, Object>> activityData = recommendationsDAO.getRecentActivityData(userId);
-        List<CheckIn> checkinData = recommendationsDAO.getRecentCheckinData(userId);
+        //Getting the recommendation data
+        RecommendationData data = dashboard.getRecommendations();
 
-        RecommendationData data = new RecommendationData(
-                activityData,
-                checkinData
-        );
-
+        //Generating Ollama's response
         recommendationService.generateRecommendations(data,
                 response -> Platform.runLater(() -> {
                     if (response == null || response.getResponse() == null) {
@@ -199,6 +232,54 @@ public class DashboardController {
                         }
 
                         recommendationIndex++;
+                    }
+                }));
+    }
+
+    /**
+     * A method to load the recommendations from its service.
+     */
+    private void loadInsights() {
+        communityQuote.setText("Generating quote for today..");
+        communityInsightsOne.setText("Generating insights for today...");
+        communityInsightsTwo.setText("Generating insights for today...");
+
+        //Getting the community data
+        CommunityInsightsData data = dashboard.getInsights();
+
+        //Generating Ollama's response
+        communityService.generateInsights(data,
+                response -> Platform.runLater(() -> {
+                    if (response == null || response.getResponse() == null) {
+                        communityQuote.setText("Unable to generate quote.");
+                        communityInsightsOne.setText("Unable to generate community insights.");
+                        communityInsightsTwo.setText("Unable to generate community insights.");
+                        return;
+                    }
+
+                    String[] insights = response.getResponse().split("\\r?\\n");
+                    int insightsIndex = 0;
+
+                    for (String insight : insights) {
+                        insight = insight.trim();
+
+                        if (insight.isEmpty()) {
+                            continue;
+                        }
+
+                        if (insightsIndex == 0) {
+                            communityQuote.setText("\"" + insight + "\"");
+                        }
+
+                        if (insightsIndex == 1) {
+                            communityInsightsOne.setText(insight);
+                        }
+
+                        if (insightsIndex == 2) {
+                            communityInsightsTwo.setText(insight);
+                        }
+
+                        insightsIndex++;
                     }
 
 

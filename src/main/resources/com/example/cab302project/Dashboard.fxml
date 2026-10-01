@@ -14,6 +14,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cab302project.Dashboard.DashboardController"
+            style="-fx-font-family: 'Inter';"
             prefHeight="400.0" prefWidth="600.0">
     <!--Splitting the dashboard into two parts. Top containing the community quotes and the center containing AI recommendations and overall statistics.-->
     <BorderPane AnchorPane.leftAnchor="0"
@@ -24,14 +25,113 @@
             <VBox fillWidth="true"
                   spacing="20"
                   style="-fx-background-color: #fff">
-                <HBox style="-fx-background-color: #DEF3F0">
+                <HBox spacing="30"
+                      fillHeight="true"
+                      style="-fx-background-color: #DEF3F0">
                     <padding>
-                        <Insets top="20" left="20" right="20" bottom="50"/>
+                        <Insets top="25" right="40" bottom="25" left="40"/>
                     </padding>
-                    <Label text="This box will represent the overall community quote retrieved from the database in the future."/>
+                    <VBox alignment="CENTER"
+                          prefWidth="30"
+                          minWidth="30"
+                          maxWidth="30"
+                    >
+                        <Label text="Q"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+                        <Label text="U"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+                        <Label text="O"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+                        <Label text="T"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+                        <Label text="E"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+
+                        <Region prefHeight="8"/>
+
+                        <Label text="F"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+
+                        <Label text="O"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+
+                        <Label text="R"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+
+                        <Region prefHeight="8"/>
+
+                        <Label text="T"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+
+                        <Label text="O"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+
+                        <Label text="D"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+
+                        <Label text="A"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+                        <Label text="Y"
+                               wrapText="true"
+                               style="-fx-font-size: 12px;
+                                  -fx-text-fill: #1F6F64;
+                                  -fx-font-weight: 700;"/>
+
+                    </VBox>
+                    <HBox HBox.hgrow="ALWAYS"
+                          alignment="CENTER">
+                        <Label fx:id="communityQuote"
+                               text="Loading quote for today..."
+                               wrapText="true"
+                               alignment="CENTER"
+                               textAlignment="CENTER"
+                               maxWidth="1000"
+                               style="-fx-font-size: 32;
+                                      -fx-font-family: 'Arial';
+                                      -fx-font-style: italic;
+                                      -fx-font-weight: 600;
+                                      -fx-line-spacing: 4px;
+                                      -fx-text-fill: #193C37;"/>
+                    </HBox>
                 </HBox>
 
-                <VBox spacing="20">
+                <VBox spacing="15">
                     <padding>
                         <Insets top="20" right="20" bottom="20" left="20"/>
                     </padding>
@@ -42,20 +142,32 @@
                      -fx-border-width: 5px;
                      -fx-border-color: #C5C6C7;">
                         <padding>
-                            <Insets top="10" left="20" right="20" bottom="10"/>
+                            <Insets top="12" left="20" right="20" bottom="12"/>
                         </padding>
-                        <Label text="This box will represent a sub community quote retrieved from the database in the future."/>
+                        <Label fx:id="communityInsightsOne"
+                               text="Loading insights for today..."
+                               wrapText="true"
+                               style="-fx-font-size: 15px;
+                                      -fx-font-weight: 500;
+                                      -fx-line-spacing: 3px;
+                                      -fx-text-fill: #344542;"/>
                     </HBox>
 
                     <HBox style="-fx-background-color: #C5C6C7;
-                     -fx-background-radius: 15px;
-                     -fx-border-radius: 15px;
-                     -fx-border-width: 5px;
-                     -fx-border-color: #C5C6C7;">
+                                 -fx-background-radius: 15px;
+                                 -fx-border-radius: 15px;
+                                 -fx-border-width: 5px;
+                                 -fx-border-color: #C5C6C7;">
                         <padding>
-                            <Insets top="10" left="20" right="20" bottom="10"/>
+                            <Insets top="12" left="20" right="20" bottom="12"/>
                         </padding>
-                        <Label text="This box will represent a sub community quote retrieved from the database in the future."/>
+                        <Label fx:id="communityInsightsTwo"
+                               text="Loading insights for today..."
+                               wrapText="true"
+                               style="-fx-font-size: 15px;
+                                      -fx-font-weight: 500;
+                                      -fx-line-spacing: 3px;
+                                      -fx-text-fill: #344542;"/>
                     </HBox>
                 </VBox>
             </VBox>
@@ -78,29 +190,31 @@
                       prefWidth="0"
                       maxWidth="Infinity">
 
-                    <Label text="AI Recommendations"
+                    <Label text="Personalised Recommendations"
                            alignment="CENTER_LEFT"
-                           style="-fx-font-size: 20;
-                                  -fx-font-weight: bold;"/>
+                           style="-fx-font-size: 23px;
+                                  -fx-text-fill: #1F2D2A;
+                                  -fx-font-weight: 700;"/>
 
                     <VBox VBox.vgrow="ALWAYS"
                           spacing="20"
                           style="-fx-background-color: #fff;
                                  -fx-background-radius: 15;
                                  -fx-border-radius: 20;">
+
                         <VBox VBox.vgrow="ALWAYS"
                               spacing="30">
                             <padding>
-                                <Insets top="15" right="15" bottom="15" left="15"/>
+                                <Insets top="12" right="12" bottom="12" left="12"/>
                             </padding>
-                            <VBox spacing="25"
+                            <VBox spacing="10"
                                   style="-fx-background-color: #F2FFFD;
                                  -fx-background-radius: 15;
                                  -fx-border-radius: 20;"
                                   prefHeight="130">
 
                                 <padding>
-                                    <Insets top="0" right="5" bottom="0" left="5"/>
+                                    <Insets top="15" right="15" bottom="15" left="15"/>
                                 </padding>
 
                                 <effect>
@@ -110,27 +224,33 @@
                                                 offsetY="-1"
                                                 color="#D9A441"/>
                                 </effect>
+                                <Label text="AI Recommendation"
+                                       style="-fx-font-size: 10px;
+                                              -fx-font-weight: 700;
+                                              -fx-text-fill: #1F6F64;
+                                              -fx-letter-spacing: 1.5px;"/>
                                 <Label fx:id="recommendationOne"
-                                       text="Loading recommendation..."
                                        wrapText="true"
-                                       style="-fx-font-size: 16;
-                                              -fx-font-weight: bold;"/>
+                                       style="-fx-font-size: 15px;
+                                              -fx-font-weight: 500;
+                                              -fx-line-spacing: 3px;
+                                              -fx-font-weight: 500;"/>
                             </VBox>
                         </VBox>
 
                         <VBox VBox.vgrow="ALWAYS"
                               spacing="30">
                             <padding>
-                                <Insets top="15" right="15" bottom="15" left="15"/>
+                                <Insets top="12" right="12" bottom="12" left="12"/>
                             </padding>
-                            <VBox spacing="25"
+                            <VBox spacing="10"
                                   style="-fx-background-color: #F2FFFD;
                                  -fx-background-radius: 15;
                                  -fx-border-radius: 20;"
                                   prefHeight="130">
 
                                 <padding>
-                                    <Insets top="0" right="5" bottom="0" left="5"/>
+                                    <Insets top="15" right="15" bottom="15" left="15"/>
                                 </padding>
 
                                 <effect>
@@ -140,28 +260,35 @@
                                                 offsetY="-1"
                                                 color="#D9A441"/>
                                 </effect>
+                                <Label text="AI Recommendation"
+                                       style="-fx-font-size: 10px;
+                                              -fx-font-weight: 700;
+                                              -fx-text-fill: #1F6F64;
+                                              -fx-letter-spacing: 1.5px;"/>
 
                                 <Label fx:id="recommendationTwo"
-                                       text="Loading recommendation..."
                                        wrapText="true"
-                                       style="-fx-font-size: 16;
-                                              -fx-font-weight: bold;"/>
+                                       style="-fx-font-size: 15px;
+                                              -fx-font-weight: 500;
+                                              -fx-line-spacing: 3px;
+                                              -fx-font-weight: 500;"/>
                             </VBox>
                         </VBox>
+
 
                         <VBox VBox.vgrow="ALWAYS"
                               spacing="30">
                             <padding>
-                                <Insets top="15" right="15" bottom="15" left="15"/>
+                                <Insets top="12" right="12" bottom="12" left="12"/>
                             </padding>
-                            <VBox spacing="25"
+                            <VBox spacing="10"
                                   style="-fx-background-color: #F2FFFD;
                                  -fx-background-radius: 15;
                                  -fx-border-radius: 20;"
                                   prefHeight="130">
 
                                 <padding>
-                                    <Insets top="0" right="5" bottom="0" left="5"/>
+                                    <Insets top="15" right="15" bottom="15" left="15"/>
                                 </padding>
 
                                 <effect>
@@ -171,12 +298,17 @@
                                                 offsetY="-1"
                                                 color="#D9A441"/>
                                 </effect>
-
+                                <Label text="AI Recommendation"
+                                       style="-fx-font-size: 10px;
+                                              -fx-font-weight: 700;
+                                              -fx-text-fill: #1F6F64;
+                                              -fx-letter-spacing: 1.5px;"/>
                                 <Label fx:id="recommendationThree"
-                                       text="Loading recommendation..."
                                        wrapText="true"
-                                       style="-fx-font-size: 16;
-                                              -fx-font-weight: bold;"/>
+                                       style="-fx-font-size: 15px;
+                                              -fx-font-weight: 500;
+                                              -fx-line-spacing: 3px;
+                                              -fx-font-weight: 500;"/>
                             </VBox>
                         </VBox>
 
@@ -192,8 +324,9 @@
                       maxWidth="Infinity">
 
                     <Label text="Overall Statistics"
-                           style="-fx-font-size: 20;
-                                  -fx-font-weight: bold;"/>
+                           style="-fx-font-size: 23px;
+                                  -fx-text-fill: #1F2D2A;
+                                  -fx-font-weight: 700;"/>
 
                     <VBox VBox.vgrow="ALWAYS"
                           fillWidth="true"
@@ -212,179 +345,186 @@
                             <VBox spacing="5"
                                   fillWidth="true">
 
-                                <Label text="Activity Completed"
-                                       style="-fx-font-weight:bold;
-                                              -fx-font-size: 15;"/>
-                                <HBox spacing="10"
-                                      fillHeight="true"
-                                      alignment="CENTER_LEFT">
+                                <HBox alignment="CENTER_LEFT">
+                                    <Label text="ACTIVITIES COMPLETED"
+                                           style="-fx-font-weight:700;
+                                                  -fx-text-fill: #7A7A7A;
+                                                  -fx-letter-spacing: 1px;
+                                                  -fx-font-size: 11px;"/>
 
-                                    <ProgressBar fx:id="activityCompleted"
-                                                 prefHeight="40"
-                                                 maxWidth="Infinity"
-                                                 HBox.hgrow="ALWAYS"
-                                                 style="-fx-accent: #1F6F64"/>
+                                    <Region HBox.hgrow="ALWAYS"/>
                                     <Label fx:id="activitiesCompletedLabel"
                                            text=""
-                                           style="-fx-font-weight:bold;
-                                              -fx-font-size: 15;"/>
+                                           style="-fx-font-weight:700;
+                                                  -fx-text-fill: #1F6F64;
+                                                  -fx-font-size: 16;"/>
                                 </HBox>
+                                <ProgressBar fx:id="activityCompleted"
+                                             prefHeight="12"
+                                             maxWidth="Infinity"
+                                             HBox.hgrow="ALWAYS"
+                                             style="-fx-accent: #1F6F64"/>
                             </VBox>
 
-                            <VBox spacing="15"
-                                  VBox.vgrow="ALWAYS"
-                                  fillWidth="true"
-                                  alignment="TOP_CENTER">
 
-                                <VBox spacing="5"
-                                      fillWidth="true">
+                            <VBox spacing="5"
+                                  fillWidth="true">
 
-                                    <Label text="Activity Minutes Completed"
-                                           style="-fx-font-weight=bold;
-                                              -fx-font-size: 15;"/>
-                                    <HBox spacing="10"
-                                          fillHeight="true"
-                                          alignment="CENTER_LEFT">
-                                        <ProgressBar fx:id="activitiesMinutesCompleted"
-                                                     prefHeight="40"
-                                                     maxWidth="Infinity"
-                                                     HBox.hgrow="ALWAYS"
-                                                     style="-fx-accent: #1F6F64"/>
-                                        <Label fx:id="activitiesMinutesCompletedLabel"
-                                               text=""
-                                               style="-fx-font-weight=bold;
-                                              -fx-font-size: 15;"/>
-                                    </HBox>
-                                </VBox>
+                                <HBox alignment="CENTER_LEFT">
+
+                                    <Label text="ACTIVITY MINUTES COMPLETED"
+                                           style="-fx-font-weight=700;
+                                                  -fx-text-fill: #7A7A7A;
+                                                  -fx-letter-spacing: 1px;
+                                                  -fx-font-size: 11px;"/>
+
+                                    <Region HBox.hgrow="ALWAYS"/>
+
+                                    <Label fx:id="activitiesMinutesCompletedLabel"
+                                           text=""
+                                           style="-fx-font-weight=700;
+                                                  -fx-text-fill: #1F6F64;
+                                                  -fx-font-size: 16px;"/>
+                                </HBox>
+
+                                <ProgressBar fx:id="activitiesMinutesCompleted"
+                                             prefHeight="12"
+                                             maxWidth="Infinity"
+                                             HBox.hgrow="ALWAYS"
+                                             style="-fx-accent: #1F6F64"/>
                             </VBox>
-
-                            <HBox spacing="20"
-                                  alignment="BOTTOM_CENTER"
-                                  fillHeight="true">
-
-                                <VBox HBox.hgrow="ALWAYS"
-                                      alignment="TOP_CENTER"
-                                      fillWidth="true"
-                                      prefHeight="150"
-                                      spacing="40"
-                                      style="-fx-background-color: #F5F3F3;
-                                         -fx-background-radius: 15;
-                                         -fx-border-radius: 20;">
-                                    <padding>
-                                        <Insets top="5" bottom="10" left="0" right="0"/>
-                                    </padding>
-
-                                    <Label text="Average Sleep"
-                                           wrapText="true"
-                                           alignment="CENTER"
-                                           textAlignment="CENTER"
-                                           maxWidth="Infinity"
-                                           HBox.hgrow="ALWAYS"
-                                           style="-fx-text-fill: #7A7A7A;
-                                                  -fx-font-size: 18;
-                                                  -fx-font-weight: bold;"/>
-
-                                    <Label fx:id="avgSleep"
-                                           text=""
-                                           style="-fx-font-size: 55;
-                                              -fx-font-weight: bold;"/>
-
-                                    <Button text="View Data"
-                                            prefWidth="150"
-                                            prefHeight="40"
-                                            maxHeight="40"
-                                            maxWidth="120"
-                                            style="-fx-background-color: #1F6F64;
-                                               -fx-text-fill: white;
-                                               -fx-background-radius: 10;
-                                               -fx-font-size: 20;"/>
-                                </VBox>
-
-                                <VBox HBox.hgrow="ALWAYS"
-                                      alignment="TOP_CENTER"
-                                      prefHeight="150"
-                                      fillWidth="true"
-                                      spacing="40"
-                                      style="-fx-background-color: #F5F3F3;
-                                         -fx-background-radius: 15;
-                                         -fx-border-radius: 20;">
-                                    <padding>
-                                        <Insets top="5" bottom="10" left="0" right="0"/>
-                                    </padding>
-
-                                    <Label text="Average Study Stress"
-                                           wrapText="true"
-                                           alignment="CENTER"
-                                           textAlignment="CENTER"
-                                           maxWidth="Infinity"
-                                           HBox.hgrow="ALWAYS"
-                                           style="-fx-text-fill: #7A7A7A;
-                                                  -fx-font-size: 18;
-                                                  -fx-font-weight: bold;"/>
-
-                                    <Label fx:id="avgStudyStress"
-                                           text=""
-                                           style="-fx-font-size: 55;
-                                              -fx-font-weight: bold;"/>
-
-                                    <Button text="View Data"
-                                            prefWidth="150"
-                                            prefHeight="40"
-                                            maxHeight="40"
-                                            maxWidth="150"
-                                            style="-fx-background-color: #1F6F64;
-                                               -fx-text-fill: white;
-                                               -fx-background-radius: 10;
-                                               -fx-font-size: 20;"/>
-                                </VBox>
-                                <VBox HBox.hgrow="ALWAYS"
-                                      alignment="CENTER"
-                                      fillWidth="true"
-                                      spacing="40"
-                                      style="-fx-background-color: #F5F3F3;
-                                             -fx-background-radius: 15;">
-                                    <!--This aims to overlap a circle and an arc to output a donut like progress bar rather than the standard progress indicator.-->
-                                    <Pane fx:id="streakProgressCircle"
-                                          prefWidth="250"
-                                          prefHeight="250"
-                                          VBox.vgrow="ALWAYS">
-                                        <Circle radius="80"
-                                                centerY="125"
-                                                centerX="125"
-                                                fill="transparent"
-                                                stroke="darkgrey"
-                                                strokeWidth="10"/>
-                                        <Arc fx:id="streakArc"
-                                             radiusX="80"
-                                             radiusY="80"
-                                             centerY="125"
-                                             centerX="125"
-                                             startAngle="90"
-                                             length="270"
-                                             fill="transparent"
-                                             stroke="#1F6F64"
-                                             strokeWidth="10"
-                                             type="OPEN"/>
-
-                                        <VBox layoutY="95"
-                                              layoutX="75"
-                                              prefWidth="100"
-                                              spacing="3"
-                                              alignment="CENTER">
-                                            <Label fx:id="weeklyStreakLabel"
-                                                   text=""
-                                                   style="-fx-font-size: 20;
-                                                          -fx-font-weight: bold;"/>
-                                            <Label text="to complete weekly check-in streak"
-                                                   textAlignment="CENTER"
-                                                   wrapText="true"
-                                                   style="-fx-font-size: 12;
-                                              -fx-font-weight: bold;"/>
-                                        </VBox>
-                                    </Pane>
-                                </VBox>
-                            </HBox>
                         </VBox>
+
+                        <HBox spacing="15"
+                              alignment="CENTER"
+                              fillHeight="true">
+
+                            <VBox HBox.hgrow="ALWAYS"
+                                  alignment="TOP_CENTER"
+                                  fillWidth="true"
+                                  prefHeight="130"
+                                  maxHeight="150"
+                                  spacing="10"
+                                  style="-fx-background-color: #F5F3F3;
+                                         -fx-background-radius: 15;
+                                         -fx-border-radius: 20;">
+                                <padding>
+                                    <Insets top="12" bottom="12" left="10" right="10"/>
+                                </padding>
+
+                                <Label text="AVERAGE SLEEP"
+                                       wrapText="true"
+                                       alignment="CENTER"
+                                       textAlignment="CENTER"
+                                       maxWidth="Infinity"
+                                       style="-fx-text-fill: #7A7A7A;
+                                              -fx-font-size: 15px;
+                                              -fx-letter-spacing: 1px;
+                                              -fx-font-weight: 700;"/>
+
+                                <Label fx:id="avgSleep"
+                                       text=""
+                                       style="-fx-font-size: 40px;
+                                              -fx-text-fill: #1F6F64;
+                                              -fx-font-weight: 700;"/>
+                                <Label text="hours"
+                                       style="-fx-font-size: 12px;
+                                              -fx-text-fill: black;
+                                              -fx-font-weight: 600;"/>
+                            </VBox>
+
+                            <VBox HBox.hgrow="ALWAYS"
+                                  alignment="TOP_CENTER"
+                                  prefHeight="130"
+                                  maxHeight="150"
+                                  fillWidth="true"
+                                  spacing="10"
+                                  style="-fx-background-color: #F5F3F3;
+                                         -fx-background-radius: 15;
+                                         -fx-border-radius: 20;">
+                                <padding>
+                                    <Insets top="12" bottom="12" left="10" right="10"/>
+                                </padding>
+
+                                <Label text="AVERAGE STUDY STRESS"
+                                       wrapText="true"
+                                       alignment="CENTER"
+                                       textAlignment="CENTER"
+                                       maxWidth="Infinity"
+                                       style="-fx-text-fill: #7A7A7A;
+                                              -fx-font-size: 15px;
+                                              -fx-letter-spacing: 1px;
+                                              -fx-font-weight: 700;"/>
+
+                                <Label fx:id="avgStudyStress"
+                                       text=""
+                                       style="-fx-font-size: 40px;
+                                              -fx-text-fill: #1F6F64;
+                                              -fx-font-weight: 700;"/>
+                                <Label text="/10"
+                                       style="-fx-font-size: 12px;
+                                              -fx-text-fill: black;
+                                              -fx-font-weight: 600;"/>
+
+                            </VBox>
+                            <VBox HBox.hgrow="ALWAYS"
+                                  alignment="CENTER"
+                                  fillWidth="true"
+                                  spacing="5"
+                                  prefHeight="130"
+                                  maxHeight="150"
+                                  style="-fx-background-color: #F5F3F3;
+                                             -fx-background-radius: 15;">
+                                <padding>
+                                    <Insets top="5" bottom="5" left="5" right="5"/>
+                                </padding>
+                                <!--This aims to overlap a circle and an arc to output a donut like progress bar rather than the standard progress indicator.-->
+                                <Pane fx:id="streakProgressCircle"
+                                      prefWidth="170"
+                                      prefHeight="140"
+                                      maxWidth="170"
+                                      maxHeight="140">
+
+                                    <Circle radius="55"
+                                            centerY="70"
+                                            centerX="80"
+                                            fill="transparent"
+                                            stroke="#C5C6C7"
+                                            strokeWidth="8"/>
+
+                                    <Arc fx:id="streakArc"
+                                         radiusX="55"
+                                         radiusY="55"
+                                         centerY="70"
+                                         centerX="80"
+                                         startAngle="90"
+                                         length="270"
+                                         fill="transparent"
+                                         stroke="#1F6F64"
+                                         strokeWidth="8"
+                                         type="OPEN"/>
+
+                                    <VBox layoutY="45"
+                                          layoutX="35"
+                                          prefWidth="100"
+                                          spacing="2"
+                                          alignment="CENTER">
+                                        <Label fx:id="weeklyStreakLabel"
+                                               text=""
+                                               style="-fx-font-size: 32px;
+                                                      -fx-text-fill: #1F6F64;
+                                                      -fx-font-weight: 700;"/>
+                                        <Label text="CHECKIN DAY STREAK"
+                                               textAlignment="CENTER"
+                                               wrapText="true"
+                                               style="-fx-font-size: 12;
+                                                      -fx-text0fill: black;
+                                                      -fx-letter-spacing: 1px;
+                                                      -fx-font-weight: 700;"/>
+                                    </VBox>
+                                </Pane>
+                            </VBox>
+                        </HBox>
                     </VBox>
                 </VBox>
             </HBox>

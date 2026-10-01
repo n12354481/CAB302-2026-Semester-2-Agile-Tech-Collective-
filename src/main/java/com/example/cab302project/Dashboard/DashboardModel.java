@@ -1,5 +1,14 @@
 package com.example.cab302project.Dashboard;
 
+import com.example.cab302project.Dashboard.CommunityInsights.CommunityInsightsData;
+import com.example.cab302project.Dashboard.CommunityInsights.CommunityService;
+import com.example.cab302project.Dashboard.CommunityInsights.ICommunityInsightsDAO;
+import com.example.cab302project.Dashboard.Recommendations.IRecommendationsDAO;
+import com.example.cab302project.Dashboard.Recommendations.RecommendationData;
+import com.example.cab302project.Dashboard.Recommendations.RecommendationService;
+import com.example.cab302project.Database.DatabaseCommunityInsightsDAO;
+import com.example.cab302project.Database.DatabaseRecommendationsDAO;
+
 import java.util.List;
 
 /**
@@ -13,7 +22,8 @@ public class DashboardModel {
     private int activityMinutes;
     private int activityGoal;
 
-    private List<String> recommendations;
+    private RecommendationData recommendations;
+    private CommunityInsightsData insights;
 
     /**
      * Constructs the dashboard model's fields.
@@ -23,8 +33,10 @@ public class DashboardModel {
      * @param avgSleep: The overall statistic's average sleep field.
      * @param activityMinutes: The overall statistic's activity minutes field.
      * @param activityGoal: The overall statistics activities goal minutes field.
+     * @param insights: The insights class which retrieves all the insights data.
+     * @param recommendations: The recommendations class which retrieves all the recommendations' data.
      */
-    public DashboardModel(int weeklyCheckinsStreak, int activitiesCompleted, double avgStudyStress, double avgSleep, int activityMinutes, int activityGoal)
+    public DashboardModel(int weeklyCheckinsStreak, int activitiesCompleted, double avgStudyStress, double avgSleep, int activityMinutes, int activityGoal, RecommendationData recommendations, CommunityInsightsData insights)
     {
         this.weeklyCheckinsStreak = weeklyCheckinsStreak;
         this.activitiesCompleted = activitiesCompleted;
@@ -32,8 +44,8 @@ public class DashboardModel {
         this.avgStudyStress = avgStudyStress;
         this.activityMinutes = activityMinutes;
         this.activityGoal = activityGoal;
-
-        this.recommendations = List.of();
+        this.insights = insights;
+        this.recommendations = recommendations;
     }
 
     /**
@@ -103,16 +115,24 @@ public class DashboardModel {
             progress = activityMinutes;
         }
         else{
-            progress = activityMinutes/activityGoal;
+            progress = (double) activityMinutes/activityGoal;
         }
         return progress;
     }
 
-    public List<String> getREcommendations() {
+    /**
+     * Getter for  recommendation data
+     * @return: Returns the recommendation data
+     */
+    public RecommendationData getRecommendations() {
         return recommendations;
     }
 
-    public void setRecommendations(List<String> recommendations) {
-        this.recommendations = recommendations;
+    /**
+     * Getter for  insights data
+     * @return: Returns the insights data
+     */
+    public CommunityInsightsData getInsights() {
+        return insights;
     }
 }
