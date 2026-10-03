@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.assertThrows;
 /** Which band a reward lands in comes from these, so each one is checked. */
 class RewardTest {
 
@@ -21,6 +21,12 @@ class RewardTest {
         return new Reward("Garden gnome", "Months active", 1, 1, "month", "why it was earned");
     }
 
+    @Test
+    void cannotClaimBeforeTheTargetIsMet() {
+        Reward reward = counting();
+        assertThrows(IllegalStateException.class, () -> reward.claim(LocalDate.of(2026, 9, 12)));
+        assertFalse(reward.claimed());
+    }
     @Test
     void meetingTheTargetMakesItReadyToClaim() {
         assertFalse(counting().complete());

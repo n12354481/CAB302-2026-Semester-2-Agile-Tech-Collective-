@@ -75,3 +75,4 @@ public class Reward {
         claimedOn = date;
     }
 }
+
