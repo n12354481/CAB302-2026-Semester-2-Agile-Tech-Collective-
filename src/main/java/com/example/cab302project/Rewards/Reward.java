@@ -72,6 +72,9 @@ public class Reward {
     }
 
     public void claim(LocalDate date) {
+        if (!complete()) {
+            throw new IllegalStateException(name + " is not complete yet");
+        }
         claimedOn = date;
     }
 }
