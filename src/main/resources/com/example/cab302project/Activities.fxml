@@ -25,14 +25,31 @@
 
         <!-- activities page heading and description -->
         <Label text="Activities" style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
-        <Label text="Choose an activity to support your wellbeing." wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #666666;"/>
+        <Label text="Choose an activity to support your wellbeing."
+               wrapText="true"
+               style="-fx-font-size: 15px;
+                      -fx-text-fill: gray;"/>
 
-        <HBox alignment="CENTER_LEFT">
+        <HBox alignment="CENTER_LEFT" spacing="20">
             <ButtonBar fx:id="buttonBar"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- opens my activities page -->
+            <Button text="My Activities"
+                    onAction="#onMyActivitiesClicked"
+                    style="-fx-background-color: #DEF3F0;
+                           -fx-background-radius: 10;
+                           -fx-padding: 8 14;
+                           -fx-cursor: hand"/>
         </HBox>
 
         <!-- displays the activity cards for selected category -->
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS" style="-fx-background: white; -fx-background-color: white;">
+        <ScrollPane fitToWidth="true"
+                    hbarPolicy="NEVER"
+                    VBox.vgrow="ALWAYS"
+                    style="-fx-background: white;
+                           -fx-background-color: white;">
             <content>
                 <FlowPane fx:id="contentPane" hgap="20" vgap="20" prefWrapLength="750">
                     <padding>
@@ -44,19 +61,32 @@
     </VBox>
 
     <!-- activity details section which is shown after an activity is clicked -->
-    <ScrollPane fx:id="detailsPane" visible="false" managed="false" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: white; -fx-background-color: white;">
+    <ScrollPane fx:id="detailsPane"
+                visible="false"
+                managed="false"
+                fitToWidth="true"
+                hbarPolicy="NEVER"
+                style="-fx-background: white;
+                       -fx-background-color: white;">
         <content>
             <VBox spacing="18">
                 <padding>
                     <Insets top="30" right="40" bottom="30" left="40"/>
                 </padding>
 
-                <Button text="← Back" onAction="#onBackClicked" prefWidth="90" style="-fx-background-color: #E8EEEE; -fx-background-radius: 8; -fx-cursor: hand;"/>
+                <Button text="← Back"
+                        onAction="#onBackClicked"
+                        prefWidth="90"
+                        style="-fx-background-color: #E8EEEE;
+                               -fx-background-radius: 8;
+                               -fx-cursor: hand;"/>
 
                 <!-- Activity image section. Images have not been added yet, category used as placeholder -->
                 <StackPane prefHeight="250" minHeight="250" maxHeight="250" style="-fx-background-color: #E8EEEE; -fx-background-radius: 15;">
+
                     <ImageView fx:id="activityImage" fitWidth="600" fitHeight="240" preserveRatio="true"/>
-                    <Label fx:id="imagePlaceholder" style="-fx-font-size: 20px; -fx-text-fill: #666666;"/>
+                    <Label fx:id="imagePlaceholder" style="-fx-font-size: 20px; -fx-text-fill: gray;"/>
+
                 </StackPane>
 
                 <Label fx:id="activityName" wrapText="true" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
@@ -73,12 +103,144 @@
                 <FlowPane hgap="20" vgap="10">
                     <RadioButton fx:id="duration15" text="15 mins" toggleGroup="$durationGroup"/>
                     <RadioButton fx:id="duration30" text="30 mins" toggleGroup="$durationGroup"/>
-                    <RadioButton fx:id="customDuration" text="custom" toggleGroup="$durationGroup"/>
+                    <RadioButton fx:id="customDuration" text="Custom" toggleGroup="$durationGroup"/>
                 </FlowPane>
-                <TextField fx:id="customMinutes" promptText="Duratin in minutes" maxWidth="220"/>
-                <Button text="Select Activity" onAction="#onSelectActivityClicked" prefWidth="180" prefHeight="42" style="-fx-background-color: #1F6F64;-fx-text-fill: white;-fx-font-size: 15px;-fx-font-weight: bold;-fx-background-radius: 8; -fx-cursor: hand;"/>
+
+                <TextField fx:id="customMinutes" promptText="Duration in minutes" maxWidth="220"/>
+
+                <Button fx:id="selectActivityButton"
+                        text="Select Activity"
+                        onAction="#onSelectActivityClicked"
+                        prefWidth="180"
+                        prefHeight="42"
+                        style="-fx-background-color: #1F6F64;
+                               -fx-text-fill: white;
+                               -fx-font-size: 15px;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 8;
+                               -fx-cursor: hand;"/>
+
                 <Label fx:id="selectionMessage" wrapText="true" style="-fx-font-size: 14px; -fx-text-fill: #1F6F64;"/>
             </VBox>
+        </content>
+    </ScrollPane>
+
+    <!-- my activities page -->
+    <ScrollPane fx:id="myActivitiesPane"
+                visible="false"
+                managed="false"
+                fitToWidth="true"
+                hbarPolicy="NEVER"
+                style="-fx-background: white;
+                       -fx-background-color: white;">
+        <content>
+            <VBox spacing="22">
+                <padding>
+                    <Insets top="30" right="40" bottom="30" left="40"/>
+                </padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Button text="← Back"
+                            onAction="#onMyActivitiesBackCLicked"
+                            prefWidth="90"
+                            style="-fx-background-color: #E8EEEE;
+                                   -fx-background-radius: 8;
+                                   -fx-cursor: hand;"/>
+
+                    <VBox spacing="4">
+
+                        <Label text="My Activities" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+                        <Label text="Track and manage your activities" style="-fx-font-size: 14px; -fx-text-fill: gray;"/>
+
+                    </VBox>
+                </HBox>
+
+                <HBox alignment="CENTER_RIGHT" spacing="10">
+                    <Button text="+ Add activity"
+                            onAction="#onAddActivityClicked"
+                            style="-fx-background-color: #DEF3F0;
+                                   -fx-background-radius: 10;
+                                   -fx-padding: 8 14;
+                                   -fx-cursor: hand;"/>
+
+                    <Button fx:id="editButton"
+                            text="Edit"
+                            onAction="#onEditActivitiesClicked"
+                            style="-fx-background-color: #DEF3F0;
+                                   -fx-background-radius: 10;
+                                   -fx-padding: 8 14;
+                                   -fx-cursor: hand;"/>
+                </HBox>
+
+                <Label text="My Activities" style="-fx-font-size: 19px; -fx-font-weight: bold;"/>
+
+                <VBox fx:id="myActivitiesList" spacing="10"/>
+
+                <Separator/>
+
+                <Label text="Recent activity" style="-fx-font-size: 19px; -fx-font-weight: bold;"/>
+
+                <VBox fx:id="recentActivitiesList" spacing="10"/>
+
+            </VBox>
+        </content>
+    </ScrollPane>
+
+    <!-- create custom activity page -->
+    <ScrollPane fx:id="createActivityPane"
+                visible="false"
+                managed="false"
+                fitToWidth="true"
+                hbarPolicy="NEVER"
+                style="-fx-background: white;
+                       -fx-background-color: white;">
+
+        <content>
+            <VBox spacing="18">
+                <padding>
+                    <Insets top="30" right="40" bottom="30" left="40"/>
+                </padding>
+
+                <Button text="← Back"
+                        onAction="#onCreateActivitiyBackClicked"
+                        prefWidth="90"
+                        style="-fx-background-color: #E8EEEE;
+                              -fx-background-radius: 8;
+                              -fx-cursor: hand;"/>
+
+                <Label text="Create custom activity" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+                <Label text="Activity name" style="-fx-font-size: 17px; -fx-font-weight: bold;"/>
+
+                <TextField fx:id="customActivityName" promptText="e.g. Badminton"/>
+
+                <Label text="Category" style="-fx-font-size: 17px; -fx-font-weight: bold;"/>
+
+                <ComboBox fx:id="customActivityCategory" promptText="Choose a category" prefWidth="250"/>
+
+                <Label text="Description (optional)" style="-fx-font-size: 17px; -fx-font-weight: bold;"/>
+
+                <TextArea fx:id="customActivityDescription"
+                          promptText="Add details about your activity..."
+                          prefRowCount="4"
+                          wrapText="true"/>
+
+                <Button text="Create activity"
+                        onAction="#onCreateActivityClicked"
+                        prefWidth="180"
+                        prefHeight="42"
+                        style="-fx-background-color: #1F6F64;
+                               -fx-text-fill: white;
+                               -fx-font-size: 15px;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 8;
+                               -fx-cursor: hand;"/>
+
+                <Label fx:id="createActivityMessage" wrapText="true" style="-fx-font-size: 14px; -fx-text-fill: #1F6F64;"/>
+
+            </VBox>
+
         </content>
     </ScrollPane>
 </StackPane>
