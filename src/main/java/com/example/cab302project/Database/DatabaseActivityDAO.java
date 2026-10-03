@@ -106,5 +106,24 @@ public class DatabaseActivityDAO {
 
         return new Activity(id, activity.getName(), activity.getCategory(), activity.getDescription(), activity.getGoal(), activity.getImageFile());
     }
+
+    public List<Activity> getAllActivities() {
+        List<Activity> savedActivities = new ArrayList<>();
+
+        String query = "SELECT * FROM activity ORDER BY activityID";
+
+        try (PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery()) {
+
+            while (rs.next()) {
+                Activity activity = marshallActivity(rs);
+
+                savedActivities.add(activity);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return savedActivities;
+    }
 }
 
