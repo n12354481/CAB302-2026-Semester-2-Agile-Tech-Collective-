@@ -16,5 +16,6 @@ public record SocialPostings(
     String startTime,
     String endTime,
     String eventLocation
+    // String tags
     ) {
 }

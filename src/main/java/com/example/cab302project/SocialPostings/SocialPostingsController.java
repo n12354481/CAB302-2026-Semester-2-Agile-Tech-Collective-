@@ -3,6 +3,7 @@ package com.example.cab302project;
 import com.example.cab302project.SocialPostings.ISocialPostingsDAO;
 import com.example.cab302project.SocialPostings.SocialPostings;
 import com.example.cab302project.SocialPostings.CreatePostController;
+import com.example.cab302project.SocialPostings.PostDetailController;
 
 import com.example.cab302project.Database.SocialPostingsDAO;
 import javafx.fxml.FXML;
@@ -43,34 +44,6 @@ public class SocialPostingsController {
         loadPosts();
     }
 
-    /**
-     * Pulls all the posts from the database and rebuilds the feed
-     * safe to call again and again to refresh what's displayed e.g applying filters
-     */
-    /** private void loadPosts() {
-        postsContainer.getChildren().clear();
-
-        try {
-            List<SocialPostings> posts = socialPostingsDAO.getAllPosts();
-
-            if (posts.isEmpty()) {
-                Label emptyLabel = new Label("No posts on the community feed to display.");
-                emptyLabel.getStyleClass().add("post-desc");
-                postsContainer.getChildren().add(emptyLabel);
-                return;
-            }
-
-            for (SocialPostings post : posts) {
-                postsContainer.getChildren().add(buildPostCard(post));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Label errorLabel = new Label("Couldn't load posts right now.");
-            errorLabel.getStyleClass().add("post-desc");
-            postsContainer.getChildren().add(errorLabel);
-        }
-    } **/
-
     private VBox buildPostCard(SocialPostings post) {
         VBox card = new VBox();
         card.getStyleClass().add("post-card");
@@ -99,7 +72,33 @@ public class SocialPostingsController {
         body.getChildren().addAll(title, description, buttons);
         card.getChildren().addAll(image, body);
 
+        // clicking anywhere opens the post detail page
+        card.setOnMouseClicked(event -> openPostDetail(post));
+        card.setStyle("-fx-cursor: hand;");
+
+        registerButton.setOnMouseClicked(javafx.event.Event::consume);
+        interestedButton.setOnMouseClicked(javafx.event.Event::consume);
+
         return card;
+    }
+
+    private void openPostDetail(SocialPostings post) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/cab302project/postdetail.fxml")
+            );
+            Parent detailView = loader.load();
+
+            StackPane mainContent = (StackPane) postsContainer.getScene().lookup("#mainContent");
+
+            PostDetailController controller = loader.getController();
+            controller.setMainContent(mainContent);
+            controller.setPost(post);
+
+            mainContent.getChildren().setAll(detailView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void loadPosts() {
