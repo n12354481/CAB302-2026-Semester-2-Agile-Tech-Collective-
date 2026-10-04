@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <!-- Laid out from the Rewards Dashboard Wireframe. -->
@@ -27,28 +26,27 @@
             <Label fx:id="rangeLabel" styleClass="muted"/>
         </HBox>
 
-        <!-- Shown when this user has nothing logged at all. -->
-        <VBox fx:id="emptyState" styleClass="card" spacing="10.0" managed="false" visible="false">
-            <Label text="Nothing logged yet." styleClass="card-title"/>
-            <Label text="There is no logging screen yet, so you can fill the last fortnight with demo data to see how the rewards work."
-                   wrapText="true" styleClass="body"/>
-            <HBox>
-                <Button text="Load demo data" onAction="#onLoadDemo"/>
-            </HBox>
-        </VBox>
-
-        <!-- Shown once there is something to summarise. -->
+        <!-- Hidden only if the database cannot be read. -->
         <VBox fx:id="summaryState" spacing="24.0" managed="false" visible="false">
 
-            <!-- Row 1: the garden, and whichever day is picked in the streak grid. -->
+            <!-- Row 1: the garden, and whichever day is picked in it. -->
             <HBox spacing="24.0">
-                <StackPane styleClass="garden-placeholder" HBox.hgrow="ALWAYS">
-                    <Label text="GARDEN" styleClass="garden-placeholder-label"/>
-                </StackPane>
+                <!-- prefWidth 0 so the garden takes whatever the selected card leaves. -->
+                <!-- The controller adds the GardenPane at the end. FXML cannot import it, because
+                     it reads the capitalised Rewards package as a class name. -->
+                <VBox fx:id="gardenCard" styleClass="card" spacing="12.0" HBox.hgrow="ALWAYS"
+                      minWidth="360.0" prefWidth="0.0" maxWidth="Infinity">
+                    <HBox alignment="CENTER_LEFT" spacing="12.0">
+                        <Label text="GARDEN" styleClass="caption"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <HBox fx:id="legend" alignment="CENTER_RIGHT" spacing="14.0"/>
+                    </HBox>
+                </VBox>
 
                 <VBox styleClass="card" spacing="12.0" minWidth="400.0" prefWidth="400.0">
                     <Label text="SELECTED" styleClass="caption"/>
                     <Label fx:id="selectedDateLabel" styleClass="selected-date"/>
+                    <Label fx:id="selectedStateLabel" styleClass="small-muted"/>
                     <Region styleClass="divider"/>
 
                     <Label fx:id="aboveLabel" styleClass="caption"/>
@@ -62,9 +60,14 @@
                 </VBox>
             </HBox>
 
-        <!-- Row 2: rewards to claim, and the streak. -->
-            <HBox spacing="24.0">
-                <VBox styleClass="card" spacing="14.0" HBox.hgrow="ALWAYS" prefWidth="520.0" maxWidth="Infinity">
+        <!-- Row 2: rewards to claim, and the streak. Two equal columns. -->
+            <GridPane hgap="24.0">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50.0"/>
+                    <ColumnConstraints percentWidth="50.0"/>
+                </columnConstraints>
+                <VBox styleClass="card" spacing="14.0" maxWidth="Infinity" maxHeight="Infinity"
+                      GridPane.columnIndex="0">
                     <Label text="Rewards summary" styleClass="card-title"/>
                     <HBox alignment="CENTER_LEFT" spacing="14.0">
                         <Label text="Rewards ready to claim" styleClass="body" HBox.hgrow="ALWAYS"
@@ -75,38 +78,26 @@
                             minWidth="-Infinity" maxWidth="Infinity" onAction="#onViewClaiming"/>
                 </VBox>
 
-                <VBox styleClass="card" spacing="8.0" HBox.hgrow="ALWAYS" prefWidth="520.0" maxWidth="Infinity">
+                <VBox styleClass="card" spacing="8.0" maxWidth="Infinity" maxHeight="Infinity"
+                      GridPane.columnIndex="1">
                     <Label text="STREAK" styleClass="caption"/>
-                    <HBox spacing="24.0">
-                        <VBox spacing="4.0" minWidth="160.0" prefWidth="160.0">
-                            <HBox alignment="BASELINE_LEFT" spacing="8.0">
-                                <Label fx:id="streakNumber" styleClass="streak-number"/>
-                                <Label fx:id="streakUnit" styleClass="body"/>
-                            </HBox>
-                            <Label text="Anything logged keeps it going." wrapText="true" styleClass="small-muted"/>
-                            <Label text="KEY" styleClass="caption">
-                                <VBox.margin>
-                                    <Insets top="12.0"/>
-                                </VBox.margin>
-                            </Label>
-                            <VBox fx:id="keyList" spacing="6.0"/>
-                        </VBox>
-
-                        <!-- Monday to Sunday. Fixed columns so the "today" marker cannot widen them. -->
-                        <GridPane fx:id="dayGrid" hgap="6.0" vgap="6.0">
-                            <columnConstraints>
-                                <ColumnConstraints minWidth="36.0" prefWidth="36.0" maxWidth="36.0" halignment="CENTER"/>
-                                <ColumnConstraints minWidth="36.0" prefWidth="36.0" maxWidth="36.0" halignment="CENTER"/>
-                                <ColumnConstraints minWidth="36.0" prefWidth="36.0" maxWidth="36.0" halignment="CENTER"/>
-                                <ColumnConstraints minWidth="36.0" prefWidth="36.0" maxWidth="36.0" halignment="CENTER"/>
-                                <ColumnConstraints minWidth="36.0" prefWidth="36.0" maxWidth="36.0" halignment="CENTER"/>
-                                <ColumnConstraints minWidth="36.0" prefWidth="36.0" maxWidth="36.0" halignment="CENTER"/>
-                                <ColumnConstraints minWidth="36.0" prefWidth="36.0" maxWidth="36.0" halignment="CENTER"/>
-                            </columnConstraints>
-                        </GridPane>
+                    <HBox alignment="BASELINE_LEFT" spacing="8.0">
+                        <Label fx:id="streakNumber" styleClass="streak-number"/>
+                        <Label fx:id="streakUnit" styleClass="body"/>
                     </HBox>
+                    <Label text="Anything logged keeps it going." wrapText="true" styleClass="small-muted"/>
+                    <Region fx:id="streakDivider" styleClass="divider">
+                        <VBox.margin>
+                            <Insets top="10.0" bottom="6.0"/>
+                        </VBox.margin>
+                    </Region>
+                    <HBox fx:id="milestoneRow" alignment="BASELINE_LEFT" spacing="4.0">
+                        <Label text="Next milestone:" styleClass="body"/>
+                        <Label fx:id="milestoneValue" styleClass="milestone-value"/>
+                    </HBox>
+                    <Label fx:id="startStreakLabel" text="Log anything today to start one." styleClass="body"/>
                 </VBox>
-            </HBox>
+            </GridPane>
         </VBox>
 
         <Label fx:id="messageLabel" wrapText="true" styleClass="error"/>

@@ -2,13 +2,13 @@ package com.example.cab302project.Rewards;
 
 import com.example.cab302project.Database.DatabaseConnection;
 import com.example.cab302project.HelloApplication;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -19,18 +19,19 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.OptionalInt;
 
 /**
  * The rewards dashboard with the garden next to
- * the selected day, then the rewards ready to claim and the streak grid.
+ * the selected day, then the rewards ready to claim and the streak.
  *
  * Every number comes from {@link RewardsService}, which is where the
  * logic and the tests reside. This class only decides what to show.
  *
  * Some of it is demo scaffolding until the rest of the app is built. The user is
- * hardcoded because there is no login, the garden is a  placeholder, and the
- * claiming page it links to is hardcoded too.
+ * hardcoded because there is no login, and the claiming page it links to is hardcoded too.
  */
 public class RewardsController {
 
@@ -46,19 +47,17 @@ public class RewardsController {
     private static final DateTimeFormatter DAY_MONTH = DateTimeFormatter.ofPattern("d MMM");
     private static final DateTimeFormatter WEEKDAY_DAY_MONTH = DateTimeFormatter.ofPattern("EEE d MMM");
 
-    /** Grid headings, Monday is initially like {@link java.time.DayOfWeek}. */
-    private static final String[] WEEKDAYS = {"M", "T", "W", "T", "F", "S", "S"};
-
-    /** The key, best day first. CAPPED is left out because it shares BALANCED's colour. */
-    private static final DayState[] KEY = {
-            DayState.BALANCED, DayState.ROOTED_NO_FLOWER, DayState.FLOWERED_SHALLOW,
-            DayState.UNDER_BOTH, DayState.REST_ONLY, DayState.NOTHING_LOGGED};
-
     @FXML private Label rangeLabel;
-    @FXML private VBox emptyState;
     @FXML private VBox summaryState;
 
+    @FXML private VBox gardenCard;
+    @FXML private HBox legend;
+
+    /** Added in code; see the note in Rewards.fxml. */
+    private final GardenPane garden = new GardenPane();
+
     @FXML private Label selectedDateLabel;
+    @FXML private Label selectedStateLabel;
     @FXML private Label aboveLabel;
     @FXML private VBox activityList;
     @FXML private Label capNote;
@@ -70,22 +69,27 @@ public class RewardsController {
 
     @FXML private Label streakNumber;
     @FXML private Label streakUnit;
-    @FXML private VBox keyList;
-    @FXML private GridPane dayGrid;
+    @FXML private Region streakDivider;
+    @FXML private HBox milestoneRow;
+    @FXML private Label milestoneValue;
+    @FXML private Label startStreakLabel;
 
     @FXML private Label messageLabel;
 
     private RewardsService service;
     private LocalDate today;
 
-    /** The day on the selected card. Starts today and moves when a grid cell is clicked. */
-    private LocalDate selected;
+    /** The day on the selected card. Starts today and moves when a plant is clicked. */
+    private final ObjectProperty<LocalDate> selectedDay = new SimpleObjectProperty<>();
 
     @FXML
     public void initialize() {
         today = LocalDate.now();
-        selected = today;
-        drawKey();
+        selectedDay.set(today);
+        gardenCard.getChildren().add(garden);
+        legend.getChildren().setAll(GardenPane.legendItems());
+        garden.setOnPick(selectedDay::set);
+        garden.setOnLoadDemo(this::onLoadDemo);
         try {
             Connection connection = DatabaseConnection.getInstance();
             service = new RewardsService(connection, THRESHOLDS);
@@ -93,10 +97,10 @@ public class RewardsController {
             showError("Could not open the database: " + ex.getMessage());
             return;
         }
+        selectedDay.addListener((obs, old, day) -> refresh());
         refresh();
     }
 
-    @FXML
     private void onLoadDemo() {
         try {
             Connection connection = DatabaseConnection.getInstance();
@@ -127,16 +131,14 @@ public class RewardsController {
     /** Reads everything again and redraws. Called on open and after anything changes. */
     private void refresh() {
         LocalDate from = today.minusDays(WINDOW_DAYS - 1L);
+        LocalDate selected = selectedDay.get();
         rangeLabel.setText(from.format(DAY_MONTH) + " – " + today.format(DAY_MONTH));
 
-        List<DayState> days;
-        RewardsSummary summary;
+        List<DayTotals> totals;
         List<DayEntry> activities;
         List<DayEntry> rest;
         try {
-            days = service.statesFor(DEMO_USER_ID, from, today,
-                    RewardsService.DEFAULT_ACTIVITY_GOAL, RewardsService.DEFAULT_REST_GOAL);
-            summary = RewardsSummary.of(days, THRESHOLDS);
+            totals = service.totalsFor(DEMO_USER_ID, from, today);
             activities = service.activitiesOn(DEMO_USER_ID, selected);
             rest = service.restOn(DEMO_USER_ID, selected);
         } catch (SQLException ex) {
@@ -144,28 +146,30 @@ public class RewardsController {
             return;
         }
 
+        List<DayState> days = totals.stream()
+                .map(day -> day.state(RewardsService.DEFAULT_ACTIVITY_GOAL, RewardsService.DEFAULT_REST_GOAL))
+                .toList();
+        RewardsSummary summary = RewardsSummary.of(days, THRESHOLDS);
+
         messageLabel.setText("");
-        boolean nothingLogged = days.stream().allMatch(day -> day == DayState.NOTHING_LOGGED);
-        show(emptyState, nothingLogged);
-        show(summaryState, !nothingLogged);
+        show(summaryState, true);
 
-        if (nothingLogged) {
-            return;
-        }
+        garden.draw(totals, days, today, selected,
+                RewardsService.DEFAULT_ACTIVITY_GOAL, RewardsService.DEFAULT_REST_GOAL);
 
-        showSelectedDay(activities, rest);
+        DayState selectedState = days.get((int) ChronoUnit.DAYS.between(from, selected));
+        showSelectedDay(selectedState, activities, rest);
 
         // Nothing records a claim yet.
         readyToClaimLabel.setText(String.valueOf(summary.unclaimedStages(0)));
 
-        streakNumber.setText(String.valueOf(summary.currentStreak()));
-        streakUnit.setText(plural(summary.currentStreak(), "day", "days") + " in a row");
-        drawDayGrid(days, from);
+        showStreak(summary.currentStreak());
     }
 
     /** What grew above the ground and below it on the selected day, and the goals measured. */
-    private void showSelectedDay(List<DayEntry> activities, List<DayEntry> rest) {
-        selectedDateLabel.setText(selected.format(WEEKDAY_DAY_MONTH));
+    private void showSelectedDay(DayState state, List<DayEntry> activities, List<DayEntry> rest) {
+        selectedDateLabel.setText(selectedDay.get().format(WEEKDAY_DAY_MONTH));
+        selectedStateLabel.setText(describe(state));
 
         int activityMinutes = activities.stream().mapToInt(DayEntry::minutes).sum();
         int countedActivity = Math.min(activityMinutes, DayState.ACTIVITY_CAP_MINUTES);
@@ -197,58 +201,17 @@ public class RewardsController {
                 + " activity, " + duration(RewardsService.DEFAULT_REST_GOAL) + " rest");
     }
 
-    /**
-     * Click a cell to show that day in the selected card.
-     */
-    private void drawDayGrid(List<DayState> days, LocalDate from) {
-        dayGrid.getChildren().clear();
-        for (int column = 0; column < WEEKDAYS.length; column++) {
-            Label heading = new Label(WEEKDAYS[column]);
-            heading.getStyleClass().add("weekday");
-            dayGrid.add(heading, column, 0);
-        }
+    /** The count, then either the next milestone or a nudge to start one. */
+    private void showStreak(int streak) {
+        streakNumber.setText(String.valueOf(streak));
+        streakUnit.setText(plural(streak, "day", "days") + " in a row");
 
-        int offset = from.getDayOfWeek().getValue() - 1;
-        for (int i = 0; i < days.size(); i++) {
-            DayState state = days.get(i);
-            LocalDate date = from.plusDays(i);
-            int position = offset + i;
-
-            Region cell = new Region();
-            cell.getStyleClass().add("day-cell");
-            cell.setStyle("-fx-background-color: " + colourFor(state) + ";");
-            if (date.equals(selected)) {
-                cell.getStyleClass().add("selected");
-            }
-            Tooltip.install(cell, new Tooltip(date.format(DAY_MONTH) + " — " + describe(state)));
-            cell.setOnMouseClicked(event -> {
-                selected = date;
-                refresh();
-            });
-            dayGrid.add(cell, position % 7, position / 7 + 1);
-        }
-
-        // Today acts as the last day, so the marker goes on the row under the last cell.
-        int todayPosition = offset + days.size() - 1;
-        Label marker = new Label("↑ today");
-        marker.getStyleClass().add("today-marker");
-        marker.setMinWidth(Region.USE_PREF_SIZE);
-        dayGrid.add(marker, todayPosition % 7, todayPosition / 7 + 2);
-    }
-
-    /** The colour key beside the grid (drawn once). */
-    private void drawKey() {
-        for (DayState state : KEY) {
-            Region swatch = new Region();
-            swatch.getStyleClass().add("key-swatch");
-            swatch.setStyle("-fx-background-color: " + colourFor(state) + ";");
-            Label label = new Label(describe(state));
-            label.getStyleClass().add("key-label");
-
-            HBox row = new HBox(7, swatch, label);
-            row.setAlignment(Pos.CENTER_LEFT);
-            keyList.getChildren().add(row);
-        }
+        OptionalInt next = StreakMilestone.next(streak);
+        next.ifPresent(milestone -> milestoneValue.setText(milestone + " days"));
+        show(milestoneRow, next.isPresent());
+        show(startStreakLabel, streak == 0);
+        // Past the last milestone there is nothing left under the line.
+        show(streakDivider, next.isPresent() || streak == 0);
     }
 
     private static HBox entryRow(String name, String detail) {
@@ -270,18 +233,6 @@ public class RewardsController {
         return label;
     }
 
-    private static String colourFor(DayState state) {
-        return switch (state) {
-            // Greyscale. The better the day, the darker the grey.
-            case NOTHING_LOGGED -> "#eceeed";
-            case REST_ONLY -> "#d6d9d8";
-            case UNDER_BOTH -> "#bfc3c2";
-            case FLOWERED_SHALLOW -> "#9a9f9e";
-            case ROOTED_NO_FLOWER -> "#6f7473";
-            case BALANCED, CAPPED -> "#3a3d3c";
-        };
-    }
-
     private static String describe(DayState state) {
         return switch (state) {
             case NOTHING_LOGGED -> "Nothing logged";
@@ -294,8 +245,8 @@ public class RewardsController {
         };
     }
 
-    /** 20 min, 2 hr, 7 hr 20 min. */
-    private static String duration(int minutes) {
+    /** 20 min, 2 hr, 7 hr 20 min. Shared with the garden's goal labels. */
+    static String duration(int minutes) {
         int hours = minutes / 60;
         int leftover = minutes % 60;
         if (hours == 0) {
@@ -318,7 +269,6 @@ public class RewardsController {
 
     private void showError(String message) {
         messageLabel.setText(message);
-        show(emptyState, false);
         show(summaryState, false);
     }
 }

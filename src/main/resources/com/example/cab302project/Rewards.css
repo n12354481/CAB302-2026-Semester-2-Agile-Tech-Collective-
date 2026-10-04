@@ -18,21 +18,6 @@
     -fx-padding: 24;
 }
 
-.garden-placeholder {
-    -fx-background-color: #f9fafa;
-    -fx-background-radius: 8;
-    -fx-border-color: #cfd3d2;
-    -fx-border-width: 2;
-    -fx-border-style: dashed;
-    -fx-border-radius: 8;
-}
-
-.garden-placeholder-label {
-    -fx-font-size: 15px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #9a9f9e;
-}
-
 .title {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
@@ -135,46 +120,78 @@
     -fx-font-weight: bold;
 }
 
-.key-swatch {
-    -fx-min-width: 10;
-    -fx-min-height: 10;
-    -fx-max-width: 10;
-    -fx-max-height: 10;
-    -fx-background-radius: 1;
+.milestone-value {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b1d1d;
 }
 
-.key-label {
+/* Garden. Sizes are in the garden's own 740 x 340 space, which is scaled to fit the card. */
+
+.legend-label {
     -fx-font-size: 11px;
     -fx-text-fill: #666b6a;
 }
 
-.weekday {
-    -fx-font-size: 11px;
+.garden-axis {
+    -fx-font-size: 9px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #858a89;
+}
+
+.garden-goal-activity {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2F7D68;
+}
+
+.garden-goal-rest {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8A7660;
+}
+
+.garden-weekday {
+    -fx-font-size: 10px;
     -fx-font-weight: bold;
     -fx-text-fill: #b5b9b8;
 }
 
-.day-cell {
-    -fx-min-width: 36;
-    -fx-min-height: 36;
-    -fx-pref-width: 36;
-    -fx-pref-height: 36;
-    -fx-background-radius: 3;
+.garden-date {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #858a89;
+}
+
+.garden-today {
+    -fx-text-fill: #2F7D68;
+}
+
+.garden-empty-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1b1d1d;
+}
+
+.garden-empty-body {
+    -fx-font-size: 12px;
+    -fx-text-fill: #666b6a;
+}
+
+/* Same as the claiming page's green buttons. */
+.green-button {
+    -fx-min-height: 34;
+    -fx-padding: 0 18;
+    -fx-background-color: #1d6f59;
+    -fx-background-radius: 4;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
     -fx-cursor: hand;
 }
 
-/* The outline sits 2px outside the cell like the wireframe outline. */
-.day-cell.selected {
-    -fx-border-color: #1b1d1d;
-    -fx-border-width: 2;
-    -fx-border-insets: -4;
-    -fx-border-radius: 4;
-}
-
-.today-marker {
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1b1d1d;
+.green-button:hover {
+    -fx-background-color: #195c4a;
 }
 
 .error {

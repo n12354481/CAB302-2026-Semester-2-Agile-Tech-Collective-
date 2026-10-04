@@ -28,6 +28,16 @@ class DayStateTest {
     }
 
     @Test
+    void activityExactlyAtItsGoalCountsAsMet() {
+        assertEquals(DayState.FLOWERED_SHALLOW, classify(ACTIVITY_GOAL, 300));
+    }
+
+    @Test
+    void restExactlyAtItsGoalCountsAsMet() {
+        assertEquals(DayState.ROOTED_NO_FLOWER, classify(20, REST_GOAL));
+    }
+
+    @Test
     void cappedActivityCannotRescueAMissedActivityGoal() {
         // 300 min counts as 180, which is still the same side of a 200 min goal.
         assertEquals(DayState.UNDER_BOTH, DayState.classify(300, 300, 200, REST_GOAL));

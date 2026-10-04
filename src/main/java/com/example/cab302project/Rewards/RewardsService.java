@@ -60,6 +60,14 @@ public final class RewardsService {
                 .toList();
     }
 
+    /**
+     * The minutes behind each day, oldest first. The garden needs these to size each stem
+     * and root, a state alone cannot say how tall a plant is.
+     */
+    public List<DayTotals> totalsFor(int userID, LocalDate from, LocalDate to) throws SQLException {
+        return dayTotals.forRange(userID, from, to);
+    }
+
     /** What grew above the ground on one day, for the selected day card. */
     public List<DayEntry> activitiesOn(int userID, LocalDate date) throws SQLException {
         return dayTotals.activitiesOn(userID, date);
