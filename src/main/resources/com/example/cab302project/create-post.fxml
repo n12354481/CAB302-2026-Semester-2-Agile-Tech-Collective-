@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.FlowPane?>
 
 <VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.cab302project.SocialPostings.CreatePostController" spacing="14" style="-fx-background-color: #f2f2f2;">
 
@@ -73,9 +74,7 @@
                     </VBox>
                     <VBox spacing="4" HBox.hgrow="ALWAYS">
                         <Label text="Event Tags" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
-                        <HBox spacing="6">
-                            <Label text="+ Add Tags" style="-fx-background-color: #e0e0e0; -fx-padding: 4 10; -fx-background-radius: 12;" />
-                        </HBox>
+                        <FlowPane fx:id="tagsContainer" hgap="6" vgap="6" />
                     </VBox>
                 </HBox>
 

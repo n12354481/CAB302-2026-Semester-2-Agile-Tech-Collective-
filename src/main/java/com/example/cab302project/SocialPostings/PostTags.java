@@ -4,13 +4,24 @@ package com.example.cab302project.SocialPostings;
 import java.util.List;
 
 /**
- * Predefined tages to use when a user creates
+ * Predefined tags to use when a user creates
  * a post
 */
 public class PostTags {
     public static final List<String> AVAILABLE_TAGS = List.of(
             "Science",
-            "Brisbane"
+            "Brisbane",
+            "Math",
+            "Trivia",
+            "STEM",
+            "QUT",
+            "UQ",
+            "Engineering",
+            "Competition",
+            "Workshop",
+            "Social",
+            "Robotics"
+
     );
 
     private PostTags() {}

@@ -30,7 +30,9 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
     public List<SocialPostings> getAllPosts() throws SQLException {
         List<SocialPostings> posts = new ArrayList<>();
 
-        String sql = "SELECT postId, userId, title, description, content, image, " + "event_date, start_time, end_time, event_location " + "FROM post ORDER BY postId DESC";
+        String sql = "SELECT postId, userId, title, description, content, image, "
+                + "event_date, start_time, end_time, event_location, tags "
+                + "FROM post ORDER BY postId DESC";
 
         try (PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet resultSet = statement.executeQuery()) {
@@ -46,7 +48,8 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
                         resultSet.getString("event_date"),
                         resultSet.getString("start_time"),
                         resultSet.getString("end_time"),
-                        resultSet.getString("event_location")
+                        resultSet.getString("event_location"),
+                        resultSet.getString("tags")
                 ));
             }
         }
@@ -59,9 +62,11 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
      */
     @Override
     public int createPost(SocialPostings post) throws SQLException {
-        String sql = "INSERT INTO post (userID, title, description, content, image, " + "event_date, start_time, end_time, event_location) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO post (userID, title, description, content, image, "
+                + "event_date, start_time, end_time, event_location, tags) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-         try (PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, post.userId());
             statement.setString(2, post.title());
             statement.setString(3, post.description());
@@ -71,6 +76,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
             statement.setString(7, post.startTime());
             statement.setString(8, post.endTime());
             statement.setString(9, post.eventLocation());
+            statement.setString(10, post.tags());
 
             statement.executeUpdate();
 
@@ -90,8 +96,8 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
     public void addPostsFeed() throws SQLException {
         String sql = "INSERT INTO post "
                 + "(userID, title, description, content, image, event_date, "
-                + "start_time, end_time, event_location) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "start_time, end_time, event_location, tags) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 
         addPostIfNotExists(
@@ -105,7 +111,8 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
                 "2026-11-12",
                 "17:00",
                 "19:00",
-                "QUT Gardens Point"
+                "QUT Gardens Point",
+                "Brisbane"
         );
 
         addPostIfNotExists(
@@ -119,7 +126,8 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
                 "2026-11-02",
                 "13:00",
                 "16:00",
-                "QUT Gardens Point, V Block, Level 3"
+                "QUT Gardens Point, V Block, Level 3",
+                "Math, Brisbane"
         );
 
         addPostIfNotExists(
@@ -133,8 +141,99 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
                 "2026-10-17",
                 "17:00",
                 "21:00",
-                "University of Queensland, Science Block, Room 413B"
+                "University of Queensland, Science Block, Room 413B",
+                "Science"
         );
+    }
+
+    /**
+     * Registers a user for a post
+     * @param userId
+     * @param postId
+     * @throws SQLException
+     */
+    @Override
+    public void registerForPost(int userId, int postId) throws SQLException {
+        String sql = "INSERT OR IGNORE INTO registrations (userID, postID) VALUES (?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, postId);
+            statement.executeUpdate();
+        }
+    }
+
+    /**
+     * Removes a user's registration from a post
+     * @param userId
+     * @param postId
+     * @throws SQLException
+     */
+    @Override
+    public void unregisterFromPost(int userId, int postId) throws SQLException {
+        String sql = "DELETE FROM registrations WHERE userID = ? AND postID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, postId);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public boolean isRegistered(int userId, int postId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM registrations WHERE userID = ? AND postID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, postId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next() && resultSet.getInt(1) > 0;
+            }
+        }
+    }
+
+    /**
+     * All the posts the user has registered for
+     * @param userId
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public List<SocialPostings> getRegisteredPosts(int userId) throws SQLException {
+        List<SocialPostings> posts = new ArrayList<>();
+
+        String sql = "SELECT p.postId, p.userId, p.title, p.description, p.content, p.image, "
+                + "p.event_date, p.start_time, p.end_time, p.event_location, p.tags "
+                + "FROM post p "
+                + "JOIN registrations r ON r.postID = p.postId "
+                + "WHERE r.userID = ? "
+                + "ORDER BY p.event_date ASC";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    posts.add(new SocialPostings(
+                            resultSet.getInt("postId"),
+                            resultSet.getInt("userId"),
+                            resultSet.getString("title"),
+                            resultSet.getString("description"),
+                            resultSet.getString("content"),
+                            resultSet.getString("image"),
+                            resultSet.getString("event_date"),
+                            resultSet.getString("start_time"),
+                            resultSet.getString("end_time"),
+                            resultSet.getString("event_location"),
+                            resultSet.getString("tags")
+                    ));
+                }
+            }
+        }
+
+        return posts;
     }
 
     /**
@@ -151,7 +250,8 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
             String eventDate,
             String startTime,
             String endTime,
-            String eventLocation
+            String eventLocation,
+            String tags
     ) throws SQLException {
         String checkSql = "SELECT COUNT(*) FROM post "
                 + "WHERE title = ? AND event_date = ?";
@@ -179,6 +279,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
             statement.setString(7, startTime);
             statement.setString(8, endTime);
             statement.setString(9, eventLocation);
+            statement.setString(10, tags);
 
             statement.executeUpdate();
         }
