@@ -85,6 +85,7 @@ public final class DatabaseSchema {
                     + "start_time TEXT, "
                     + "end_time TEXT, "
                     + "event_location TEXT, "
+                    + "tags TEXT"
                     + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE)"
     };
 
