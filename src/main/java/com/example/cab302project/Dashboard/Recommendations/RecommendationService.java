@@ -60,7 +60,7 @@ public class RecommendationService {
         prompt.append("provide exactly three short, practical wellbeing recommendations. ");
 
         prompt.append("If no recent activity or check-in data is provided, ");
-        prompt.append("provide only exactly three generic short, practical wellbeing recommendations suitable for a university student. Do not give any additional messages.");
+        prompt.append("provide ONLY exactly three generic short, practical wellbeing recommendations suitable for a university student. Do NOT give any additional messages.");
         prompt.append("Do not claim the recommendations are personal when no data is available.");
 
         prompt.append("Each recommendation should: be supportive and practical, be specific to the student's data, be no more than 25 words, be suitable for displaying on a dashboard. ");

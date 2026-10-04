@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -28,7 +29,10 @@ public class HelloController {
     private StackPane mainContent;
 
     @FXML
-    private Button usernameDisplay;
+    private Label usernameDisplay;
+
+    @FXML
+    private Label usernameInitials;
 
     @FXML
     private Button homeButton;
@@ -89,12 +93,12 @@ public class HelloController {
     @FXML
     private void onUserProfileButtonClicked() {
 
-        boolean showing = settingsButton.isVisible();
-        settingsButton.setVisible(!showing);
-        settingsButton.setManaged(!showing);
-
-        logoutButton.setVisible(!showing);
-        logoutButton.setManaged(!showing);
+//        boolean showing = settingsButton.isVisible();
+//        settingsButton.setVisible(!showing);
+//        settingsButton.setManaged(!showing);
+//
+//        logoutButton.setVisible(!showing);
+//        logoutButton.setManaged(!showing);
     }
 
     @FXML
@@ -117,7 +121,20 @@ public class HelloController {
     private void loadPage(String page) {
         try {
 
-            usernameDisplay.setText(user.getUsername());
+            String username = user.getUsername();
+
+            usernameDisplay.setText(username);
+
+            String initials;
+
+            if(username.length() >= 2)
+            {
+                initials = username.substring(0, 2).toUpperCase();
+            } else {
+                initials = username.toUpperCase();
+            }
+
+            usernameInitials.setText(initials);
 
             FXMLLoader loader = new FXMLLoader(
                     HelloApplication.class.getResource(page)
