@@ -8,13 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-// import javafx.scene.Parent;
-import javafx.scene.Scene;
-// import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
+import java.util.List;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CreatePostController {
     
@@ -32,20 +33,57 @@ public class CreatePostController {
     @FXML private TextField startTimeField;
     @FXML private TextField endTimeField;
     @FXML private TextField eventLocationField;
+    @FXML private FlowPane tagsContainer;
     @FXML private Label statusLabel;
-
-    private StackPane mainContent;
-
-    public void setMainContent(StackPane mainContent) {
-        this.mainContent = mainContent;
-    }
 
     private final ISocialPostingsDAO socialPostingsDAO = new SocialPostingsDAO();
 
     // replace with actual logged in user ID
-    private static final int CURRENT_USER_ID = 1;
+    private int currentUserId = 1;
+
+    public void setUserId(int userId) {
+        this.currentUserId = userId;
+    }
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    private StackPane mainContent;
+
+    /**
+     * Called by when the screen is opened so the page could navigate
+     * somewhere else later if needed
+     * @param mainContent
+     */
+    public void setMainContent(StackPane mainContent) {
+        this.mainContent = mainContent;
+    }
+
+    private static final String TAG_UNSELECTED_STYLE =
+            "-fx-background-color: #E0E0E0; -fx-background-radius: 12; -fx-padding: 4 10;";
+    private static final String TAG_SELECTED_STYLE =
+            "-fx-background-color: #1F6F64; -fx-text-fill: white; -fx-background-radius: 12; -fx-padding: 4 10;";
+
+    @FXML
+    private void initialize() {
+        for (String tag : PostTags.AVAILABLE_TAGS) {
+            ToggleButton tagButton = new ToggleButton(tag);
+            tagButton.setStyle(TAG_UNSELECTED_STYLE);
+            tagButton.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+                tagButton.setStyle(isSelected ? TAG_SELECTED_STYLE : TAG_UNSELECTED_STYLE);
+            });
+            tagsContainer.getChildren().add(tagButton);
+        }
+    }
+
+    private String getSelectedTags() {
+        List<String> selected = new ArrayList<>();
+        for (javafx.scene.Node node : tagsContainer.getChildren()) {
+            if (node instanceof ToggleButton toggleButton && toggleButton.isSelected()) {
+                selected.add(toggleButton.getText());
+            }
+        }
+        return String.join(",", selected);
+    }
 
     @FXML
     private void onPostEventClicked() {
@@ -57,6 +95,7 @@ public class CreatePostController {
         String dateText = eventDateField.getText();
         String startTimeText = startTimeField.getText();
         String endTimeText = endTimeField.getText();
+        String tags = getSelectedTags();
 
         if (title == null || title.isBlank()) {
             statusLabel.setStyle("-fx-text-fill: #C0392B;");
@@ -84,7 +123,7 @@ public class CreatePostController {
 
         SocialPostings post = new SocialPostings(
                 0,
-                CURRENT_USER_ID,
+                currentUserId,
                 title,
                 description,
                 description,
@@ -92,7 +131,8 @@ public class CreatePostController {
                 dateText,
                 startTimeText,
                 endTimeText,
-                location
+                location,
+                getSelectedTags()
         );
 
         try {
@@ -137,6 +177,11 @@ public class CreatePostController {
         startTimeField.clear();
         endTimeField.clear();
         eventLocationField.clear();
+        for (javafx.scene.Node node : tagsContainer.getChildren()) {
+            if (node instanceof ToggleButton toggleButton) {
+                toggleButton.setSelected(false);
+            }
+        }
     }
 
     private boolean isValidDate(String text) {

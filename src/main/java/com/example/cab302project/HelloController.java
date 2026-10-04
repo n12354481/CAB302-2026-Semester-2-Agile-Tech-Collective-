@@ -5,6 +5,7 @@ import com.example.cab302project.Authentication.User;
 import com.example.cab302project.Dashboard.DashboardController;
 import com.example.cab302project.Database.DatabaseUserDAO;
 import com.example.cab302project.Settings.SettingsController;
+import com.example.cab302project.SocialPostings.SocialPostingsController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -150,6 +151,11 @@ public class HelloController {
             if(page.equals("settings.fxml"))
             {
                 SettingsController controller = loader.getController();
+                controller.setUserId(userID);
+            }
+
+            if(page.equals("socialpostings.fxml")) {
+                SocialPostingsController controller = loader.getController();
                 controller.setUserId(userID);
             }
 

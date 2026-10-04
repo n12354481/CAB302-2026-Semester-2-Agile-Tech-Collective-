@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.cab302project.SocialPostings.PostDetailController" spacing="12" stylesheets="@socialstyle.css" styleClass="social-root">
+
+    <padding><Insets top="24" bottom="24" left="28" right="28" /></padding>
+
+    <VBox styleClass="header-class">
+        <Label text="STEM Social Community" styleClass="header-title" />
+        <Label text="Connect and discover like-minded students in your city!" styleClass="header-subtitle" />
+    </VBox>
+
+    <Button text="&#8592;" onAction="#onBackClicked" styleClass="back-button"/>
+
+    <Region fx:id="postImage" prefHeight="200" styleClass="post-image"/>
+
+    <VBox styleClass="panel-card">
+        <Label fx:id="titleLabel" styleClass="post-title"/>
+        <Label fx:id="descriptionLabel" styleClass="post-desc" wrapText="true"/>
+    </VBox>
+
+    <HBox spacing="16">
+        <VBox spacing="8" styleClass="panel-card" HBox.hgrow="ALWAYS">
+            <Label text="About the Event" styleClass="panel-title"/>
+            <Label fx:id="contentLabel" wrapText="true" styleClass="post-desc"/>
+            <HBox spacing="16">
+                <VBox spacing="4" styleClass="panel-card" HBox.hgrow="ALWAYS">
+                    <Label text="Location" styleClass="panel-title"/>
+                    <Label fx:id="locationLabel" wrapText="true" styleClass="post-desc"/>
+                </VBox>
+
+                <VBox spacing="4" styleClass="panel-card" HBox.hgrow="ALWAYS">
+                    <Label text="Time" styleClass="panel-title"/>
+                    <Label fx:id="timeLabel" wrapText="true" styleClass="post-desc"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <VBox spacing="4" styleClass="panel-card" prefWidth="200">
+            <Label text="Map Location" styleClass="panel-title"/>
+            <Region prefHeight="120" styleClass="map-placeholder"/>
+        </VBox>
+
+    </HBox>
+
+    <Button text="Contact Info" styleClass="create-post-btn" onAction="#onContactInfoClicked"/>
+
+</VBox>

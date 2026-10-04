@@ -85,7 +85,16 @@ public final class DatabaseSchema {
                     + "start_time TEXT, "
                     + "end_time TEXT, "
                     + "event_location TEXT, "
-                    + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE)"
+                    + "tags TEXT, "
+                    + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE)",
+
+            "CREATE TABLE IF NOT EXISTS registrations ("
+                    + "userID INTEGER NOT NULL, "
+                    + "postID INTEGER NOT NULL, "
+                    + "PRIMARY KEY (userID, postID), "
+                    + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE, "
+                    + "FOREIGN KEY (postID) REFERENCES post (postID) ON DELETE CASCADE"
+                    + ")"
     };
 
     /** Creates the shared tables if they are not already there. */
@@ -95,7 +104,19 @@ public final class DatabaseSchema {
             for (String ddl : TABLES) {
                 statement.executeUpdate(ddl);
             }
+
+            // add tags to older database
+            try {
+                statement.executeUpdate(
+                        "ALTER TABLE post ADD COLUMN tags TEXT"
+                );
+            } catch (SQLException e) {
+                if (!e.getMessage().contains("duplicate column name")) {
+                    throw e;
+                }
+            }
         }
+
         insertDefaultMoods(connection);
     }
 
