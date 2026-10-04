@@ -6,8 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cab302project.SocialPostingsController" stylesheets="@socialstyle.css" styleClass="social-root">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cab302project.SocialPostings.SocialPostingsController" stylesheets="@socialstyle.css" styleClass="social-root">
 
     <top>
         <VBox styleClass="header-card">
@@ -29,13 +30,19 @@
         <VBox styleClass="feed-card" HBox.hgrow="ALWAYS">
 
             <!-- filter bar for users -->
-            <HBox styleClass="filter-bar" spacing="8" alignment="CENTER_LEFT">
+            <VBox spacing="8">
                 <padding><Insets top="12" right="16" bottom="12" left="16"/></padding>
-                <Label text="Filter posts by:" styleClass="filter-label"/>
-                <Button text="CLEAR FILTERS" styleClass="clear-filters-btn" onAction="#onClearFiltersClicked"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Hyperlink text="FILTERS" styleClass="filters-link" onAction="#onFiltersClicked"/>
-            </HBox>
+
+                <HBox styleClass="filter-bar" spacing="8" alignment="CENTER_LEFT">
+                    <Label text="Filter posts by:" styleClass="filter-label"/>
+                    <HBox fx:id="activeFiltersContainer" spacing="6" alignment="CENTER_LEFT"/>
+                    <Button text="CLEAR FILTERS" styleClass="clear-filters-btn" onAction="#onClearFiltersClicked"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Hyperlink text="FILTERS" styleClass="filters-link" onAction="#onFiltersClicked"/>
+                </HBox>
+
+                <HBox fx:id="filterOptionsRow" spacing="6" visible="false" managed="false"/>
+            </VBox>
 
             <ScrollPane fitToWidth="true" styleClass="feed-scroll" VBox.vgrow="ALWAYS">
                 <VBox fx:id="postsContainer" spacing="16">
@@ -47,27 +54,13 @@
             <VBox spacing="16" prefWidth="220" minWidth="220">
                 <Button text="+ Create a Post" styleClass="create-post-btn" onAction="#onCreatePostClicked" maxWidth="Infinity"/>
 
-                <VBox styleClass="panel-card">
+                <VBox styleClass="panel-card" VBox.vgrow="ALWAYS">
                     <Label text="Upcoming Events" styleClass="panel-title"/>
-                    <Region styleClass="placeholder-bar"/>
-                    <Region styleClass="placeholder-bar"/>
-                    <Region styleClass="placeholder-bar"/>
-                </VBox>
-
-                <VBox styleClass="panel-card">
-                    <Label text="Your Posts" styleClass="panel-title"/>
-                    <Region styleClass="placeholder-bar"/>
-                    <Region styleClass="placeholder-bar"/>
-                    <Region styleClass="placeholder-bar"/>
-                </VBox>
-
-                <VBox styleClass="panel-card">
-                    <Label text="Past Events" styleClass="panel-title"/>
-                    <Region styleClass="placeholder-bar"/>
-                    <Region styleClass="placeholder-bar"/>
-                    <Region styleClass="placeholder-bar"/>
+                    <VBox fx:id="upcomingEventsList" spacing="8"/>
                 </VBox>
             </VBox>
+
+
 
         </HBox>
     </center>
