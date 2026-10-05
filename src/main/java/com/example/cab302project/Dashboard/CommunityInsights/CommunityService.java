@@ -48,7 +48,7 @@ public class CommunityService {
     /**
      * A method which aims to construct a system prompt for passing to the ollama when generating a response.
      * @param data: The community insights data for which the service is being built.
-     * @return: Returns the system prompt for this service.
+     * @return Returns the system prompt for this service.
      */
     private String buildPrompt(CommunityInsightsData data)
     {

@@ -1,0 +1,60 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "integration" ]
+  pull_request:
+    branches: [ "integration" ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'corretto'
+        cache: maven
+
+    - name: Install Ollama
+      run: |
+        curl -fsSL https://ollama.com/install.sh | sh
+
+    - name: Start Ollama
+      run: |
+        ollama serve > /tmp/ollama.log 2>&1 &
+        sleep 5
+
+    # Download the model used by the project
+    - name: Pull llama3.2
+      run: |
+        ollama pull llama3.2
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
+    - name: Show Ollama logs
+      if: failure()
+      run: cat /tmp/ollama.log
+
+    - name: Generate Javadoc
+      run: mvn javadoc:javadoc
+
+    - name: Publish Javadoc
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+          folder: target/docs/javadoc

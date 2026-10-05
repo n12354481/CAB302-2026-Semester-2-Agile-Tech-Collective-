@@ -28,7 +28,7 @@ public class Connection {
 
     /**
      * This method aims to create a HTTP connection for the provided API URL to connect the Ollama.
-     * @return: Returns the received connection from Ollama.
+     * @return Returns the received connection from Ollama.
      */
     protected HttpURLConnection getConnection() {
         HttpURLConnection conn = null;
@@ -46,7 +46,7 @@ public class Connection {
     /**
      * This method sends a JSON request to Ollama and aims to fetch the result.
      * @param simpleJsonObj: The JSON format request given to fetch the request.
-     * @return: Returns the response provided by Ollama.
+     * @return Returns the response provided by Ollama.
      */
     public Response fetchOllamaResponse(String simpleJsonObj) {
 
@@ -104,7 +104,7 @@ public class Connection {
      * This method aims to create a JSON formatted request to fethc the ollama response.
      * @param model: The model being connected
      * @param prompt: The prompt being sent to retrieve the request.
-     * @return: returns the response obtained.
+     * @return returns the response obtained.
      */
     public Response fetchOllamaResponse(String model, String prompt) {
         Gson gson = new Gson();
@@ -142,7 +142,7 @@ public class Connection {
     /**
      * This method aims to read the response received from the HTTP connection.
      * @param conn: The connection containing Ollama's response.
-     * @return: Returns the contents as a String.
+     * @return Returns the contents as a String.
      */
     protected String readConnInput(HttpURLConnection conn) {
         InputStream is = null;

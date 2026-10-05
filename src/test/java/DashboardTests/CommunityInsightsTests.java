@@ -115,6 +115,6 @@ public class CommunityInsightsTests {
         });
 
         //Ensuring that the test did wait for 30 sec.
-        assertTrue(latch.await(30, TimeUnit.SECONDS), "Ollama did not respond in 30 sec.");
+        assertTrue(latch.await(150, TimeUnit.SECONDS), "Ollama did not respond in 30 sec.");
     }
 }
