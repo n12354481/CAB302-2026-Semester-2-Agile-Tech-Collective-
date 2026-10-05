@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * tests activity model and database methods used by activities feature
  */
-public class ActivityDaoTest {
+public class ActivityTest {
    private Activity testActivity;
    private DatabaseActivityDAO activityDAO;
    private Connection connection;
@@ -25,7 +25,7 @@ public class ActivityDaoTest {
     public void setUp() throws SQLException {
 
        testActivity = new Activity(
-               "Swimming", "Fitness", "Swimming activity", 30, null);
+               "Swimming", "Fitness", "Swimming activity", 30);
 
        activityDAO = new DatabaseActivityDAO();
        connection = DatabaseConnection.getInstance();
@@ -94,5 +94,6 @@ public class ActivityDaoTest {
       assertNotNull(found);
       assertEquals(testActivity.getName(), found.getName());
    }
+
 
 }

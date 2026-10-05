@@ -7,6 +7,7 @@ import com.example.cab302project.Database.DatabaseUserDAO;
 import com.example.cab302project.Rewards.RewardsController;
 import com.example.cab302project.Settings.SettingsController;
 import com.example.cab302project.SocialPostings.SocialPostingsController;
+import com.example.cab302project.Activities.ActivitiesController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -74,7 +75,6 @@ public class HelloController {
     private void onActivitiesButtonClicked() {
         loadPage("Activities.fxml");
     }
-
 
     @FXML
     private void onRewardsButtonClicked() {
@@ -153,6 +153,11 @@ public class HelloController {
 
             if(page.equals("socialpostings.fxml")) {
                 SocialPostingsController controller = loader.getController();
+                controller.setUserId(userID);
+            }
+
+            if(page.equals("Activities.fxml")) {
+                ActivitiesController controller = loader.getController();
                 controller.setUserId(userID);
             }
 

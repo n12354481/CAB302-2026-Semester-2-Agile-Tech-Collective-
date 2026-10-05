@@ -266,6 +266,71 @@ public class DatabaseActivityDAO implements IActivityDAO {
         );
     }
 
+    @Override
+    public int insertActivityLog(int userId, int activityId, String logDate, int minutes) {
+        String sql = "INSERT INTO activity_log " +
+                "(userID, activityID, log_date, minutes) " +
+                "VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, activityId);
+            statement.setString(3, logDate);
+            statement.setInt(4, minutes);
+
+            statement.executeUpdate();
+
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if (keys.next()) {
+                    return keys.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return -1;
+    }
+
+    @Override
+    public List<int[]> getActivityLogs(int userId) {
+        List<int[]> logs = new ArrayList<>();
+
+        String sql = "SELECT logID, activityID, minutes " +
+                "FROM activity_log " +
+                "WHERE userID = ? " +
+                "ORDER BY logID DESC";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    int[] log = {
+                            rs.getInt("logID"), rs.getInt("activityID"), rs.getInt("minutes")
+                    };
+                    logs.add(log);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return logs;
+    }
+
+    @Override
+    public void deleteActivityLog(int logId, int userId) {
+        String sql = "DELETE FROM activity_log " + "WHERE logID = ? AND userID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, logId);
+            statement.setInt(2, userId);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void addDefaultActivity(String name, String category, String description, int goal) {
         if (findByName(name) != null) {
             return;

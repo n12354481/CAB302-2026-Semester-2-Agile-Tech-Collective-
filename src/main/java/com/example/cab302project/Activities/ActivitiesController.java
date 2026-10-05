@@ -6,10 +6,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.io.*;
 
 /**
  * controller for activities feature
@@ -21,9 +21,11 @@ public class ActivitiesController implements Initializable {
 
     private final IActivityDAO activityDAO = new DatabaseActivityDAO();
 
+    private int userId;
+
     // temporarily stores selected activities while app is running
     private final List<SelectedActivity> myActivities = new ArrayList<>();
-    // temporarily stores completed activities
+
     private final List<SelectedActivity> recentActivities = new ArrayList<>();
     // controls whether remove buttons are shown
     private boolean editMode = false;
@@ -120,13 +122,34 @@ public class ActivitiesController implements Initializable {
         activityDAO.addDefaultActivities();
 
         activities = activityDAO.getAllActivities();
-        loadSavedActivities();
         createCategoryButtons();
 
         customMinutes.visibleProperty().bind(customDuration.selectedProperty());
         customMinutes.managedProperty().bind(customDuration.selectedProperty());
         customActivityCategory.getItems().addAll(activityDAO.getCategories());
 
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+        loadCompletedActivities();
+    }
+
+    private void loadCompletedActivities() {
+        recentActivities.clear();
+        List<int[]> logs = activityDAO.getActivityLogs(userId);
+
+        for (int[] log : logs) {
+            int logId = log[0];
+            int activityId = log[1];
+            int minutes = log[2];
+
+            Activity activity = activityDAO.getActivityById(activityId);
+
+            if (activity != null) {
+                recentActivities.add(new SelectedActivity(activity, minutes, logId));
+            }
+        }
     }
 
     // creates category buttons based on category found in activity list
@@ -337,15 +360,15 @@ public class ActivitiesController implements Initializable {
                 "Jogging",
                 "Tennis",
                 "Study with a friend",
-                "Workshop",
-                "STEM society event",
+                "Attend a workshop",
+                "Join a STEM society event",
                 "Meditation",
-                "Review notes",
-                "Coding practice",
+                "Review lecture notes",
+                "Coding Practice",
                 "Reading",
                 "Gym workout",
-                "Walk",
-                "Uni club event",
+                "Go for a walk",
+                "University club event",
                 "Lunch with a friend"
         );
         return defaultActivities.contains(activity.getName());
@@ -366,8 +389,6 @@ public class ActivitiesController implements Initializable {
         myActivities.removeIf(selected -> selected.getActivity().getId() == activityId);
 
         recentActivities.removeIf(selected -> selected.getActivity().getId() == activityId);
-
-        saveMyActivities();
 
         activityDAO.delete(activityId);
         activities = activityDAO.getAllActivities();
@@ -483,7 +504,6 @@ public class ActivitiesController implements Initializable {
 
         if (activityBeingEdited != null) {
             activityBeingEdited.setMinutes(minutes);
-            saveMyActivities();
 
             selectionMessage.setText(selectedActivity.getName() + " updated to " + minutes + " mins. ");
         } else {
@@ -496,78 +516,15 @@ public class ActivitiesController implements Initializable {
         }
     }
 
-    private void saveMyActivities() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(MY_ACTIVITIES_FILE))) {
-            for (SelectedActivity selected : myActivities) {
-                writer.println(selected.getActivity().getId() + "," + selected.getMinutes() + ",ACTIVE");
-            }
-
-            for (SelectedActivity selected : recentActivities) {
-                writer.println(selected.getActivity().getId() + "," + selected.getMinutes() + ",COMPLETED");
-            }
-        } catch (IOException e) {
-            System.out.println("Could not save activities." + e.getMessage());
-        }
-    }
-
-    private void loadSavedActivities() {
-        myActivities.clear();
-        recentActivities.clear();
-
-        File file = new File(MY_ACTIVITIES_FILE);
-
-        if (!file.exists()) {
-            return;
-        }
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-
-                if (parts.length < 2) {
-                    continue;
-                }
-
-                try {
-                    int activityId = Integer.parseInt(parts[0].trim());
-                    int minutes = Integer.parseInt(parts[1].trim());
-                    String status = parts.length >= 3 ? parts[2].trim() : "ACTIVE";
-
-                    Activity activity = activityDAO.getActivityById(activityId);
-
-                    if (activity == null) {
-                        continue;
-                    }
-
-                    SelectedActivity saved = new SelectedActivity(activity, minutes);
-
-                    if (status.equals("COMPLETED")) {
-                        recentActivities.add(saved);
-                    } else {
-                        myActivities.add(saved);
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Could not read activity");
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Could not load activities: " + e.getMessage());
-        }
-    }
-
     private void addToMyActivities(Activity activity, int minutes) {
         for (SelectedActivity selected : myActivities) {
             if (selected.getActivity().getName().equalsIgnoreCase(activity.getName())) {
                 selected.setMinutes(minutes);
 
-                saveMyActivities();
                 return;
             }
         }
         myActivities.add(new SelectedActivity(activity, minutes));
-        saveMyActivities();
     }
 
     @FXML
@@ -581,6 +538,7 @@ public class ActivitiesController implements Initializable {
         myActivitiesPane.setVisible(true);
         myActivitiesPane.setManaged(true);
 
+        loadCompletedActivities();
         loadMyActivities();
     }
 
@@ -688,7 +646,6 @@ public class ActivitiesController implements Initializable {
 
             removeButton.setOnAction(event -> {
                 myActivities.remove(selected);
-                saveMyActivities();
                 loadMyActivities();
             });
 
@@ -700,13 +657,32 @@ public class ActivitiesController implements Initializable {
 
     private void completedActivity(SelectedActivity selected) {
 
+        if (userId <= 0) {
+            System.out.println("Cannot save activity because user ID has not been set.");
+            return;
+        }
+        int logId = activityDAO.insertActivityLog(
+                userId,
+                selected.getActivity().getId(),
+                LocalDate.now().toString(),
+                selected.getMinutes()
+        );
+
+        if (logId <= 0) {
+            System.out.println("Cannot save completed activity.");
+            return;
+        }
+
+        selected.setLogId(logId);
+
         myActivities.remove(selected);
 
-        if (!recentActivities.contains(selected)) {
+        if(!recentActivities.contains(selected)) {
             recentActivities.add(0, selected);
         }
-        saveMyActivities();
+
         loadMyActivities();
+
     }
 
     private HBox createRecentActivityRow(SelectedActivity selected) {
@@ -734,15 +710,19 @@ public class ActivitiesController implements Initializable {
 
         completedCheckBox.setOnAction(event -> {
             if (!completedCheckBox.isSelected()) {
+                if (selected.getLogId() > 0) {
+                    activityDAO.deleteActivityLog(selected.getLogId(), userId);
+                }
+
                 recentActivities.remove(selected);
+                selected.setLogId(-1);
 
                 if (!myActivities.contains(selected)) {
                     myActivities.add(selected);
                 }
-
-                saveMyActivities();
-                loadMyActivities();
             }
+            loadMyActivities();
+
         });
         return row;
     }
@@ -752,9 +732,17 @@ public class ActivitiesController implements Initializable {
         private final Activity activity;
         private int minutes;
 
+        private int logId = -1;
+
         public SelectedActivity(Activity activity, int minutes) {
             this.activity = activity;
             this.minutes = minutes;
+        }
+
+        public SelectedActivity(Activity activity, int minutes, int logId) {
+            this.activity = activity;
+            this.minutes = minutes;
+            this.logId = logId;
         }
 
         public Activity getActivity() {
@@ -768,6 +756,10 @@ public class ActivitiesController implements Initializable {
         public void setMinutes(int minutes) {
             this.minutes = minutes;
         }
+
+        public int getLogId() { return logId; }
+
+        public void setLogId(int logId) { this.logId = logId; }
     }
 }
 
