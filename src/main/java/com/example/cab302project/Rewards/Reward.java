@@ -8,10 +8,11 @@ import java.time.LocalDate;
  * Reward sits in one of three bands. It is counting until {@link #complete()}, then it is
  * ready to claim.
  *
- * The counts are hardcoded for this iteration, nothing here reads the database yet.
+ * Built by {@link ClaimsDAO} from the user's logged activities.
  */
 public class Reward {
 
+    private final String key;
     private final String name;
     private final String counts;
     private final int done;
@@ -23,17 +24,24 @@ public class Reward {
     private LocalDate claimedOn;
 
     /**
-     * @param counts      what is being counted, shown under the name, e.g. "Study sessions"
-     * @param unit        what the numbers are, e.g. "days" in "7 of 20 days"
+     * @param key         stays the same if the name is reworded, so a saved claim still matches
+     * @param counts      what is being counted, shown under the name, e.g. "Social activities"
+     * @param unit        what the numbers are, e.g. "activities" in "7 of 20 activities"
      * @param description the sentence the confirm dialog shows
      */
-    public Reward(String name, String counts, int done, int target, String unit, String description) {
+    public Reward(String key, String name, String counts, int done, int target, String unit,
+                  String description) {
+        this.key = key;
         this.name = name;
         this.counts = counts;
         this.done = done;
         this.target = target;
         this.unit = unit;
         this.description = description;
+    }
+
+    public String key() {
+        return key;
     }
 
     public String name() {
@@ -75,6 +83,14 @@ public class Reward {
         if (!complete()) {
             throw new IllegalStateException(name + " is not complete yet");
         }
+        claimedOn = date;
+    }
+
+    /**
+     * A claim read back from the database. Skips the target check, so a cosmetic stays
+     * claimed even if the activities behind it are deleted later.
+     */
+    void restoreClaim(LocalDate date) {
         claimedOn = date;
     }
 }

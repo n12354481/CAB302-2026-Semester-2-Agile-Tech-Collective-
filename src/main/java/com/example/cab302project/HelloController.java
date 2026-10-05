@@ -4,17 +4,18 @@ import com.example.cab302project.Authentication.IUserDAO;
 import com.example.cab302project.Authentication.User;
 import com.example.cab302project.Dashboard.DashboardController;
 import com.example.cab302project.Database.DatabaseUserDAO;
+import com.example.cab302project.Rewards.RewardsController;
 import com.example.cab302project.Settings.SettingsController;
 import com.example.cab302project.SocialPostings.SocialPostingsController;
+import com.example.cab302project.Activities.ActivitiesController;
+
 import com.example.cab302project.MoodForm.CheckInController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Stack;
@@ -77,7 +78,6 @@ public class HelloController {
         loadPage("Activities.fxml");
     }
 
-
     @FXML
     private void onRewardsButtonClicked() {
         loadPage("Rewards.fxml");
@@ -113,10 +113,8 @@ public class HelloController {
         FXMLLoader loader = new FXMLLoader(
                 HelloApplication.class.getResource("login.fxml")
         );
-        Scene scene = new Scene(loader.load());
-        Stage stage = (Stage) logoutButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        // Swap the root (not the scene) so the window keeps its size.
+        logoutButton.getScene().setRoot(loader.load());
     }
 
 
@@ -157,6 +155,16 @@ public class HelloController {
 
             if(page.equals("socialpostings.fxml")) {
                 SocialPostingsController controller = loader.getController();
+                controller.setUserId(userID);
+            }
+
+            if(page.equals("Activities.fxml")) {
+                ActivitiesController controller = loader.getController();
+                controller.setUserId(userID);
+            }
+
+            if(page.equals("Rewards.fxml")) {
+                RewardsController controller = loader.getController();
                 controller.setUserId(userID);
             }
 

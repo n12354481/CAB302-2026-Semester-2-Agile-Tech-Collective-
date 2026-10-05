@@ -12,4 +12,8 @@ public interface IActivityDAO {
     List<String> getCategories();
     void delete(int id);
     void addDefaultActivities();
+
+    int insertActivityLog(int userId, int activityId, String logDate, int minutes);
+    List<int[]> getActivityLogs(int userId);
+    void deleteActivityLog(int logId, int userId);
 }

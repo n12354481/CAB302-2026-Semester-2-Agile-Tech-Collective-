@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.HashSet;
 
 
@@ -55,9 +57,9 @@ public class SocialPostingsController {
 
     private boolean filterOptionsBuilt = false;
 
-    private int currentUserId = 1;
+    private int currentUserId;
 
-    private static final Set<Integer> registeredMockPostIds = new HashSet<>();
+    private final Map<Integer, Set<Integer>> registeredMockPostIds = new HashMap<>();
 
     /**
      * Called automatically once the FXML file has finiished loading and this
@@ -84,8 +86,11 @@ public class SocialPostingsController {
         }
 
         // Add registered mock posts
+        Set<Integer> registeredMockPosts =
+                registeredMockPostIds.getOrDefault(currentUserId, new HashSet<>());
+
         for (SocialPostings post : allPosts) {
-            if (post.postId() < 0 && registeredMockPostIds.contains(post.postId())) {
+            if (post.postId() < 0 && registeredMockPosts.contains(post.postId())) {
                 registered.add(post);
             }
         }
@@ -157,7 +162,10 @@ public class SocialPostingsController {
 
     private boolean isRegistered(SocialPostings post) {
         if (post.postId() < 0) {
-            return registeredMockPostIds.contains(post.postId());
+            Set<Integer> registeredMockPosts =
+                    registeredMockPostIds.getOrDefault(currentUserId, new HashSet<>());
+
+            return registeredMockPosts.contains(post.postId());
         }
 
         try {
@@ -180,10 +188,16 @@ public class SocialPostingsController {
         try {
             if (post.postId() < 0) {
 
+                Set<Integer> registeredMockPosts =
+                        registeredMockPostIds.computeIfAbsent(
+                                currentUserId,
+                                id -> new HashSet<>()
+                        );
+
                 if (currentlyRegistered) {
-                    registeredMockPostIds.remove(post.postId());
+                    registeredMockPosts.remove(post.postId());
                 } else {
-                    registeredMockPostIds.add(post.postId());
+                    registeredMockPosts.add(post.postId());
                 }
 
             } else {
@@ -234,6 +248,7 @@ public class SocialPostingsController {
 
             PostDetailController controller = loader.getController();
             controller.setMainContent(mainContent);
+            controller.setUserId(currentUserId);
             controller.setPost(post);
 
             mainContent.getChildren().setAll(detailView);
@@ -251,7 +266,7 @@ public class SocialPostingsController {
             // sample posts for the community feed
             List<SocialPostings> mockPosts = List.of(
                     new SocialPostings(
-                            -1, 1,
+                            -1, 0,
                             "Science Trivia Night",
                             "Come test your knowledge about everything science!",
                             "Either come alone or with a team to challenge other science students and go head to head!",
@@ -264,7 +279,7 @@ public class SocialPostingsController {
                     ),
 
                     new SocialPostings(
-                            -2, 2,
+                            -2, 0,
                             "Robotics Design Challenge",
                             "Come along to build robots!",
                             "Learn how to design, code, and build robots.",
@@ -277,7 +292,7 @@ public class SocialPostingsController {
                     ),
 
                     new SocialPostings(
-                            -3, 3,
+                            -3, 0,
                             "Beach Walk",
                             "Come along for a casual and chill beach walk",
                             "Join the Social Brisbane Club for a chill walk along the beach to take a break from university!",
@@ -290,7 +305,7 @@ public class SocialPostingsController {
                     ),
 
                 new SocialPostings(
-                    -4, 1,
+                    -4, 0,
                     "Astronomy Night",
                     "Stargazing and telescope viewing for all experience levels",
                     "Bring a blanket and come look through our telescopes! We'll have a short talk on the current night sky before we get started.",
@@ -303,7 +318,7 @@ public class SocialPostingsController {
             ),
 
                     new SocialPostings(
-                            -5, 2,
+                            -5, 0,
                             "Coding Club Hackday",
                             "A relaxed one-day hackathon for all skill levels",
                             "Form a team or work solo on a small project of your choice. Mentors will be on hand, and there's pizza at lunch!",
@@ -316,7 +331,7 @@ public class SocialPostingsController {
                     ),
 
                     new SocialPostings(
-                            -6, 3,
+                            -6, 0,
                             "Botanic Gardens Picnic",
                             "Casual picnic meetup, bring your own food and a mat",
                             "A laid-back afternoon to meet other students over snacks in the gardens. Open to everyone, no need to RSVP.",
@@ -329,7 +344,7 @@ public class SocialPostingsController {
                     ),
 
                     new SocialPostings(
-                            -7, 2,
+                            -7, 0,
                             "Intro to Machine Learning Workshop",
                             "A beginner-friendly hands-on workshop on ML basics",
                             "We'll cover the basics of machine learning and get a simple model running together. Laptops provided if you don't have one.",
@@ -342,7 +357,7 @@ public class SocialPostingsController {
                     ),
 
                     new SocialPostings(
-                            -8, 1,
+                            -8, 0,
                             "South Bank Markets Meetup",
                             "Explore the Sunday markets as a group",
                             "Meet at the entrance and we'll wander the stalls together, grab some food, and enjoy the river views.",
@@ -355,10 +370,10 @@ public class SocialPostingsController {
                     ),
 
                     new SocialPostings(
-                            -9, 3,
+                            -9, 0,
                             "Chemistry Demo Show",
                             "Live chemistry demonstrations and experiments",
-                            "Come watch some fun (and loud!) chemistry demonstrations, with a Q&A with the presenters afterwards.",
+                            "Come watch some fun chemistry demonstrations, with a Q&A with the presenters afterwards.",
                             null,
                             "29/10/2026",
                             "15:00",
