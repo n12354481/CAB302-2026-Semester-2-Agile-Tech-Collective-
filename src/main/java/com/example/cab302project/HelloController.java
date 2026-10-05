@@ -6,6 +6,8 @@ import com.example.cab302project.Dashboard.DashboardController;
 import com.example.cab302project.Database.DatabaseUserDAO;
 import com.example.cab302project.Settings.SettingsController;
 import com.example.cab302project.SocialPostings.SocialPostingsController;
+import com.example.cab302project.Activities.ActivitiesController;
+import com.example.cab302project.Rewards.RewardsController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
