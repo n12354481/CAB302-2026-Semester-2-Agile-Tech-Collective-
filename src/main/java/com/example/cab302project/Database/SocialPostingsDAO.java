@@ -78,7 +78,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
             statement.setString(9, post.eventLocation());
             statement.setString(10, post.tags());
 
-            statement.executeUpdate();
+           statement.executeUpdate();
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -91,7 +91,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
     }
 
     /**
-     * Add posts into the database
+     * add posts into the database
      */
     public void addPostsFeed() throws SQLException {
         String sql = "INSERT INTO post "
@@ -170,7 +170,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
      * @throws SQLException
      */
     @Override
-    public void unregisterFromPost(int userId, int postId) throws SQLException {
+   public void unregisterFromPost(int userId, int postId) throws SQLException {
         String sql = "DELETE FROM registrations WHERE userID = ? AND postID = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -182,7 +182,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
 
     @Override
     public boolean isRegistered(int userId, int postId) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM registrations WHERE userID = ? AND postID = ?";
+        String sql = "SELECT COUNT(*) FROM registrations WHERE userId = ? AND postId = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
