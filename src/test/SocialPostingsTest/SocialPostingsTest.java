@@ -12,34 +12,48 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SocialPostingsTest {
+
     private Connection connection;
     private SocialPostingsDAO socialPostingsDAO;
 
     @BeforeEach
     public void setUp() throws SQLException {
 
-        // tempory database that is separate from contacts.db
         connection = DriverManager.getConnection("jdbc:sqlite::memory:");
 
-        String sql = """
+        // create post table
+        String postSql = """
                 CREATE TABLE post (
-                postId INTEGER PRIMARY KEY AUTOINCREMENT,
-                userId INTEGER NOT NULL,
-                title TEXT,
-                description TEXT,
-                content TEXT,
-                image TEXT,
-                event_date TEXT,
-                start_time TEXT,
-                end_time TEXT,
-                event_location TEXT
-               )
-               """;
+                    postId INTEGER PRIMARY KEY AUTOINCREMENT,
+                    userId INTEGER NOT NULL,
+                    title TEXT,
+                    description TEXT,
+                    content TEXT,
+                    image TEXT,
+                    event_date TEXT,
+                    start_time TEXT,
+                    end_time TEXT,
+                    event_location TEXT,
+                    tags TEXT
+                )
+                """;
 
-        connection.createStatement().executeUpdate(sql);
+        connection.createStatement().executeUpdate(postSql);
+
+        // create registrations table
+        String registrationSql = """
+                CREATE TABLE registrations (
+                    userId INTEGER NOT NULL,
+                    postId INTEGER NOT NULL,
+                    PRIMARY KEY (userId, postId)
+                )
+                """;
+
+        connection.createStatement().executeUpdate(registrationSql);
 
         socialPostingsDAO = new SocialPostingsDAO(connection);
     }
@@ -55,14 +69,15 @@ public class SocialPostingsTest {
         SocialPostings post = new SocialPostings(
                 0,
                 1,
-                "Test Social Post",
-                "Test description",
-                "Test content",
-                "",
-                "2026-12-01",
-                "10:00",
-                "12:00",
-                "Griffith University"
+                "Science Trivia Night",
+                "Come test your science knowledge!",
+                "A fun trivia event.",
+                null,
+                "20/09/2026",
+                "16:00",
+                "20:00",
+                "QUT Gardens Point",
+                "Science, Trivia"
         );
 
         int postId = socialPostingsDAO.createPost(post);
@@ -76,133 +91,311 @@ public class SocialPostingsTest {
         SocialPostings post = new SocialPostings(
                 0,
                 1,
-                "Get All Posts Test",
-                "Test description",
-                "Test content",
-                "",
-                "2026-12-02",
-                "13:00",
-                "14:00",
-                "QUT Gardens Point"
+                "Science Trivia Night",
+                "Come test your science knowledge!",
+                "A fun trivia event.",
+                null,
+                "20/09/2026",
+                "16:00",
+                "20:00",
+                "QUT Gardens Point",
+                "Science, Trivia"
         );
 
         socialPostingsDAO.createPost(post);
 
         List<SocialPostings> posts = socialPostingsDAO.getAllPosts();
 
-        boolean foundPost = false;
-
-        for (SocialPostings savedPost : posts) {
-            if (savedPost.title().equals("Get All Posts Test")) {
-                foundPost = true;
-                break;
-            }
-        }
-
-        assertTrue(foundPost);
+        assertEquals(1, posts.size());
     }
 
     @Test
     public void testCreateMultiplePosts() throws SQLException {
 
-        SocialPostings postOne = new SocialPostings(
+        SocialPostings post1 = new SocialPostings(
                 0,
                 1,
-                "Test Post One",
-                "First test post",
-                "First test content",
-                "",
-                "2026-12-03",
-                "14:00",
+                "Science Trivia",
+                "Trivia event",
+                "Science questions",
+                null,
+                "20/09/2026",
                 "16:00",
-                "University of Queensland, B Block"
+                "20:00",
+                "QUT",
+                "Science"
         );
 
-        SocialPostings postTwo = new SocialPostings(
+        SocialPostings post2 = new SocialPostings(
                 0,
-                1,
-                "Test Post Two",
-                "Second test post",
-                "Second test content",
-                "",
-                "2026-12-04",
+                2,
+                "Robotics Challenge",
+                "Build robots",
+                "Robotics event",
+                null,
+                "25/09/2026",
                 "12:00",
-                "13:00",
-                "University of Queensland, L Block"
+                "17:00",
+                "QUT",
+                "Robotics"
         );
 
-        int firstId = socialPostingsDAO.createPost(postOne);
-        int secondId = socialPostingsDAO.createPost(postTwo);
+        socialPostingsDAO.createPost(post1);
+        socialPostingsDAO.createPost(post2);
 
-        assertTrue(firstId > 0);
-        assertTrue(secondId > 0);
-        assertTrue(firstId != secondId);
+        List<SocialPostings> posts = socialPostingsDAO.getAllPosts();
+
+        assertEquals(2, posts.size());
     }
 
     @Test
-    public void testPostDetailsAreSaved() throws SQLException {
+    public void testPostTitleIsSaved() throws SQLException {
 
         SocialPostings post = new SocialPostings(
                 0,
                 1,
-                "Details Test",
-                "Test description",
-                "Test content",
-                "test.png",
-                "2026-12-05",
-                "14:00",
+                "Science Trivia Night",
+                "Trivia event",
+                "Science questions",
+                null,
+                "20/09/2026",
                 "16:00",
-                "QUT Kelvin Grove"
+                "20:00",
+                "QUT",
+                "Science"
+        );
+
+        socialPostingsDAO.createPost(post);
+
+        List<SocialPostings> posts = socialPostingsDAO.getAllPosts();
+
+        assertEquals("Science Trivia Night", posts.get(0).title());
+    }
+
+    @Test
+    public void testPostDescriptionIsSaved() throws SQLException {
+
+        SocialPostings post = new SocialPostings(
+                0,
+                1,
+                "Science Trivia",
+                "Come test your science knowledge!",
+                "Science questions",
+                null,
+                "20/09/2026",
+                "16:00",
+                "20:00",
+                "QUT",
+                "Science"
+        );
+
+        socialPostingsDAO.createPost(post);
+
+        List<SocialPostings> posts = socialPostingsDAO.getAllPosts();
+
+        assertEquals(
+                "Come test your science knowledge!",
+                posts.get(0).description()
+        );
+    }
+
+    @Test
+    public void testPostEventDetailsAreSaved() throws SQLException {
+
+        SocialPostings post = new SocialPostings(
+                0,
+                1,
+                "Science Trivia",
+                "Trivia event",
+                "Science questions",
+                null,
+                "20/09/2026",
+                "16:00",
+                "20:00",
+                "QUT Gardens Point",
+                "Science"
+        );
+
+        socialPostingsDAO.createPost(post);
+
+        List<SocialPostings> posts = socialPostingsDAO.getAllPosts();
+
+        SocialPostings savedPost = posts.get(0);
+
+        assertEquals("20/09/2026", savedPost.eventDate());
+        assertEquals("16:00", savedPost.startTime());
+        assertEquals("20:00", savedPost.endTime());
+        assertEquals("QUT Gardens Point", savedPost.eventLocation());
+    }
+
+    @Test
+    public void testPostTagsAreSaved() throws SQLException {
+
+        SocialPostings post = new SocialPostings(
+                0,
+                1,
+                "Science Trivia",
+                "Trivia event",
+                "Science questions",
+                null,
+                "20/09/2026",
+                "16:00",
+                "20:00",
+                "QUT",
+                "Science, QUT"
+        );
+
+        socialPostingsDAO.createPost(post);
+
+        List<SocialPostings> posts = socialPostingsDAO.getAllPosts();
+
+        assertEquals("Science, QUT", posts.get(0).tags());
+    }
+
+    @Test
+    public void testPostsHaveDifferentIds() throws SQLException {
+
+        SocialPostings post1 = new SocialPostings(
+                0,
+                1,
+                "Science Trivia",
+                "Trivia",
+                "Science event",
+                null,
+                "20/09/2026",
+                "16:00",
+                "20:00",
+                "QUT",
+                "Science"
+        );
+
+        SocialPostings post2 = new SocialPostings(
+                0,
+                2,
+                "Robotics Challenge",
+                "Robotics",
+                "Build robots",
+                null,
+                "25/09/2026",
+                "12:00",
+                "17:00",
+                "QUT",
+                "Robotics"
+        );
+
+        int id1 = socialPostingsDAO.createPost(post1);
+        int id2 = socialPostingsDAO.createPost(post2);
+
+        assertTrue(id1 != id2);
+    }
+
+    @Test
+    public void testRegisterForPost() throws SQLException {
+
+        SocialPostings post = new SocialPostings(
+                0,
+                1,
+                "Science Trivia",
+                "Trivia",
+                "Science event",
+                null,
+                "20/09/2026",
+                "16:00",
+                "20:00",
+                "QUT",
+                "Science"
         );
 
         int postId = socialPostingsDAO.createPost(post);
 
-        List<SocialPostings> posts = socialPostingsDAO.getAllPosts();
+        socialPostingsDAO.registerForPost(1, postId);
 
-        for (SocialPostings savedPost : posts) {
-            if (savedPost.postId() == postId) {
-                assertEquals("Details Test", savedPost.title());
-                assertEquals("Test description", savedPost.description());
-                assertEquals("Test content", savedPost.content());
-                assertEquals("test.png", savedPost.image());
-                assertEquals("2026-12-05", savedPost.eventDate());
-                assertEquals("14:00", savedPost.startTime());
-                assertEquals("16:00", savedPost.endTime());
-                assertEquals("QUT Kelvin Grove", savedPost.eventLocation());
-                return;
-            }
-        }
-
-        assertTrue(false);
+        assertTrue(
+                socialPostingsDAO.isRegistered(1, postId)
+        );
     }
 
     @Test
-    public void testAddPostsFeed() throws SQLException {
-        socialPostingsDAO.addPostsFeed();
+    public void testUserIsNotRegisteredInitially() throws SQLException {
 
-        List<SocialPostings> posts = socialPostingsDAO.getAllPosts();
+        SocialPostings post = new SocialPostings(
+                0,
+                1,
+                "Science Trivia",
+                "Trivia",
+                "Science event",
+                null,
+                "20/09/2026",
+                "16:00",
+                "20:00",
+                "QUT",
+                "Science"
+        );
 
-        boolean foundNetworkingNight = false;
-        boolean foundMathWorkshop = false;
-        boolean foundScienceTrivia = false;
+        int postId = socialPostingsDAO.createPost(post);
 
-        for (SocialPostings post : posts) {
+        assertFalse(
+                socialPostingsDAO.isRegistered(1, postId)
+        );
+    }
 
-            if (post.title().equals("STEM Networking Night")) {
-                foundNetworkingNight = true;
-            }
+    @Test
+    public void testUnregisterFromPost() throws SQLException {
 
-            if (post.title().equals("Math Workshop")) {
-                foundMathWorkshop = true;
-            }
+        SocialPostings post = new SocialPostings(
+                0,
+                1,
+                "Science Trivia",
+                "Trivia",
+                "Science event",
+                null,
+                "20/09/2026",
+                "16:00",
+                "20:00",
+                "QUT",
+                "Science"
+        );
 
-            if (post.title().equals("Science Trivia Night!")) {
-                foundScienceTrivia = true;
-            }
-        }
+        int postId = socialPostingsDAO.createPost(post);
 
-        assertTrue(foundNetworkingNight);
-        assertTrue(foundMathWorkshop);
-        assertTrue(foundScienceTrivia);
+        socialPostingsDAO.registerForPost(1, postId);
+
+        assertTrue(
+                socialPostingsDAO.isRegistered(1, postId)
+        );
+
+        socialPostingsDAO.unregisterFromPost(1, postId);
+
+        assertFalse(
+                socialPostingsDAO.isRegistered(1, postId)
+        );
+    }
+
+    @Test
+    public void testGetRegisteredPosts() throws SQLException {
+
+        SocialPostings post = new SocialPostings(
+                0,
+                1,
+                "Science Trivia",
+                "Trivia",
+                "Science event",
+                null,
+                "20/09/2026",
+                "16:00",
+                "20:00",
+                "QUT",
+                "Science"
+        );
+
+        int postId = socialPostingsDAO.createPost(post);
+
+        socialPostingsDAO.registerForPost(1, postId);
+
+        List<SocialPostings> registeredPosts =
+                socialPostingsDAO.getRegisteredPosts(1);
+
+        assertEquals(1, registeredPosts.size());
+        assertEquals("Science Trivia", registeredPosts.get(0).title());
     }
 }
