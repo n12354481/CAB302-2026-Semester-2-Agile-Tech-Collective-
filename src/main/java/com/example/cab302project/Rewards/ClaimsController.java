@@ -1,5 +1,6 @@
 package com.example.cab302project.Rewards;
 
+import com.example.cab302project.Database.DatabaseConnection;
 import com.example.cab302project.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,16 +18,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The claiming page
- *
- * The rewards are hardcoded for this iteration. Nothing counts real activities yet,
- * it is forgotten when the window closes.
+ * The claiming page. The rewards and claims come from {@link ClaimsDAO}.
  */
 public class ClaimsController {
 
@@ -51,14 +49,43 @@ public class ClaimsController {
     @FXML private Label dialogTitle;
     @FXML private Label dialogText;
 
-    private final List<Reward> rewards = demoRewards();
+    private List<Reward> rewards = List.of();
 
     /** The reward the confirm dialog is asking for, null when the dialog is closed. */
     private Reward pending;
 
+    private ClaimsDAO claimsDAO;
+    private int userId;
+
     @FXML
     public void initialize() {
         monthLabel.setText(LocalDate.now().format(MONTH));
+        try {
+            claimsDAO = new ClaimsDAO(DatabaseConnection.getInstance());
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Shows the rewards for the logged-in user. Called once the page is loaded.
+     * @param userId: The userID of the logged-in user.
+     */
+    public void setUserId(int userId) {
+        this.userId = userId;
+        load();
+    }
+
+    private void load() {
+        if (claimsDAO == null) {
+            return;
+        }
+        try {
+            rewards = claimsDAO.rewardsFor(userId);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            rewards = List.of();
+        }
         draw();
     }
 
@@ -190,26 +217,29 @@ public class ClaimsController {
         if (pending == null) {
             return;
         }
-        pending.claim(LocalDate.now());
+        try {
+            claimsDAO.claim(userId, pending, LocalDate.now());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         pending = null;
 
         show(overlay, false);
-        draw();
+        load();
     }
 
     @FXML
     private void onBack() {
-        swapPage("Rewards.fxml");
-    }
-
-    /** The nav keeps every page in one StackPane, so swapping its child changes page. */
-    private void swapPage(String page) {
+        // The nav keeps every page in one StackPane, so swapping its child changes page.
         Node holder = monthLabel.getScene().lookup("#mainContent");
         if (!(holder instanceof StackPane pane)) {
             return;
         }
         try {
-            Node loaded = FXMLLoader.load(HelloApplication.class.getResource(page));
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("Rewards.fxml"));
+            Node loaded = loader.load();
+            RewardsController controller = loader.getController();
+            controller.setUserId(userId);
             pane.getChildren().setAll(loaded);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -224,29 +254,5 @@ public class ClaimsController {
     private void show(Node node, boolean visible) {
         node.setVisible(visible);
         node.setManaged(visible);
-    }
-
-    /** Hardcoded for this iteration */
-    private static List<Reward> demoRewards() {
-        Reward greenThumb = new Reward("“Green Thumb” title", "Balanced days", 20, 20, "days",
-                "Earned for twenty balanced days. Added to your profile once you confirm.");
-        greenThumb.claim(LocalDate.of(2026, 8, 12));
-
-        return new ArrayList<>(List.of(
-                new Reward("Garden gnome", "Months active", 1, 1, "month",
-                        "Earned for your first full month with Stem Wellbeing. Added to your "
-                                + "garden once you confirm."),
-                new Reward("“Early Bird” title", "Morning study sessions", 10, 10, "before 9am",
-                        "Earned for ten study sessions started before 9am. Added to your profile "
-                                + "once you confirm."),
-                new Reward("Skies (morning, noon, night)", "Balanced days", 7, 20, "days",
-                        "Earned for twenty balanced days. Changes the sky behind your garden "
-                                + "once you confirm."),
-                new Reward("Jacaranda", "Study sessions", 7, 10, "sessions",
-                        "Earned for ten study sessions. Planted in your garden once you confirm."),
-                new Reward("Eucalyptus", "Physical movement", 9, 15, "sessions",
-                        "Earned for fifteen movement sessions. Planted in your garden once you "
-                                + "confirm."),
-                greenThumb));
     }
 }

@@ -38,8 +38,7 @@ public class CreatePostController {
 
     private final ISocialPostingsDAO socialPostingsDAO = new SocialPostingsDAO();
 
-    // replace with actual logged in user ID
-    private int currentUserId = 1;
+    private int currentUserId;
 
     public void setUserId(int userId) {
         this.currentUserId = userId;
@@ -166,6 +165,9 @@ public class CreatePostController {
         );
 
         Node content = loader.load();
+
+        SocialPostingsController controller = loader.getController();
+        controller.setUserId(currentUserId);
 
         mainContent.getChildren().setAll(content);
     }

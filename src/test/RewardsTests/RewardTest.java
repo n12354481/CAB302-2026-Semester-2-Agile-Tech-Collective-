@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class RewardTest {
 
     private static Reward counting() {
-        return new Reward("Jacaranda", "Study sessions", 7, 10, "sessions", "why it was earned");
+        return new Reward("jacaranda", "Jacaranda", "Study sessions", 7, 10, "sessions", "why it was earned");
     }
 
     private static Reward finished() {
-        return new Reward("Garden gnome", "Months active", 1, 1, "month", "why it was earned");
+        return new Reward("garden-gnome", "Garden gnome", "Months active", 1, 1, "month", "why it was earned");
     }
 
     @Test
@@ -43,7 +43,7 @@ class RewardTest {
     @Test
     void fractionIsHowFullTheBarShouldBeAndNeverPastFull() {
         assertEquals(0.7, counting().fraction(), 0.0001);
-        Reward over = new Reward("Eucalyptus", "Physical movement", 20, 15, "sessions", "why");
+        Reward over = new Reward("eucalyptus", "Eucalyptus", "Physical movement", 20, 15, "sessions", "why");
         assertEquals(1.0, over.fraction());
     }
 

@@ -78,7 +78,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
             statement.setString(9, post.eventLocation());
             statement.setString(10, post.tags());
 
-            statement.executeUpdate();
+           statement.executeUpdate();
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -91,7 +91,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
     }
 
     /**
-     * Add posts into the database
+     * add posts into the database
      */
     public void addPostsFeed() throws SQLException {
         String sql = "INSERT INTO post "
@@ -103,7 +103,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
         addPostIfNotExists(
                 connection,
                 sql,
-                1,
+                0,
                 "STEM Networking Night",
                 "Meet other STEM students and make new connections.",
                 "Come along to our STEM networking night!",
@@ -118,7 +118,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
         addPostIfNotExists(
                 connection,
                 sql,
-                1,
+                0,
                 "Math Workshop",
                 "Get help with your math questions!",
                 "Bring any questions, worksheets, or assignments along for extra help!",
@@ -133,7 +133,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
         addPostIfNotExists(
                 connection,
                 sql,
-                1,
+                0,
                 "Science Trivia Night!",
                 "Test your science knowledge against other teams and science students.",
                 "Join us for a fun night of science trivia! Come alone and meet new people or come in a group and put your brains to the test!",
@@ -170,7 +170,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
      * @throws SQLException
      */
     @Override
-    public void unregisterFromPost(int userId, int postId) throws SQLException {
+   public void unregisterFromPost(int userId, int postId) throws SQLException {
         String sql = "DELETE FROM registrations WHERE userID = ? AND postID = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -182,7 +182,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
 
     @Override
     public boolean isRegistered(int userId, int postId) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM registrations WHERE userID = ? AND postID = ?";
+        String sql = "SELECT COUNT(*) FROM registrations WHERE userId = ? AND postId = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
