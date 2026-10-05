@@ -30,13 +30,9 @@ import java.util.OptionalInt;
  * Every number comes from {@link RewardsService}, which is where the
  * logic and the tests reside. This class only decides what to show.
  *
- * Some of it is demo scaffolding until the rest of the app is built. The user is
- * hardcoded because there is no login, and the claiming page it links to is hardcoded too.
+ * The claiming page it links to is still hardcoded.
  */
 public class RewardsController {
-
-    /** The panel always shows the same user. */
-    private static final int DEMO_USER_ID = 1;
 
     /** A fortnight that matches the preconfigured run */
     private static final int WINDOW_DAYS = 14;
@@ -78,6 +74,7 @@ public class RewardsController {
 
     private RewardsService service;
     private LocalDate today;
+    private int userId;
 
     /** The day on the selected card. Starts today and moves when a plant is clicked. */
     private final ObjectProperty<LocalDate> selectedDay = new SimpleObjectProperty<>();
@@ -89,7 +86,6 @@ public class RewardsController {
         gardenCard.getChildren().add(garden);
         legend.getChildren().setAll(GardenPane.legendItems());
         garden.setOnPick(selectedDay::set);
-        garden.setOnLoadDemo(this::onLoadDemo);
         try {
             Connection connection = DatabaseConnection.getInstance();
             service = new RewardsService(connection, THRESHOLDS);
@@ -98,17 +94,16 @@ public class RewardsController {
             return;
         }
         selectedDay.addListener((obs, old, day) -> refresh());
-        refresh();
     }
 
-    private void onLoadDemo() {
-        try {
-            Connection connection = DatabaseConnection.getInstance();
-            GardenDemoData.ensureUser(connection, DEMO_USER_ID);
-            GardenDemoData.seed(connection, DEMO_USER_ID, today);
+    /**
+     * Shows the rewards for the logged-in user. Called by the nav once the page is loaded.
+     * @param userId: The userID of the logged-in user.
+     */
+    public void setUserId(int userId) {
+        this.userId = userId;
+        if (service != null) {
             refresh();
-        } catch (SQLException ex) {
-            showError("Could not load the demo data: " + ex.getMessage());
         }
     }
 
@@ -121,7 +116,10 @@ public class RewardsController {
             return;
         }
         try {
-            Node claims = FXMLLoader.load(HelloApplication.class.getResource("Claims.fxml"));
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("Claims.fxml"));
+            Node claims = loader.load();
+            ClaimsController controller = loader.getController();
+            controller.setUserId(userId);
             pane.getChildren().setAll(claims);
         } catch (IOException ex) {
             messageLabel.setText("Could not open the claiming page: " + ex.getMessage());
@@ -138,9 +136,9 @@ public class RewardsController {
         List<DayEntry> activities;
         List<DayEntry> rest;
         try {
-            totals = service.totalsFor(DEMO_USER_ID, from, today);
-            activities = service.activitiesOn(DEMO_USER_ID, selected);
-            rest = service.restOn(DEMO_USER_ID, selected);
+            totals = service.totalsFor(userId, from, today);
+            activities = service.activitiesOn(userId, selected);
+            rest = service.restOn(userId, selected);
         } catch (SQLException ex) {
             showError("Could not read your logged days: " + ex.getMessage());
             return;

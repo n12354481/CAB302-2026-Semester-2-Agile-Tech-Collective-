@@ -4,7 +4,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -70,7 +69,6 @@ public class GardenPane extends StackPane {
     private final Pane canvas = new Pane();
 
     private Consumer<LocalDate> onPick = date -> { };
-    private Runnable onLoadDemo = () -> { };
 
     // The range and selection from the last draw, for the arrow keys.
     private LocalDate first;
@@ -101,11 +99,6 @@ public class GardenPane extends StackPane {
     /** Called with the day clicked, or moved to with the arrow keys. */
     public void setOnPick(Consumer<LocalDate> onPick) {
         this.onPick = onPick;
-    }
-
-    /** Called by the button in the empty garden. */
-    public void setOnLoadDemo(Runnable onLoadDemo) {
-        this.onLoadDemo = onLoadDemo;
     }
 
     /**
@@ -374,11 +367,8 @@ public class GardenPane extends StackPane {
         title.getStyleClass().add("garden-empty-title");
         Label body = new Label("Use the app today to plant your first stem.");
         body.getStyleClass().add("garden-empty-body");
-        Button demo = new Button("Load demo data");
-        demo.getStyleClass().add("green-button");
-        demo.setOnAction(event -> onLoadDemo.run());
 
-        VBox message = new VBox(8, title, body, demo);
+        VBox message = new VBox(8, title, body);
         message.setAlignment(Pos.CENTER);
         message.setLayoutX(LEFT);
         message.setLayoutY(34);

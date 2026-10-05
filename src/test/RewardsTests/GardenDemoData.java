@@ -1,4 +1,4 @@
-package com.example.cab302project.Rewards;
+package RewardsTests;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,13 +8,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 
 /**
- * Demo data for the garden, a fortnight of logged days for a user.
- *
- * Nothing writes to {@code activity_log} or {@code rest_entry} yet, there is no logging
- * screen. Without rows the rewards panel shows empty soil on and on, so this
- * enables a fixed fortnight of activities: a balanced day, a
+ * Test data for the garden, a fortnight of logged days for a user: a balanced day, a
  * rest only day, an empty day that breaks the streak, and one day that's over the activity cap.
- *
  *
  * Deterministic and replayable: seeding the same range twice clears the range first.
  * The totals do not double up.
@@ -84,21 +79,6 @@ public final class GardenDemoData {
             }
         }
         return firstDay;
-    }
-
-    /**
-     * Makes sure the demo user exists. Foreign keys are on and the logged rows point at
-     * it. Does nothing if the row is already there. Demo scaffolding.
-     */
-    public static void ensureUser(Connection connection, int userID) throws SQLException {
-        String sql = "INSERT OR IGNORE INTO users (userID, email, username, password) "
-                + "VALUES (?, ?, ?, 'demo')";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, userID);
-            statement.setString(2, "demo" + userID + "@qut.edu.au");
-            statement.setString(3, "demo" + userID);
-            statement.executeUpdate();
-        }
     }
 
     /** Finds the demo activity  inserting it the first time. */
