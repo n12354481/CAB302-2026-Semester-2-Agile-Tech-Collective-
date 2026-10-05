@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.StackPane;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.Node;
 
 import java.io.IOException;
 
@@ -21,6 +22,12 @@ public class PostDetailController {
     @FXML private Label timeLabel;
 
     private StackPane mainContent;
+
+    private int currentUserId;
+
+    public void setUserId(int userId) {
+        this.currentUserId = userId;
+    }
 
     /**
      * Called by when the screen is opened
@@ -51,17 +58,17 @@ public class PostDetailController {
     }
 
     @FXML
-    private void onBackClicked() {
-        try {
+    private void onBackClicked() throws IOException{
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/example/cab302project/socialpostings.fxml")
             );
-            Parent feedView = loader.load();
-            mainContent.getChildren().setAll(feedView);
-        } catch (IOException e) {
-            e.printStackTrace();
+            Node content = loader.load();
+
+            SocialPostingsController controller = loader.getController();
+            controller.setUserId(currentUserId);
+
+            mainContent.getChildren().setAll(content);
         }
-    }
 
     @FXML
     private void onContactInfoClicked() {

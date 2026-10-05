@@ -103,7 +103,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
         addPostIfNotExists(
                 connection,
                 sql,
-                1,
+                0,
                 "STEM Networking Night",
                 "Meet other STEM students and make new connections.",
                 "Come along to our STEM networking night!",
@@ -118,7 +118,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
         addPostIfNotExists(
                 connection,
                 sql,
-                1,
+                0,
                 "Math Workshop",
                 "Get help with your math questions!",
                 "Bring any questions, worksheets, or assignments along for extra help!",
@@ -133,7 +133,7 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
         addPostIfNotExists(
                 connection,
                 sql,
-                1,
+                0,
                 "Science Trivia Night!",
                 "Test your science knowledge against other teams and science students.",
                 "Join us for a fun night of science trivia! Come alone and meet new people or come in a group and put your brains to the test!",
