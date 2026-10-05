@@ -3,8 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets ?>
-<?import javafx.scene.image.ImageView?>
-
 
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
@@ -81,12 +79,9 @@
                                -fx-background-radius: 8;
                                -fx-cursor: hand;"/>
 
-                <!-- Activity image section. Images have not been added yet, category used as placeholder -->
+                <!-- category banner -->
                 <StackPane prefHeight="250" minHeight="250" maxHeight="250" style="-fx-background-color: #E8EEEE; -fx-background-radius: 15;">
-
-                    <ImageView fx:id="activityImage" fitWidth="600" fitHeight="240" preserveRatio="true"/>
-                    <Label fx:id="imagePlaceholder" style="-fx-font-size: 20px; -fx-text-fill: gray;"/>
-
+                    <Label fx:id="categoryBannerLabel" style="-fx-font-size: 20px; -fx-text-fill: gray;"/>
                 </StackPane>
 
                 <Label fx:id="activityName" wrapText="true" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
@@ -120,6 +115,20 @@
                                -fx-background-radius: 8;
                                -fx-cursor: hand;"/>
 
+                <Button fx:id="deleteActivityButton"
+                        text="Delete Activity"
+                        onAction="#onDeleteActivityClicked"
+                        visible="false"
+                        managed="false"
+                        prefWidth="180"
+                        prefHeight="42"
+                        style="-fx-background-color: #E8EEEE;
+                               -fx-text-fill: #333333;
+                               -fx-font-size: 15px;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 8;
+                               -fx-cursor: hand;"/>
+
                 <Label fx:id="selectionMessage" wrapText="true" style="-fx-font-size: 14px; -fx-text-fill: #1F6F64;"/>
             </VBox>
         </content>
@@ -141,7 +150,7 @@
 
                 <HBox alignment="CENTER_LEFT" spacing="15">
                     <Button text="← Back"
-                            onAction="#onMyActivitiesBackCLicked"
+                            onAction="#onMyActivitiesBackClicked"
                             prefWidth="90"
                             style="-fx-background-color: #E8EEEE;
                                    -fx-background-radius: 8;
@@ -210,6 +219,10 @@
                               -fx-cursor: hand;"/>
 
                 <Label text="Create custom activity" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+                <Label text="Create an activity that suits you." style="-fx-font-size: 14px; -fx-text-fill: gray;"/>
+
+                <Separator/>
 
                 <Label text="Activity name" style="-fx-font-size: 17px; -fx-font-weight: bold;"/>
 
