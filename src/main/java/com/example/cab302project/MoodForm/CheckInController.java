@@ -1,5 +1,6 @@
 package com.example.cab302project.MoodForm;
 
+import com.example.cab302project.HelloController;
 import com.example.cab302project.Database.DatabaseCheckInDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -74,9 +75,14 @@ public class CheckInController {
             new DatabaseCheckInDAO();
 
     private int userID;
+    private HelloController helloController;
 
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    public void setHelloController(HelloController helloController) {
+        this.helloController = helloController;
     }
 
     @FXML
@@ -101,7 +107,7 @@ public class CheckInController {
             showError("Unable to identify the logged-in user.");
             return;
         }
-        
+
         // Make sure required questions have been answered
 
         if (emotionGroup.getSelectedToggle() == null) {
@@ -166,6 +172,10 @@ public class CheckInController {
                     "Check-in saved. ID: "
                             + checkIn.getCheckinID()
             );
+
+            if (helloController != null) {
+                helloController.loadWellbeingPage();
+            }
 
         } else {
 
