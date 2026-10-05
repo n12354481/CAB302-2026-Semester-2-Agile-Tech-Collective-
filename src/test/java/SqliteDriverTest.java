@@ -1,3 +1,4 @@
+import com.example.cab302project.Database.DatabaseConnection;
 import org.junit.jupiter.api.Test;
 import org.sqlite.SQLiteConnection;
 import java.sql.Connection;
@@ -26,9 +27,9 @@ class SqliteDriverTest {
         }
     }
 
-//    @Test
-//    public void testConnection() {
-//        Connection conn = SQLiteConnection.getInstance();
-//        assertEquals(true, conn != null);
-//    }
+    @Test
+    public void testConnection() {
+        Connection conn = DatabaseConnection.getInstance();
+        assertEquals(true, conn != null);
+    }
 }
