@@ -11,11 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -483,10 +481,8 @@ public class SettingsController {
             FXMLLoader loader = new FXMLLoader(
                     HelloApplication.class.getResource("login.fxml")
             );
-            Scene scene = new Scene(loader.load());
-            Stage stage = (Stage) deleteOverlay.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+            // Swap the root, not the scene, so the window keeps its size.
+            deleteOverlay.getScene().setRoot(loader.load());
         }
 
         deleteOverlay.setVisible(false);
