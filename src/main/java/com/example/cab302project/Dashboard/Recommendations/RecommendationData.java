@@ -25,7 +25,7 @@ public class RecommendationData {
 
     /**
      * Getter for the activity data.
-     * @return: Returns the activity data.
+     * @return Returns the activity data.
      */
     public List<Map<String, Object>> getActivityData() {
         return activityData;
@@ -33,7 +33,7 @@ public class RecommendationData {
 
     /**
      * Getter for the checkin data.
-     * @return: Returns the checkin data.
+     * @return Returns the checkin data.
      */
     public List<CheckIn> getCheckinData() {
         return checkinData;

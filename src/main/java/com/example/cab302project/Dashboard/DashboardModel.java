@@ -50,7 +50,7 @@ public class DashboardModel {
 
     /**
      * Getter for weekly check-ins
-     * @return: Returns the weekly check-ins field.
+     * @return Returns the weekly check-ins field.
      */
     public int getWeeklyCheckinsStreak()
     {
@@ -59,7 +59,7 @@ public class DashboardModel {
 
     /**
      * Getter for activities completed.
-     * @return: Returns the activities completed field.
+     * @return Returns the activities completed field.
      */
     public int getActivitiesCompleted()
     {
@@ -68,7 +68,7 @@ public class DashboardModel {
 
     /**
      * Getter for average study stress
-     * @return: Returns the average study stress field.
+     * @return Returns the average study stress field.
      */
     public double getAvgStudyStress()
     {
@@ -77,7 +77,7 @@ public class DashboardModel {
 
     /**
      * Getter for  average sleep
-     * @return: Returns the average sleep field.
+     * @return Returns the average sleep field.
      */
     public double getAvgSleep()
     {
@@ -86,7 +86,7 @@ public class DashboardModel {
 
     /**
      * Getter for  activity minutes
-     * @return: Returns the activity minutes field.
+     * @return Returns the activity minutes field.
      */
     public int getActivityMinutes()
     {
@@ -95,7 +95,7 @@ public class DashboardModel {
 
     /**
      * Getter for  activity goal
-     * @return: Returns the activity goals field.
+     * @return Returns the activity goals field.
      */
     public int getActivityGoal()
     {
@@ -104,7 +104,7 @@ public class DashboardModel {
 
     /**
      * Method for calculating progress
-     * @return: Returns the spent activity minutes
+     * @return Returns the spent activity minutes
      */
     public double getTotalActivityMinutes()
     {
@@ -122,7 +122,7 @@ public class DashboardModel {
 
     /**
      * Getter for  recommendation data
-     * @return: Returns the recommendation data
+     * @return Returns the recommendation data
      */
     public RecommendationData getRecommendations() {
         return recommendations;
@@ -130,7 +130,7 @@ public class DashboardModel {
 
     /**
      * Getter for  insights data
-     * @return: Returns the insights data
+     * @return Returns the insights data
      */
     public CommunityInsightsData getInsights() {
         return insights;

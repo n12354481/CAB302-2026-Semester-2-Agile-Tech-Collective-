@@ -66,7 +66,7 @@ public class SettingsModel {
 
     /**
      * Getter for the community participation.
-     * @return: returns the community participation variable.
+     * @return returns the community participation variable.
      */
     public boolean isCommunityParticipation()
     {
@@ -75,7 +75,7 @@ public class SettingsModel {
 
     /**
      * Getter for the community activity participation.
-     * @return: returns the community activity participation variable.
+     * @return returns the community activity participation variable.
      */
     public boolean isCommunityActivityParticipation()
     {
@@ -84,7 +84,7 @@ public class SettingsModel {
 
     /**
      * Getter for the community checkin participation.
-     * @return: returns the community checkin participation variable.
+     * @return returns the community checkin participation variable.
      */
     public boolean isCommunityCheckinParticipation()
     {
@@ -93,7 +93,7 @@ public class SettingsModel {
 
     /**
      * Method which checks if the user allowed community participation.
-     * @return: returns the community participation variable.
+     * @return returns the community participation variable.
      */
     public boolean contributeToCommunityStatistics() {
         return communityParticipation;
@@ -101,7 +101,7 @@ public class SettingsModel {
 
     /**
      * Method which checks if the user allowed community activity participation.
-     * @return: returns true if both the community participation variable and the community activity participation variable are enabled.
+     * @return returns true if both the community participation variable and the community activity participation variable are enabled.
      */
     public boolean contributeOnlyActivity() {
         return communityParticipation && activityDataParticipation;
@@ -109,7 +109,7 @@ public class SettingsModel {
 
     /**
      * Method which checks if the user allowed community checkin participation.
-     * @return: returns true if both the community participation variable and the community checkin participation variable are enabled.
+     * @return returns true if both the community participation variable and the community checkin participation variable are enabled.
      */
     public boolean contributeOnlyCheckIn() {
         return communityParticipation && checkinDataParticipation;
@@ -120,13 +120,13 @@ public class SettingsModel {
 
     /**
      * Setter for AI Personalise variable
-     * @return: returns AI personalise variable
+     * @return returns AI personalise variable
      */
     public void setAIPersonalisation(boolean enabled) { AIPersonalise = enabled; }
 
     /**
      * Method which checks if the user allowed AI personalisation.
-     * @return: returns AI personalise variable
+     * @return returns AI personalise variable
      */
     public boolean AIPersonalisationEnabled() {
         return AIPersonalise;
@@ -134,7 +134,7 @@ public class SettingsModel {
 
     /**
      * Setter for AI Activity Personalise variable
-     * @return: returns AI activity personalise variable
+     * @return returns AI activity personalise variable
      */
     public void setAIActivityPersonalisation(boolean enabled) {
         AIActivityPersonalise = enabled;
@@ -142,7 +142,7 @@ public class SettingsModel {
 
     /**
      * Method which checks if the user allowed AI activity personalisation.
-     * @return: returns AI activity personalise variable
+     * @return returns AI activity personalise variable
      */
     public boolean AIActivityPersonalisationEnabled() {
         return AIPersonalise && AIActivityPersonalise;
@@ -150,7 +150,7 @@ public class SettingsModel {
 
     /**
      * Setter for AI Checkin Personalise variable
-     * @return: returns AI checkin ersonalise variable
+     * @return returns AI checkin ersonalise variable
      */
     public void setAICheckinPersonalisation(boolean enabled) {
         AICheckinPersonalise = enabled;
@@ -158,7 +158,7 @@ public class SettingsModel {
 
     /**
      * Method which checks if the user allowed AI checkin personalisation.
-     * @return: returns AI checkin personalise variable
+     * @return returns AI checkin personalise variable
      */
     public boolean AICheckinPersonalisationEnabled() {
         return AIPersonalise && AICheckinPersonalise;
