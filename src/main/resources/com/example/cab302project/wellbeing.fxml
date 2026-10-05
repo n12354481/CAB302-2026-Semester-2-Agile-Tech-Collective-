@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.cab302project.MoodForm.WellbeingController"
+            prefWidth="1200.0"
+            prefHeight="850.0">
+
+    <children>
+
+        <Label text="My Wellbeing"
+               layoutX="35.0"
+               layoutY="30.0"
+               style="-fx-font-size: 26px;
+                      -fx-font-weight: bold;" />
+
+        <Label fx:id="checkInCountLabel"
+               text="Total check-ins: 0"
+               layoutX="35.0"
+               layoutY="85.0"
+               style="-fx-font-size: 16px;" />
+
+    </children>
+
+</AnchorPane>

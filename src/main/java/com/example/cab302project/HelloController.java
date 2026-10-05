@@ -6,6 +6,7 @@ import com.example.cab302project.Dashboard.DashboardController;
 import com.example.cab302project.Database.DatabaseUserDAO;
 import com.example.cab302project.Settings.SettingsController;
 import com.example.cab302project.SocialPostings.SocialPostingsController;
+import com.example.cab302project.MoodForm.CheckInController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -157,6 +158,11 @@ public class HelloController {
             if(page.equals("socialpostings.fxml")) {
                 SocialPostingsController controller = loader.getController();
                 controller.setUserId(userID);
+            }
+
+            if(page.equals("mood-checkin.fxml")) {
+                CheckInController controller = loader.getController();
+                controller.setUserID(userID);
             }
 
             mainContent.getChildren().setAll(content);
