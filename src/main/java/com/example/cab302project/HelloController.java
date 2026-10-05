@@ -4,6 +4,7 @@ import com.example.cab302project.Authentication.IUserDAO;
 import com.example.cab302project.Authentication.User;
 import com.example.cab302project.Dashboard.DashboardController;
 import com.example.cab302project.Database.DatabaseUserDAO;
+import com.example.cab302project.Rewards.RewardsController;
 import com.example.cab302project.Settings.SettingsController;
 import com.example.cab302project.SocialPostings.SocialPostingsController;
 import javafx.fxml.FXML;
@@ -152,6 +153,11 @@ public class HelloController {
 
             if(page.equals("socialpostings.fxml")) {
                 SocialPostingsController controller = loader.getController();
+                controller.setUserId(userID);
+            }
+
+            if(page.equals("Rewards.fxml")) {
+                RewardsController controller = loader.getController();
                 controller.setUserId(userID);
             }
 
