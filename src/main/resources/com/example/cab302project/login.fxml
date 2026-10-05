@@ -1,83 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cab302project.Authentication.LoginController"
-            prefHeight="500.0"
-            prefWidth="700.0">
+            fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            style="-fx-background: white;
+                   -fx-background-color: white;">
 
-    <!-- Green header -->
-    <Pane prefHeight="90.0"
-          AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0"
-          style="-fx-background-color: #237A6B;">
+    <content>
 
-        <Label text="Stem App"
-               layoutX="290.0"
-               layoutY="28.0"
-               style="-fx-font-size: 25px;
-                      -fx-font-weight: bold;
-                      -fx-text-fill: white;"/>
-    </Pane>
+        <VBox alignment="TOP_CENTER"
+              spacing="0"
+              minHeight="500.0"
+              style="-fx-background-color: white;">
 
-    <!-- Username -->
-    <Label text="Username"
-           layoutX="200.0"
-           layoutY="145.0"
-           style="-fx-font-size: 14px;
-                  -fx-font-weight: bold;"/>
+            <!-- Header -->
+            <StackPane prefHeight="90.0"
+                       minHeight="90.0"
+                       maxHeight="90.0"
+                       maxWidth="Infinity"
+                       style="-fx-background-color: #237A6B;">
 
-    <TextField fx:id="usernameField"
-               layoutX="200.0"
-               layoutY="170.0"
-               prefWidth="300.0"
-               promptText="Enter username"/>
+                <Label text="Stem App"
+                       style="-fx-font-size: 25px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: white;"/>
 
-    <!-- Password -->
-    <Label text="Password"
-           layoutX="200.0"
-           layoutY="225.0"
-           style="-fx-font-size: 14px;
-                  -fx-font-weight: bold;"/>
+            </StackPane>
 
-    <PasswordField fx:id="passwordField"
-                   layoutX="200.0"
-                   layoutY="250.0"
-                   prefWidth="300.0"
-                   promptText="Enter password"/>
+            <!-- Login content -->
+            <VBox alignment="TOP_LEFT"
+                  spacing="10.0"
+                  maxWidth="300.0">
 
-    <!-- Error/success messages -->
-    <Label fx:id="messageLabel"
-           layoutX="200.0"
-           layoutY="295.0"
-           prefWidth="300.0"
-           alignment="CENTER"
-           wrapText="true"/>
+                <padding>
+                    <Insets top="50.0"
+                            right="0.0"
+                            bottom="20.0"
+                            left="0.0"/>
+                </padding>
 
-    <!-- Sign in -->
-    <Button text="Sign in"
-            layoutX="300.0"
-            layoutY="335.0"
-            prefWidth="100.0"
-            onAction="#handleLogin"/>
+                <!-- Username -->
+                <Label text="Username"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
 
-    <!-- Registration -->
-    <Label text="Haven't registered yet?"
-           layoutX="275.0"
-           layoutY="405.0"/>
+                <TextField fx:id="usernameField"
+                           maxWidth="Infinity"
+                           prefHeight="32.0"
+                           promptText="Enter username"/>
 
-    <Button text="Register"
-            layoutX="300.0"
-            layoutY="430.0"
-            prefWidth="100.0"
-            onAction="#goToRegister"/>
+                <!-- Space between fields -->
+                <Region prefHeight="15.0"/>
 
-</AnchorPane>
+                <!-- Password -->
+                <Label text="Password"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
+
+                <PasswordField fx:id="passwordField"
+                               maxWidth="Infinity"
+                               prefHeight="32.0"
+                               promptText="Enter password"/>
+
+                <!-- Messages -->
+                <Label fx:id="messageLabel"
+                       maxWidth="Infinity"
+                       minHeight="30.0"
+                       alignment="CENTER"
+                       wrapText="true"/>
+
+                <!-- Sign in -->
+                <HBox alignment="CENTER">
+
+                    <Button text="Sign in"
+                            prefWidth="100.0"
+                            onAction="#handleLogin"/>
+
+                </HBox>
+
+                <Region prefHeight="20.0"/>
+
+                <!-- Registration -->
+                <Label text="Haven't registered yet?"
+                       maxWidth="Infinity"
+                       alignment="CENTER"/>
+
+                <HBox alignment="CENTER">
+
+                    <Button text="Register"
+                            prefWidth="100.0"
+                            onAction="#goToRegister"/>
+
+                </HBox>
+
+            </VBox>
+
+        </VBox>
+
+    </content>
+
+</ScrollPane>

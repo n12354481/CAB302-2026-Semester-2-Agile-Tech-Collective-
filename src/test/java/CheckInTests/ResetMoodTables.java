@@ -22,11 +22,11 @@ public class ResetMoodTables {
             );
 
             statement.execute(
-                    "DROP TABLE IF EXISTS mood"
+                    "DROP TABLE IF EXISTS checkin"
             );
 
             statement.execute(
-                    "DROP TABLE IF EXISTS checkin"
+                    "DROP TABLE IF EXISTS mood"
             );
 
             System.out.println(

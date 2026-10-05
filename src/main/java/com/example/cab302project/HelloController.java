@@ -8,6 +8,8 @@ import com.example.cab302project.Rewards.RewardsController;
 import com.example.cab302project.Settings.SettingsController;
 import com.example.cab302project.SocialPostings.SocialPostingsController;
 import com.example.cab302project.Activities.ActivitiesController;
+import com.example.cab302project.MoodForm.CheckInController;
+import com.example.cab302project.MoodForm.WellbeingController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -68,7 +70,7 @@ public class HelloController {
 
     @FXML
     private void onCheckInButtonClicked() {
-        loadPage("mood-checkin.fxml");
+        loadPage("wellbeing.fxml");
     }
 
     @FXML
@@ -88,6 +90,14 @@ public class HelloController {
 
     public void loadSocialPage() {
         loadPage("socialpostings.fxml");
+    }
+
+    public void loadCheckInPage() {
+        loadPage("mood-checkin.fxml");
+    }
+
+    public void loadWellbeingPage() {
+        loadPage("wellbeing.fxml");
     }
 
     @FXML
@@ -164,6 +174,18 @@ public class HelloController {
             if(page.equals("Rewards.fxml")) {
                 RewardsController controller = loader.getController();
                 controller.setUserId(userID);
+            }
+
+            if(page.equals("mood-checkin.fxml")) {
+                CheckInController controller = loader.getController();
+                controller.setUserID(userID);
+                controller.setHelloController(this);
+            }
+
+            if(page.equals("wellbeing.fxml")) {
+                WellbeingController controller = loader.getController();
+                controller.setUserID(userID);
+                controller.setHelloController(this);
             }
 
             mainContent.getChildren().setAll(content);

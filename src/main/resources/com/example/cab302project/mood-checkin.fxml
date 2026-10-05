@@ -1,295 +1,376 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cab302project.MoodForm.CheckInController"
-            prefHeight="720.0"
-            prefWidth="1000.0">
+            fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            style="-fx-background: #f8f8f8;
+                   -fx-background-color: #f8f8f8;">
 
+    <!-- Toggle groups used by the controller -->
     <fx:define>
-        <ToggleGroup fx:id="emotionGroup" />
-        <ToggleGroup fx:id="sleepGroup" />
+        <ToggleGroup fx:id="emotionGroup"/>
+        <ToggleGroup fx:id="sleepGroup"/>
     </fx:define>
 
-    <!-- ==================== TITLE ==================== -->
+    <content>
 
-    <Label layoutX="35.0"
-           layoutY="30.0"
-           text="Emotions and Wellbeing Check"
-           style="-fx-font-size: 24px;
-                  -fx-font-weight: bold;
-                  -fx-text-fill: #222222;"/>
+        <VBox spacing="22.0"
+              fillWidth="true"
+              style="-fx-background-color: #f8f8f8;">
 
+            <padding>
+                <Insets top="30.0"
+                        right="35.0"
+                        bottom="35.0"
+                        left="35.0"/>
+            </padding>
 
-    <!-- ==================== EMOTION ==================== -->
+            <!-- ==================== TITLE ==================== -->
 
-    <Label layoutX="35.0"
-           layoutY="85.0"
-           text="How are you feeling today?"
-           style="-fx-font-size: 17px;
-                  -fx-font-weight: bold;"/>
-
-    <HBox layoutX="35.0"
-          layoutY="120.0"
-          spacing="15.0">
-
-        <RadioButton fx:id="strugglingRadio"
-                     text="Struggling"
-                     toggleGroup="$emotionGroup"
-                     prefWidth="155.0"
-                     prefHeight="45.0"
-                     alignment="CENTER"
-                     style="-fx-background-color: #F2F2F2;
-                            -fx-background-radius: 12;
-                            -fx-padding: 10;"/>
-
-        <RadioButton fx:id="notGreatRadio"
-                     text="Not Great"
-                     toggleGroup="$emotionGroup"
-                     prefWidth="155.0"
-                     prefHeight="45.0"
-                     alignment="CENTER"
-                     style="-fx-background-color: #F2F2F2;
-                            -fx-background-radius: 12;
-                            -fx-padding: 10;"/>
-
-        <RadioButton fx:id="okayRadio"
-                     text="Okay"
-                     toggleGroup="$emotionGroup"
-                     prefWidth="155.0"
-                     prefHeight="45.0"
-                     alignment="CENTER"
-                     style="-fx-background-color: #F2F2F2;
-                            -fx-background-radius: 12;
-                            -fx-padding: 10;"/>
-
-        <RadioButton fx:id="goodRadio"
-                     text="Good"
-                     toggleGroup="$emotionGroup"
-                     prefWidth="155.0"
-                     prefHeight="45.0"
-                     alignment="CENTER"
-                     style="-fx-background-color: #F2F2F2;
-                            -fx-background-radius: 12;
-                            -fx-padding: 10;"/>
-
-        <RadioButton fx:id="greatRadio"
-                     text="Great"
-                     toggleGroup="$emotionGroup"
-                     prefWidth="155.0"
-                     prefHeight="45.0"
-                     alignment="CENTER"
-                     style="-fx-background-color: #F2F2F2;
-                            -fx-background-radius: 12;
-                            -fx-padding: 10;"/>
-
-    </HBox>
+            <Label text="Emotions and Wellbeing Check"
+                   style="-fx-font-size: 24px;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: #222222;"/>
 
 
-    <!-- ==================== SLEEP ==================== -->
+            <!-- ==================== EMOTION ==================== -->
 
-    <Label layoutX="35.0"
-           layoutY="195.0"
-           text="How much sleep did you get?"
-           style="-fx-font-size: 17px;
-                  -fx-font-weight: bold;"/>
+            <VBox spacing="12.0">
 
-    <HBox layoutX="35.0"
-          layoutY="230.0"
-          spacing="15.0">
+                <Label text="How are you feeling today?"
+                       style="-fx-font-size: 17px;
+                              -fx-font-weight: bold;"/>
 
-        <RadioButton fx:id="noSleepRadio"
-                     text="No Sleep&#10;(0 Hours)"
-                     toggleGroup="$sleepGroup"
-                     prefWidth="195.0"
-                     prefHeight="60.0"
-                     alignment="CENTER"
-                     wrapText="true"
-                     style="-fx-background-color: #F2F2F2;
-                            -fx-background-radius: 12;
-                            -fx-padding: 10;"/>
+                <GridPane hgap="12.0"
+                          vgap="12.0">
 
-        <RadioButton fx:id="lessSleepRadio"
-                     text="Less Sleep&#10;(1-5 Hours)"
-                     toggleGroup="$sleepGroup"
-                     prefWidth="195.0"
-                     prefHeight="60.0"
-                     alignment="CENTER"
-                     wrapText="true"
-                     style="-fx-background-color: #F2F2F2;
-                            -fx-background-radius: 12;
-                            -fx-padding: 10;"/>
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="20.0"/>
+                        <ColumnConstraints percentWidth="20.0"/>
+                        <ColumnConstraints percentWidth="20.0"/>
+                        <ColumnConstraints percentWidth="20.0"/>
+                        <ColumnConstraints percentWidth="20.0"/>
+                    </columnConstraints>
 
-        <RadioButton fx:id="goodSleepRadio"
-                     text="Good Sleep&#10;(6-8 Hours)"
-                     toggleGroup="$sleepGroup"
-                     prefWidth="195.0"
-                     prefHeight="60.0"
-                     alignment="CENTER"
-                     wrapText="true"
-                     style="-fx-background-color: #F2F2F2;
-                            -fx-background-radius: 12;
-                            -fx-padding: 10;"/>
+                    <RadioButton fx:id="strugglingRadio"
+                                 text="Struggling"
+                                 toggleGroup="$emotionGroup"
+                                 maxWidth="Infinity"
+                                 prefHeight="45.0"
+                                 alignment="CENTER"
+                                 GridPane.columnIndex="0"
+                                 GridPane.rowIndex="0"
+                                 style="-fx-background-color: #F2F2F2;
+                                        -fx-background-radius: 12;
+                                        -fx-padding: 10;"/>
 
-        <RadioButton fx:id="excellentSleepRadio"
-                     text="Excellent Sleep&#10;(9+ Hours)"
-                     toggleGroup="$sleepGroup"
-                     prefWidth="195.0"
-                     prefHeight="60.0"
-                     alignment="CENTER"
-                     wrapText="true"
-                     style="-fx-background-color: #F2F2F2;
-                            -fx-background-radius: 12;
-                            -fx-padding: 10;"/>
+                    <RadioButton fx:id="notGreatRadio"
+                                 text="Not Great"
+                                 toggleGroup="$emotionGroup"
+                                 maxWidth="Infinity"
+                                 prefHeight="45.0"
+                                 alignment="CENTER"
+                                 GridPane.columnIndex="1"
+                                 GridPane.rowIndex="0"
+                                 style="-fx-background-color: #F2F2F2;
+                                        -fx-background-radius: 12;
+                                        -fx-padding: 10;"/>
 
-    </HBox>
+                    <RadioButton fx:id="okayRadio"
+                                 text="Okay"
+                                 toggleGroup="$emotionGroup"
+                                 maxWidth="Infinity"
+                                 prefHeight="45.0"
+                                 alignment="CENTER"
+                                 GridPane.columnIndex="2"
+                                 GridPane.rowIndex="0"
+                                 style="-fx-background-color: #F2F2F2;
+                                        -fx-background-radius: 12;
+                                        -fx-padding: 10;"/>
 
+                    <RadioButton fx:id="goodRadio"
+                                 text="Good"
+                                 toggleGroup="$emotionGroup"
+                                 maxWidth="Infinity"
+                                 prefHeight="45.0"
+                                 alignment="CENTER"
+                                 GridPane.columnIndex="3"
+                                 GridPane.rowIndex="0"
+                                 style="-fx-background-color: #F2F2F2;
+                                        -fx-background-radius: 12;
+                                        -fx-padding: 10;"/>
 
-    <!-- ==================== WATER ==================== -->
+                    <RadioButton fx:id="greatRadio"
+                                 text="Great"
+                                 toggleGroup="$emotionGroup"
+                                 maxWidth="Infinity"
+                                 prefHeight="45.0"
+                                 alignment="CENTER"
+                                 GridPane.columnIndex="4"
+                                 GridPane.rowIndex="0"
+                                 style="-fx-background-color: #F2F2F2;
+                                        -fx-background-radius: 12;
+                                        -fx-padding: 10;"/>
 
-    <Label layoutX="35.0"
-           layoutY="330.0"
-           text="How much water have you drunk in the past 24 hours?"
-           style="-fx-font-size: 17px;
-                  -fx-font-weight: bold;"/>
+                </GridPane>
 
-    <ComboBox fx:id="waterComboBox"
-              layoutX="500.0"
-              layoutY="320.0"
-              prefWidth="130.0"
-              prefHeight="35.0"
-              promptText="Select"/>
-
-    <Label layoutX="640.0"
-           layoutY="329.0"
-           text="Litres"
-           style="-fx-font-size: 14px;"/>
-
-
-    <!-- ==================== STUDY STRESS ==================== -->
-
-    <Label layoutX="35.0"
-           layoutY="390.0"
-           text="Study stress level?"
-           style="-fx-font-size: 17px;
-                  -fx-font-weight: bold;"/>
-
-    <Slider fx:id="stressSlider"
-            layoutX="125.0"
-            layoutY="430.0"
-            prefWidth="620.0"
-            min="1.0"
-            max="5.0"
-            value="3.0"
-            blockIncrement="1.0"
-            majorTickUnit="1.0"
-            minorTickCount="0"
-            snapToTicks="true"/>
-
-    <Label layoutX="115.0"
-           layoutY="460.0"
-           text="Not Stressed"
-           style="-fx-font-size: 13px;"/>
-
-    <Label layoutX="690.0"
-           layoutY="460.0"
-           text="Very Stressed"
-           style="-fx-font-size: 13px;"/>
+            </VBox>
 
 
-    <!-- ==================== MOODS ==================== -->
+            <!-- ==================== SLEEP ==================== -->
 
-    <Label layoutX="35.0"
-           layoutY="510.0"
-           text="Words that describe your mood right now?"
-           style="-fx-font-size: 17px;
-                  -fx-font-weight: bold;"/>
+            <VBox spacing="12.0">
 
-    <HBox layoutX="35.0"
-          layoutY="550.0"
-          spacing="15.0">
+                <Label text="How much sleep did you get?"
+                       style="-fx-font-size: 17px;
+                              -fx-font-weight: bold;"/>
 
-        <CheckBox fx:id="happyCheckBox"
-                  text="Happy"
-                  prefWidth="125.0"
-                  prefHeight="42.0"
-                  alignment="CENTER"
-                  style="-fx-background-color: #F2F2F2;
-                         -fx-background-radius: 12;
-                         -fx-padding: 10;"/>
+                <GridPane hgap="12.0"
+                          vgap="12.0">
 
-        <CheckBox fx:id="calmCheckBox"
-                  text="Calm"
-                  prefWidth="125.0"
-                  prefHeight="42.0"
-                  alignment="CENTER"
-                  style="-fx-background-color: #F2F2F2;
-                         -fx-background-radius: 12;
-                         -fx-padding: 10;"/>
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="25.0"/>
+                        <ColumnConstraints percentWidth="25.0"/>
+                        <ColumnConstraints percentWidth="25.0"/>
+                        <ColumnConstraints percentWidth="25.0"/>
+                    </columnConstraints>
 
-        <CheckBox fx:id="tiredCheckBox"
-                  text="Tired"
-                  prefWidth="125.0"
-                  prefHeight="42.0"
-                  alignment="CENTER"
-                  style="-fx-background-color: #F2F2F2;
-                         -fx-background-radius: 12;
-                         -fx-padding: 10;"/>
+                    <RadioButton fx:id="noSleepRadio"
+                                 text="No Sleep&#10;(0 Hours)"
+                                 toggleGroup="$sleepGroup"
+                                 maxWidth="Infinity"
+                                 prefHeight="60.0"
+                                 alignment="CENTER"
+                                 wrapText="true"
+                                 GridPane.columnIndex="0"
+                                 GridPane.rowIndex="0"
+                                 style="-fx-background-color: #F2F2F2;
+                                        -fx-background-radius: 12;
+                                        -fx-padding: 10;"/>
 
-        <CheckBox fx:id="anxiousCheckBox"
-                  text="Anxious"
-                  prefWidth="125.0"
-                  prefHeight="42.0"
-                  alignment="CENTER"
-                  style="-fx-background-color: #F2F2F2;
-                         -fx-background-radius: 12;
-                         -fx-padding: 10;"/>
+                    <RadioButton fx:id="lessSleepRadio"
+                                 text="Less Sleep&#10;(1-5 Hours)"
+                                 toggleGroup="$sleepGroup"
+                                 maxWidth="Infinity"
+                                 prefHeight="60.0"
+                                 alignment="CENTER"
+                                 wrapText="true"
+                                 GridPane.columnIndex="1"
+                                 GridPane.rowIndex="0"
+                                 style="-fx-background-color: #F2F2F2;
+                                        -fx-background-radius: 12;
+                                        -fx-padding: 10;"/>
 
-        <CheckBox fx:id="sadCheckBox"
-                  text="Sad"
-                  prefWidth="125.0"
-                  prefHeight="42.0"
-                  alignment="CENTER"
-                  style="-fx-background-color: #F2F2F2;
-                         -fx-background-radius: 12;
-                         -fx-padding: 10;"/>
+                    <RadioButton fx:id="goodSleepRadio"
+                                 text="Good Sleep&#10;(6-8 Hours)"
+                                 toggleGroup="$sleepGroup"
+                                 maxWidth="Infinity"
+                                 prefHeight="60.0"
+                                 alignment="CENTER"
+                                 wrapText="true"
+                                 GridPane.columnIndex="2"
+                                 GridPane.rowIndex="0"
+                                 style="-fx-background-color: #F2F2F2;
+                                        -fx-background-radius: 12;
+                                        -fx-padding: 10;"/>
 
-        <CheckBox fx:id="sleepyCheckBox"
-                  text="Sleepy"
-                  prefWidth="125.0"
-                  prefHeight="42.0"
-                  alignment="CENTER"
-                  style="-fx-background-color: #F2F2F2;
-                         -fx-background-radius: 12;
-                         -fx-padding: 10;"/>
+                    <RadioButton fx:id="excellentSleepRadio"
+                                 text="Excellent Sleep&#10;(9+ Hours)"
+                                 toggleGroup="$sleepGroup"
+                                 maxWidth="Infinity"
+                                 prefHeight="60.0"
+                                 alignment="CENTER"
+                                 wrapText="true"
+                                 GridPane.columnIndex="3"
+                                 GridPane.rowIndex="0"
+                                 style="-fx-background-color: #F2F2F2;
+                                        -fx-background-radius: 12;
+                                        -fx-padding: 10;"/>
 
-    </HBox>
+                </GridPane>
 
-
-    <!-- ==================== MESSAGE ==================== -->
-
-    <Label fx:id="messageLabel"
-           layoutX="35.0"
-           layoutY="615.0"
-           text=""
-           style="-fx-font-size: 13px;"/>
+            </VBox>
 
 
-    <!-- ==================== SUBMIT ==================== -->
+            <!-- ==================== WATER ==================== -->
 
-    <Button fx:id="submitButton"
-            layoutX="35.0"
-            layoutY="650.0"
-            prefWidth="150.0"
-            prefHeight="42.0"
-            text="Submit"
-            onAction="#handleSubmit"
-            style="-fx-background-color: #2A9D8F;
-                   -fx-background-radius: 10;
-                   -fx-text-fill: white;
-                   -fx-font-size: 15px;
-                   -fx-font-weight: bold;"/>
-</AnchorPane>
+            <VBox spacing="12.0">
+
+                <Label text="How much water have you drunk in the past 24 hours?"
+                       wrapText="true"
+                       style="-fx-font-size: 17px;
+                              -fx-font-weight: bold;"/>
+
+                <HBox spacing="10.0"
+                      alignment="CENTER_LEFT">
+
+                    <ComboBox fx:id="waterComboBox"
+                              prefWidth="130.0"
+                              prefHeight="35.0"
+                              promptText="Select"/>
+
+                    <Label text="Litres"
+                           style="-fx-font-size: 14px;"/>
+
+                </HBox>
+
+            </VBox>
+
+
+            <!-- ==================== STUDY STRESS ==================== -->
+
+            <VBox spacing="10.0">
+
+                <Label text="Study stress level?"
+                       style="-fx-font-size: 17px;
+                              -fx-font-weight: bold;"/>
+
+                <Slider fx:id="stressSlider"
+                        maxWidth="Infinity"
+                        min="1.0"
+                        max="5.0"
+                        value="3.0"
+                        blockIncrement="1.0"
+                        majorTickUnit="1.0"
+                        minorTickCount="0"
+                        snapToTicks="true"/>
+
+                <HBox>
+
+                    <Label text="Not Stressed"/>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <Label text="Very Stressed"/>
+
+                </HBox>
+
+            </VBox>
+
+
+            <!-- ==================== MOODS ==================== -->
+
+            <VBox spacing="12.0">
+
+                <Label text="Words that describe your mood right now?"
+                       wrapText="true"
+                       style="-fx-font-size: 17px;
+                              -fx-font-weight: bold;"/>
+
+                <GridPane hgap="12.0"
+                          vgap="12.0">
+
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="16.666"/>
+                        <ColumnConstraints percentWidth="16.666"/>
+                        <ColumnConstraints percentWidth="16.666"/>
+                        <ColumnConstraints percentWidth="16.666"/>
+                        <ColumnConstraints percentWidth="16.666"/>
+                        <ColumnConstraints percentWidth="16.666"/>
+                    </columnConstraints>
+
+                    <CheckBox fx:id="happyCheckBox"
+                              text="Happy"
+                              maxWidth="Infinity"
+                              prefHeight="42.0"
+                              alignment="CENTER"
+                              GridPane.columnIndex="0"
+                              GridPane.rowIndex="0"
+                              style="-fx-background-color: #F2F2F2;
+                                     -fx-background-radius: 12;
+                                     -fx-padding: 10;"/>
+
+                    <CheckBox fx:id="calmCheckBox"
+                              text="Calm"
+                              maxWidth="Infinity"
+                              prefHeight="42.0"
+                              alignment="CENTER"
+                              GridPane.columnIndex="1"
+                              GridPane.rowIndex="0"
+                              style="-fx-background-color: #F2F2F2;
+                                     -fx-background-radius: 12;
+                                     -fx-padding: 10;"/>
+
+                    <CheckBox fx:id="tiredCheckBox"
+                              text="Tired"
+                              maxWidth="Infinity"
+                              prefHeight="42.0"
+                              alignment="CENTER"
+                              GridPane.columnIndex="2"
+                              GridPane.rowIndex="0"
+                              style="-fx-background-color: #F2F2F2;
+                                     -fx-background-radius: 12;
+                                     -fx-padding: 10;"/>
+
+                    <CheckBox fx:id="anxiousCheckBox"
+                              text="Anxious"
+                              maxWidth="Infinity"
+                              prefHeight="42.0"
+                              alignment="CENTER"
+                              GridPane.columnIndex="3"
+                              GridPane.rowIndex="0"
+                              style="-fx-background-color: #F2F2F2;
+                                     -fx-background-radius: 12;
+                                     -fx-padding: 10;"/>
+
+                    <CheckBox fx:id="sadCheckBox"
+                              text="Sad"
+                              maxWidth="Infinity"
+                              prefHeight="42.0"
+                              alignment="CENTER"
+                              GridPane.columnIndex="4"
+                              GridPane.rowIndex="0"
+                              style="-fx-background-color: #F2F2F2;
+                                     -fx-background-radius: 12;
+                                     -fx-padding: 10;"/>
+
+                    <CheckBox fx:id="sleepyCheckBox"
+                              text="Sleepy"
+                              maxWidth="Infinity"
+                              prefHeight="42.0"
+                              alignment="CENTER"
+                              GridPane.columnIndex="5"
+                              GridPane.rowIndex="0"
+                              style="-fx-background-color: #F2F2F2;
+                                     -fx-background-radius: 12;
+                                     -fx-padding: 10;"/>
+
+                </GridPane>
+
+            </VBox>
+
+
+            <!-- ==================== MESSAGE ==================== -->
+
+            <Label fx:id="messageLabel"
+                   text=""
+                   maxWidth="Infinity"
+                   wrapText="true"
+                   style="-fx-font-size: 13px;"/>
+
+
+            <!-- ==================== SUBMIT ==================== -->
+
+            <Button fx:id="submitButton"
+                    prefWidth="150.0"
+                    prefHeight="42.0"
+                    text="Submit"
+                    onAction="#handleSubmit"
+                    style="-fx-background-color: #2A9D8F;
+                           -fx-background-radius: 10;
+                           -fx-text-fill: white;
+                           -fx-font-size: 15px;
+                           -fx-font-weight: bold;"/>
+
+        </VBox>
+
+    </content>
+
+</ScrollPane>
