@@ -1,0 +1,13 @@
+module:com.example.cab302project
+com.example.cab302project
+com.example.cab302project.Activities
+com.example.cab302project.Authentication
+com.example.cab302project.Dashboard
+com.example.cab302project.Dashboard.CommunityInsights
+com.example.cab302project.Dashboard.Ollama
+com.example.cab302project.Dashboard.Recommendations
+com.example.cab302project.Database
+com.example.cab302project.MoodForm
+com.example.cab302project.Rewards
+com.example.cab302project.Settings
+com.example.cab302project.SocialPostings
