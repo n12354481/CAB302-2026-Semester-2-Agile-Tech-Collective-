@@ -4,6 +4,12 @@ import com.example.cab302project.Database.DatabaseCheckInDAO;
 import com.example.cab302project.HelloController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.util.StringConverter;
+import java.util.Map;
 
 import java.util.List;
 
@@ -17,9 +23,38 @@ public class WellbeingController {
     @FXML
     private Label checkInCountLabel;
 
+    @FXML
+    private Label happyCountLabel;
+
+    @FXML
+    private Label calmCountLabel;
+
+    @FXML
+    private Label tiredCountLabel;
+
+    @FXML
+    private Label anxiousCountLabel;
+
+    @FXML
+    private Label sadCountLabel;
+
+    @FXML
+    private Label sleepyCountLabel;
+
+    @FXML
+    private LineChart<String, Number> moodChart;
+
+    @FXML
+    private CategoryAxis dateAxis;
+
+    @FXML
+    private NumberAxis moodAxis;
+
     public void setUserID(int userID) {
         this.userID = userID;
+
         loadWellbeingData();
+        loadWeeklyMoodCounts();
     }
 
     private HelloController helloController;
@@ -44,10 +79,108 @@ public class WellbeingController {
                 "Total check-ins: " + checkIns.size()
         );
 
+        setupMoodAxis();
+        loadMoodChart(checkIns);
+
         System.out.println(
                 "Loaded " + checkIns.size()
                         + " check-ins for user "
                         + userID
+        );
+    }
+
+    private void loadMoodChart(List<CheckIn> checkIns) {
+
+        // Remove any old graph data
+        moodChart.getData().clear();
+
+        XYChart.Series<String, Number> series =
+                new XYChart.Series<>();
+
+        series.setName("Mood");
+
+        int checkInNumber = 1;
+
+        for (CheckIn checkIn : checkIns) {
+
+            String label =
+                    checkIn.getCheckinDate().toString()
+                            + " #" + checkInNumber;
+
+            XYChart.Data<String, Number> point =
+                    new XYChart.Data<>(
+                            label,
+                            checkIn.getEmotionToday()
+                    );
+
+            series.getData().add(point);
+
+            checkInNumber++;
+        }
+
+        moodChart.getData().add(series);
+    }
+
+    private void setupMoodAxis() {
+
+        moodAxis.setTickLabelFormatter(
+                new StringConverter<Number>() {
+
+                    @Override
+                    public String toString(Number value) {
+
+                        return switch (value.intValue()) {
+                            case 1 -> "Struggling";
+                            case 2 -> "Not Great";
+                            case 3 -> "Okay";
+                            case 4 -> "Good";
+                            case 5 -> "Great";
+                            default -> "";
+                        };
+                    }
+
+                    @Override
+                    public Number fromString(String string) {
+                        return switch (string) {
+                            case "Struggling" -> 1;
+                            case "Not Great" -> 2;
+                            case "Okay" -> 3;
+                            case "Good" -> 4;
+                            case "Great" -> 5;
+                            default -> 0;
+                        };
+                    }
+                }
+        );
+    }
+
+    private void loadWeeklyMoodCounts() {
+
+        Map<String, Integer> moodCounts =
+                checkInDAO.getMoodCountsForLastWeek(userID);
+
+        happyCountLabel.setText(
+                "Happy: " + moodCounts.get("Happy")
+        );
+
+        calmCountLabel.setText(
+                "Calm: " + moodCounts.get("Calm")
+        );
+
+        tiredCountLabel.setText(
+                "Tired: " + moodCounts.get("Tired")
+        );
+
+        anxiousCountLabel.setText(
+                "Anxious: " + moodCounts.get("Anxious")
+        );
+
+        sadCountLabel.setText(
+                "Sad: " + moodCounts.get("Sad")
+        );
+
+        sleepyCountLabel.setText(
+                "Sleepy: " + moodCounts.get("Sleepy")
         );
     }
 }

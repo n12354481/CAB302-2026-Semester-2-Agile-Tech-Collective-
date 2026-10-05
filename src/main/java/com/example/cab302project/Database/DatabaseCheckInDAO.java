@@ -14,6 +14,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DatabaseCheckInDAO implements ICheckInDAO {
 
     private final Connection connection;
@@ -451,5 +454,58 @@ public class DatabaseCheckInDAO implements ICheckInDAO {
         }
 
         return moods;
+    }
+
+    public Map<String, Integer> getMoodCountsForLastWeek(int userID) {
+
+        Map<String, Integer> moodCounts = new HashMap<>();
+
+        // Start every mood at 0
+        moodCounts.put("Happy", 0);
+        moodCounts.put("Calm", 0);
+        moodCounts.put("Tired", 0);
+        moodCounts.put("Anxious", 0);
+        moodCounts.put("Sad", 0);
+        moodCounts.put("Sleepy", 0);
+
+        String query =
+                "SELECT m.mood_name, COUNT(*) AS mood_count " +
+                        "FROM checkin c " +
+                        "JOIN checkin_mood cm ON c.checkinID = cm.checkinID " +
+                        "JOIN mood m ON cm.moodID = m.moodID " +
+                        "WHERE c.userID = ? " +
+                        "AND c.checkin_date >= date('now', '-6 days') " +
+                        "GROUP BY m.mood_name";
+
+        Connection connection = DatabaseConnection.getInstance();
+
+        try (PreparedStatement statement =
+                     connection.prepareStatement(query)) {
+
+            statement.setInt(1, userID);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                while (resultSet.next()) {
+
+                    String moodName =
+                            resultSet.getString("mood_name");
+
+                    int count =
+                            resultSet.getInt("mood_count");
+
+                    moodCounts.put(moodName, count);
+                }
+            }
+
+        } catch (SQLException e) {
+
+            System.err.println(
+                    "Unable to load weekly mood counts: "
+                            + e.getMessage()
+            );
+        }
+
+        return moodCounts;
     }
 }

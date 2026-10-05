@@ -2,154 +2,209 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cab302project.MoodForm.WellbeingController"
-            prefWidth="1200.0"
-            prefHeight="850.0"
-            style="-fx-background-color: #f8f8f8;">
+            fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            style="-fx-background: #f8f8f8;
+                   -fx-background-color: #f8f8f8;">
 
-    <children>
+    <content>
 
-        <!-- Page title -->
-        <Label text="My Wellbeing"
-               layoutX="35.0"
-               layoutY="30.0"
-               style="-fx-font-size: 28px;
-                      -fx-font-weight: bold;" />
+        <AnchorPane prefHeight="850.0"
+                    minHeight="850.0"
+                    style="-fx-background-color: #f8f8f8;">
 
-        <!-- Temporary database check -->
-        <Label fx:id="checkInCountLabel"
-               text="Total check-ins: 0"
-               layoutX="35.0"
-               layoutY="80.0"
-               style="-fx-font-size: 14px;
-                      -fx-text-fill: #666666;" />
+            <children>
 
-        <!-- Graph section -->
-        <Label text="Mood Over Time"
-               layoutX="35.0"
-               layoutY="125.0"
-               style="-fx-font-size: 20px;
-                      -fx-font-weight: bold;" />
+                <!-- Page title -->
+                <Label text="My Wellbeing"
+                       layoutX="35.0"
+                       layoutY="30.0"
+                       style="-fx-font-size: 28px;
+                              -fx-font-weight: bold;" />
 
-        <StackPane layoutX="35.0"
-                   layoutY="165.0"
-                   prefWidth="1080.0"
-                   prefHeight="270.0"
-                   style="-fx-background-color: white;
-                          -fx-border-color: #999999;
-                          -fx-border-radius: 15;
-                          -fx-background-radius: 15;">
+                <!-- Total check-ins -->
+                <Label fx:id="checkInCountLabel"
+                       text="Total check-ins: 0"
+                       layoutX="35.0"
+                       layoutY="80.0"
+                       style="-fx-font-size: 14px;
+                              -fx-text-fill: #666666;" />
 
-            <Label text="Mood graph will appear here"
-                   style="-fx-text-fill: #888888;
-                          -fx-font-size: 16px;" />
+                <!-- New Check-In -->
+                <Button text="New Check-In"
+                        layoutX="35.0"
+                        layoutY="110.0"
+                        prefWidth="135.0"
+                        prefHeight="40.0"
+                        onAction="#handleNewCheckIn"
+                        style="-fx-background-color: #2aa69a;
+                               -fx-text-fill: white;
+                               -fx-font-size: 14px;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 8;" />
 
-        </StackPane>
+                <!-- Graph title -->
+                <Label text="Mood Over Time"
+                       layoutX="35.0"
+                       layoutY="170.0"
+                       style="-fx-font-size: 20px;
+                              -fx-font-weight: bold;" />
 
-        <!-- Weekly emotions -->
-        <Label text="Emotions experienced over the week"
-               layoutX="35.0"
-               layoutY="470.0"
-               style="-fx-font-size: 18px;
-                      -fx-font-weight: bold;" />
+                <!-- Responsive graph -->
+                <LineChart fx:id="moodChart"
+                           layoutY="205.0"
+                           prefHeight="270.0"
+                           AnchorPane.leftAnchor="35.0"
+                           AnchorPane.rightAnchor="35.0"
+                           legendVisible="false"
+                           animated="false">
 
-        <Label text="Happy"
-               layoutX="55.0"
-               layoutY="515.0" />
+                    <xAxis>
+                        <CategoryAxis fx:id="dateAxis"
+                                      label="Check-in" />
+                    </xAxis>
 
-        <Label text="Calm"
-               layoutX="55.0"
-               layoutY="545.0" />
+                    <yAxis>
+                        <NumberAxis fx:id="moodAxis"
+                                    label="Mood"
+                                    lowerBound="1"
+                                    upperBound="5"
+                                    tickUnit="1"
+                                    autoRanging="false" />
+                    </yAxis>
 
-        <Label text="Tired"
-               layoutX="55.0"
-               layoutY="575.0" />
+                </LineChart>
 
-        <Label text="Anxious"
-               layoutX="350.0"
-               layoutY="515.0" />
+                <!-- Weekly emotions -->
+                <Label text="Emotions experienced over the week"
+                       layoutX="35.0"
+                       layoutY="510.0"
+                       style="-fx-font-size: 18px;
+                              -fx-font-weight: bold;" />
 
-        <Label text="Sad"
-               layoutX="350.0"
-               layoutY="545.0" />
+                <!-- Responsive emotion section -->
+                <GridPane layoutY="550.0"
+                          hgap="40.0"
+                          vgap="15.0"
+                          AnchorPane.leftAnchor="55.0"
+                          AnchorPane.rightAnchor="55.0">
 
-        <Label text="Sleepy"
-               layoutX="350.0"
-               layoutY="575.0" />
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="50.0" />
+                        <ColumnConstraints percentWidth="50.0" />
+                    </columnConstraints>
 
-        <!-- Insights -->
-        <Label text="Insights"
-               layoutX="35.0"
-               layoutY="625.0"
-               style="-fx-font-size: 18px;
-                      -fx-font-weight: bold;" />
+                    <Label fx:id="happyCountLabel"
+                           text="Happy: 0"
+                           GridPane.columnIndex="0"
+                           GridPane.rowIndex="0" />
 
-        <VBox layoutX="35.0"
-              layoutY="665.0"
-              prefWidth="280.0"
-              prefHeight="100.0"
-              spacing="10"
-              style="-fx-background-color: white;
-                     -fx-border-color: #aaaaaa;
-                     -fx-padding: 15;">
+                    <Label fx:id="anxiousCountLabel"
+                           text="Anxious: 0"
+                           GridPane.columnIndex="1"
+                           GridPane.rowIndex="0" />
 
-            <Label text="Sleep"
-                   style="-fx-font-weight: bold;" />
+                    <Label fx:id="calmCountLabel"
+                           text="Calm: 0"
+                           GridPane.columnIndex="0"
+                           GridPane.rowIndex="1" />
 
-            <Label fx:id="sleepInsightLabel"
-                   text="Not enough data" />
+                    <Label fx:id="sadCountLabel"
+                           text="Sad: 0"
+                           GridPane.columnIndex="1"
+                           GridPane.rowIndex="1" />
 
-        </VBox>
+                    <Label fx:id="tiredCountLabel"
+                           text="Tired: 0"
+                           GridPane.columnIndex="0"
+                           GridPane.rowIndex="2" />
 
-        <VBox layoutX="350.0"
-              layoutY="665.0"
-              prefWidth="280.0"
-              prefHeight="100.0"
-              spacing="10"
-              style="-fx-background-color: white;
-                     -fx-border-color: #aaaaaa;
-                     -fx-padding: 15;">
+                    <Label fx:id="sleepyCountLabel"
+                           text="Sleepy: 0"
+                           GridPane.columnIndex="1"
+                           GridPane.rowIndex="2" />
 
-            <Label text="Water Intake"
-                   style="-fx-font-weight: bold;" />
+                </GridPane>
 
-            <Label fx:id="waterInsightLabel"
-                   text="Not enough data" />
+                <!-- Insights -->
+                <Label text="Insights"
+                       layoutX="35.0"
+                       layoutY="665.0"
+                       style="-fx-font-size: 18px;
+                              -fx-font-weight: bold;" />
 
-        </VBox>
+                <!-- Responsive insight cards -->
+                <HBox layoutY="705.0"
+                      spacing="25.0"
+                      AnchorPane.leftAnchor="35.0"
+                      AnchorPane.rightAnchor="35.0">
 
-        <VBox layoutX="665.0"
-              layoutY="665.0"
-              prefWidth="280.0"
-              prefHeight="100.0"
-              spacing="10"
-              style="-fx-background-color: white;
-                     -fx-border-color: #aaaaaa;
-                     -fx-padding: 15;">
+                    <!-- Sleep -->
+                    <VBox prefHeight="100.0"
+                          spacing="10.0"
+                          HBox.hgrow="ALWAYS"
+                          maxWidth="Infinity"
+                          style="-fx-background-color: white;
+                                 -fx-border-color: #aaaaaa;
+                                 -fx-padding: 15;">
 
-            <Label text="Study Stress"
-                   style="-fx-font-weight: bold;" />
+                        <Label text="Sleep"
+                               style="-fx-font-weight: bold;" />
 
-            <Label fx:id="stressInsightLabel"
-                   text="Not enough data" />
+                        <Label fx:id="sleepInsightLabel"
+                               text="Not enough data"
+                               wrapText="true" />
 
-        </VBox>
+                    </VBox>
 
-        <Button text="New Check-In"
-                layoutX="980.0"
-                layoutY="700.0"
-                prefWidth="135.0"
-                prefHeight="45.0"
-                onAction="#handleNewCheckIn"
-                style="-fx-background-color: #2aa69a;
-                       -fx-text-fill: white;
-                       -fx-font-size: 15px;
-                       -fx-font-weight: bold;
-                       -fx-background-radius: 8;" />
+                    <!-- Water -->
+                    <VBox prefHeight="100.0"
+                          spacing="10.0"
+                          HBox.hgrow="ALWAYS"
+                          maxWidth="Infinity"
+                          style="-fx-background-color: white;
+                                 -fx-border-color: #aaaaaa;
+                                 -fx-padding: 15;">
 
-    </children>
+                        <Label text="Water Intake"
+                               style="-fx-font-weight: bold;" />
 
-</AnchorPane>
+                        <Label fx:id="waterInsightLabel"
+                               text="Not enough data"
+                               wrapText="true" />
+
+                    </VBox>
+
+                    <!-- Study Stress -->
+                    <VBox prefHeight="100.0"
+                          spacing="10.0"
+                          HBox.hgrow="ALWAYS"
+                          maxWidth="Infinity"
+                          style="-fx-background-color: white;
+                                 -fx-border-color: #aaaaaa;
+                                 -fx-padding: 15;">
+
+                        <Label text="Study Stress"
+                               style="-fx-font-weight: bold;" />
+
+                        <Label fx:id="stressInsightLabel"
+                               text="Not enough data"
+                               wrapText="true" />
+
+                    </VBox>
+
+                </HBox>
+
+            </children>
+
+        </AnchorPane>
+
+    </content>
+
+</ScrollPane>

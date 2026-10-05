@@ -70,7 +70,7 @@ public class HelloController {
 
     @FXML
     private void onCheckInButtonClicked() {
-        loadPage("mood-checkin.fxml");
+        loadPage("wellbeing.fxml");
     }
 
     @FXML
