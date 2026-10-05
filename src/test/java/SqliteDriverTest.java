@@ -1,11 +1,11 @@
 import org.junit.jupiter.api.Test;
-
+import org.sqlite.SQLiteConnection;
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Checks that the SQLite JDBC driver is on the classpath.
@@ -25,4 +25,10 @@ class SqliteDriverTest {
             assertFalse(connection.isClosed(), "Expected the connection to be open");
         }
     }
+
+//    @Test
+//    public void testConnection() {
+//        Connection conn = SQLiteConnection.getInstance();
+//        assertEquals(true, conn != null);
+//    }
 }
