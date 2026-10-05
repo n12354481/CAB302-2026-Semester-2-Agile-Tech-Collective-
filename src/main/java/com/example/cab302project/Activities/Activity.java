@@ -9,7 +9,6 @@ public class Activity {
    private final String category;
    private final String description;
    private final int goal;
-   private final String imageFile;
 
    /**
     * creates an activity that already has a database id
@@ -19,20 +18,18 @@ public class Activity {
     * @param category category the activity belongs to
     * @param description description shown in activity details
     * @param goal suggested activity duration
-    * @param imageFile image file used for activity
     */
-   public Activity(int id, String name, String category, String description, int goal, String imageFile) {
-      this(name, category, description, goal, imageFile);
+   public Activity(int id, String name, String category, String description, int goal) {
+      this(name, category, description, goal);
       this.id = id;
    }
 
    // returns stored information for activity
-   public Activity(String name, String category, String description, int goal, String imageFile) {
+   public Activity(String name, String category, String description, int goal) {
       this.name = name;
       this.category = category;
       this.description = description;
       this.goal = goal;
-      this.imageFile = imageFile;
    }
 
    public int getId() { return id; }
@@ -40,5 +37,4 @@ public class Activity {
    public String getCategory() { return category; }
    public String getDescription() { return description; }
    public int getGoal() { return goal; }
-   public String getImageFile() { return imageFile; }
 }
