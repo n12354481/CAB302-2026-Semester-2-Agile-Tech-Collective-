@@ -130,7 +130,7 @@ public class SettingsTestClass {
         Connection connection = DatabaseConnection.getInstance();
         DatabaseActivityDAO activityDAO = new DatabaseActivityDAO();
         int userId = 2;
-        int activityID = activityDAO.insert(new Activity("Walking", "Walking", "I walked.", 300, null));
+        int activityID = activityDAO.insert(new Activity("Walking", "Walking", "I walked.", 300));
 
         String query = "INSERT INTO activity_log (userID, activityID, log_date, minutes) " +
                 "VALUES (?, ?, ?, ?)";
