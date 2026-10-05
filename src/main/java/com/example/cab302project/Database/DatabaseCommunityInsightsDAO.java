@@ -22,7 +22,7 @@ public class DatabaseCommunityInsightsDAO implements ICommunityInsightsDAO {
 
     /**
      * Method which aims to fetch the total number of participating users.
-     * @return: Returns the total number of participating users.
+     * @return Returns the total number of participating users.
      */
     @Override
     public int getParticipatingUserCount() {
@@ -48,7 +48,7 @@ public class DatabaseCommunityInsightsDAO implements ICommunityInsightsDAO {
 
     /**
      * Method which aims to fetch the average sleep for participating users.
-     * @return: Returns the average sleep for participating users.
+     * @return Returns the average sleep for participating users.
      */
     @Override
     public double getAverageSleep() {
@@ -76,7 +76,7 @@ public class DatabaseCommunityInsightsDAO implements ICommunityInsightsDAO {
 
     /**
      * Method which aims to fetch the average study stress for participating users.
-     * @return: Returns the average study stress for participating users.
+     * @return Returns the average study stress for participating users.
      */
     @Override
     public double getAverageStudyStress() {
@@ -104,7 +104,7 @@ public class DatabaseCommunityInsightsDAO implements ICommunityInsightsDAO {
 
     /**
      * Method which aims to fetch the average water for participating users.
-     * @return: Returns the average water for participating users.
+     * @return Returns the average water for participating users.
      */
     @Override
     public double getAverageWater() {
@@ -132,7 +132,7 @@ public class DatabaseCommunityInsightsDAO implements ICommunityInsightsDAO {
 
     /**
      * Method which aims to fetch the average emotion for participating users.
-     * @return: Returns the average emotion for participating users.
+     * @return Returns the average emotion for participating users.
      */
     @Override
     public double getAverageEmotion() {
@@ -160,7 +160,7 @@ public class DatabaseCommunityInsightsDAO implements ICommunityInsightsDAO {
 
     /**
      * Method which aims to fetch the total activity minutes for participating users.
-     * @return: Returns the total activity minutes for participating users.
+     * @return Returns the total activity minutes for participating users.
      */
     @Override
     public int getTotalActivityMinutes() {
@@ -187,7 +187,7 @@ public class DatabaseCommunityInsightsDAO implements ICommunityInsightsDAO {
 
     /**
      * Method which aims to fetch the most popular activity category for participating users.
-     * @return: Returns the most popular activity category for participating users.
+     * @return Returns the most popular activity category for participating users.
      */
     @Override
     public String getMostPopularActivityCategory() {
@@ -219,7 +219,7 @@ public class DatabaseCommunityInsightsDAO implements ICommunityInsightsDAO {
 
     /**
      * Method which aims to fetch the most popular checkin mood for participating users.
-     * @return: Returns the most popular checkin mood for participating users.
+     * @return Returns the most popular checkin mood for participating users.
      */
     @Override
     public String getMostPopularMood() {

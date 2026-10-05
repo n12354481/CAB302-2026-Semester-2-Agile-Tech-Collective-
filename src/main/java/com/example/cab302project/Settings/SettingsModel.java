@@ -120,7 +120,6 @@ public class SettingsModel {
 
     /**
      * Setter for AI Personalise variable
-     * @return returns AI personalise variable
      */
     public void setAIPersonalisation(boolean enabled) { AIPersonalise = enabled; }
 
@@ -134,7 +133,6 @@ public class SettingsModel {
 
     /**
      * Setter for AI Activity Personalise variable
-     * @return returns AI activity personalise variable
      */
     public void setAIActivityPersonalisation(boolean enabled) {
         AIActivityPersonalise = enabled;
@@ -150,7 +148,6 @@ public class SettingsModel {
 
     /**
      * Setter for AI Checkin Personalise variable
-     * @return returns AI checkin ersonalise variable
      */
     public void setAICheckinPersonalisation(boolean enabled) {
         AICheckinPersonalise = enabled;

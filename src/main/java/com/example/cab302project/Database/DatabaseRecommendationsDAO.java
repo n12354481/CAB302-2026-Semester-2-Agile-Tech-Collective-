@@ -30,7 +30,7 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
 
     /**
      * Method which aims to fetch the recent activity of the participating users.
-     * @return: Returns the recent activity of participating users.
+     * @return Returns the recent activity of participating users.
      */
     @Override
     public List<Map<String, Object>> getRecentActivityData(int userId)
@@ -95,7 +95,7 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
 
     /**
      * Method which aims to fetch the recent checkin of the participating users.
-     * @return: Returns the recent checkin of participating users.
+     * @return Returns the recent checkin of participating users.
      */
     @Override
     public List<CheckIn> getRecentCheckinData(int userId)
@@ -156,7 +156,7 @@ public class DatabaseRecommendationsDAO implements IRecommendationsDAO {
 
     /**
      * Method which aims to fetch the recent checkin moods of the participating users.
-     * @return: Returns the recent moods of participating users.
+     * @return Returns the recent moods of participating users.
      */
     private List<String> getCheckinRecentMoods(int checkinId)
     {
