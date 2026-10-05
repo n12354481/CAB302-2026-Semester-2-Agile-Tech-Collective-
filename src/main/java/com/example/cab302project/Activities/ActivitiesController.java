@@ -297,6 +297,7 @@ public class ActivitiesController implements Initializable {
 
         activityName.setText(activity.getName());
         categoryLabel.setText(activity.getCategory());
+        categoryBannerLabel.setText(selectedActivity.getCategory());
         descriptionLabel.setText(activity.getDescription());
 
         if (activity.getGoal() > 0) {
