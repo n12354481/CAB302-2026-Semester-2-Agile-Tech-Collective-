@@ -1,4 +1,4 @@
-package java.ActivityTests;
+package ActivityTests;
 
 import com.example.cab302project.Activities.Activity;
 import com.example.cab302project.Database.DatabaseActivityDAO;
@@ -128,7 +128,6 @@ public class ActivityTest {
    public void testDeleteActivityLog() {
       int activityId = activityDAO.insert(testActivity);
       int logId = activityDAO.insertActivityLog(1, activityId, "2026-10-06", 30);
-      activityDAO.deleteActivityLog(1, logId);
 
       List<int[]> beforeDelete = activityDAO.getActivityLogs(1);
       activityDAO.deleteActivityLog(logId, 1);
