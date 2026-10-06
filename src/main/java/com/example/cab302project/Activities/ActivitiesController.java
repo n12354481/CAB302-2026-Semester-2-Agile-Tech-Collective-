@@ -32,9 +32,6 @@ public class ActivitiesController implements Initializable {
 
     private SelectedActivity activityBeingEdited = null;
 
-    // file used to remember selected activities after closing app
-    private static final String MY_ACTIVITIES_FILE = "myActivities.txt";
-
     @FXML
     private VBox browsePane;
 
@@ -762,10 +759,3 @@ public class ActivitiesController implements Initializable {
         public void setLogId(int logId) { this.logId = logId; }
     }
 }
-
-
-
-
-
-
-
