@@ -1,3 +1,5 @@
+package java.ActivityTests;
+
 import com.example.cab302project.Activities.Activity;
 import com.example.cab302project.Database.DatabaseActivityDAO;
 import com.example.cab302project.Database.DatabaseConnection;
@@ -7,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -93,6 +97,44 @@ public class ActivityTest {
       Activity found = activityDAO.getOrCreateActivity(testActivity);
       assertNotNull(found);
       assertEquals(testActivity.getName(), found.getName());
+   }
+
+   // activity log database test
+   @Test
+   public void testInsertActivityLog() {
+      int activityId = activityDAO.insert(testActivity);
+      int logId = activityDAO.insertActivityLog(1, activityId, "2026-10-06", 30);
+      assertTrue(activityId > 0);
+   }
+
+   @Test
+   public void testGetActivityLogs() {
+      int activityId = activityDAO.insert(testActivity);
+      activityDAO.insertActivityLog(1, activityId, "2026-10-06", 30);
+      List<int[]> logs = activityDAO.getActivityLogs(1);
+      assertFalse(logs.isEmpty());
+   }
+
+   @Test
+   public void testGetActivityLogMinutes() {
+      int activityId = activityDAO.insert(testActivity);
+      activityDAO.insertActivityLog(1, activityId, "2026-10-06", 45);
+      List<int[]> logs = activityDAO.getActivityLogs(1);
+      assertFalse(logs.isEmpty());
+      assertEquals(45, logs.get(0)[2]);
+   }
+
+   @Test
+   public void testDeleteActivityLog() {
+      int activityId = activityDAO.insert(testActivity);
+      int logId = activityDAO.insertActivityLog(1, activityId, "2026-10-06", 30);
+      activityDAO.deleteActivityLog(1, logId);
+
+      List<int[]> beforeDelete = activityDAO.getActivityLogs(1);
+      activityDAO.deleteActivityLog(logId, 1);
+
+      List<int[]> afterDelete = activityDAO.getActivityLogs(1);
+      assertEquals(beforeDelete.size() -1, afterDelete.size());
    }
 
 
