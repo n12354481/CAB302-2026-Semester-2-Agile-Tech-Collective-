@@ -1,7 +1,6 @@
 package com.example.cab302project.Dashboard.Recommendations;
 
 import com.example.cab302project.Dashboard.Ollama.Connection;
-import com.example.cab302project.Dashboard.Ollama.OllamaConfig;
 import com.example.cab302project.Dashboard.Ollama.Response;
 import com.example.cab302project.Dashboard.Ollama.ResponseReceived;
 import com.example.cab302project.MoodForm.CheckIn;
@@ -20,7 +19,7 @@ public class RecommendationService {
      * Constructs the connection for ollama.
      */
     public RecommendationService() {
-        ollamaConnection = new Connection(OllamaConfig.API_URL);
+        ollamaConnection = new Connection("http://localhost:11434/api/generate");
     }
 
     /**
@@ -34,7 +33,7 @@ public class RecommendationService {
         System.out.println(prompt);
 
         //This fetches the response.
-        ollamaConnection.fetchAsynchronousOllamaResponse(OllamaConfig.MODEL_NAME, prompt, response -> {
+        ollamaConnection.fetchAsynchronousOllamaResponse("llama3.2", prompt, response -> {
             System.out.println("Ollama response: ");
             if(response == null) {
                 System.out.println("Response null");
@@ -61,7 +60,7 @@ public class RecommendationService {
         prompt.append("provide exactly three short, practical wellbeing recommendations. ");
 
         prompt.append("If no recent activity or check-in data is provided, ");
-        prompt.append("provide ONLY exactly three generic short, practical wellbeing recommendations suitable for a university student. Do NOT give any additional messages.");
+        prompt.append("provide only exactly three generic short, practical wellbeing recommendations suitable for a university student. Do not give any additional messages.");
         prompt.append("Do not claim the recommendations are personal when no data is available.");
 
         prompt.append("Each recommendation should: be supportive and practical, be specific to the student's data, be no more than 25 words, be suitable for displaying on a dashboard. ");

@@ -140,39 +140,43 @@
 
                                     <VBox>
                                         <Label text="Email"
-                                               style="-fx-font-weight: bold; -fx-font-size: 20;"/>
+                                               style="-fx-font-weight: bold; -fx-font-size: 25;"/>
                                         <HBox spacing="10">
                                             <TextField fx:id="emailTextField"
                                                        editable="false"
                                                        prefHeight="40"
                                                        HBox.hgrow="ALWAYS"
                                                        style="-fx-background-color: #F7F5F5;
-                                                               -fx-font-size: 16;"/>
+                                                               -fx-font-size: 18;"/>
                                             <Button fx:id="emailUpdateButton"
                                                     text="Update"
                                                     onAction="#onEmailUpdateClicked"
                                                     prefHeight="40"
                                                     prefWidth="90"
-                                                    style="-fx-background-color: #C8EEE9"/>
+                                                    style="
+                                                    -fx-font-size: 16;
+                                                    -fx-background-color: #C8EEE9"/>
                                         </HBox>
                                     </VBox>
 
                                     <VBox spacing="8">
                                         <Label text="Username"
-                                               style="-fx-font-weight: bold; -fx-font-size: 20;"/>
+                                               style="-fx-font-weight: bold; -fx-font-size: 25;"/>
                                         <HBox spacing="10">
                                             <TextField fx:id="usernameTextField"
                                                        editable="false"
                                                        prefHeight="40"
                                                        HBox.hgrow="ALWAYS"
                                                        style="-fx-background-color: #F7F5F5;
-                                                              -fx-font-size: 16"/>
+                                                              -fx-font-size: 18"/>
                                             <Button fx:id="usernameUpdateButton"
                                                     text="Update"
                                                     onAction="#onUsernameUpdateClicked"
                                                     prefWidth="90"
                                                     prefHeight="40"
-                                                    style="-fx-background-color: #C8EEE9"/>
+                                                    style="
+                                                    -fx-font-size: 16;
+                                                    -fx-background-color: #C8EEE9"/>
                                         </HBox>
 
                                         <!--Section for updating the user's password.-->
@@ -191,22 +195,35 @@
                                                 prefWidth="250"
                                                 onAction="#onChangePasswordClicked"
                                                 style="-fx-background-color: #C8EEE9;
-                                                       -fx-font-size: 20;"/>
+                                                       -fx-font-size: 25;"/>
                                     </VBox>
                                 </VBox>
                             </VBox>
                         </center>
 
                         <bottom>
-                            <HBox alignment="CENTER_LEFT">
+                            <HBox alignment="CENTER_LEFT" spacing="15">
                                 <padding>
                                     <Insets top="20" right="36" bottom="30" left="36"/>
                                 </padding>
                                 <Button text="Save"
                                         onAction="#onSaveSettings"
-                                        style="-fx-background-color: #77DD77"
+                                        style="
+                                        -fx-text-fill: white;
+                                        -fx-font-size: 16px;
+                                        -fx-font-weight: bold;
+                                        -fx-background-radius: 8px;
+                                        -fx-background-color: #1F6F64"
                                         prefWidth="150"
                                         prefHeight="40"/>
+                                <Label fx:id="saveStatusLabel"
+                                       text=""
+                                       visible="false"
+                                       managed="false"
+                                       style="
+                                       -fx-font-size: 14px;
+                                       -fx-font-weight: bold;
+                                       -fx-text-fill: #1F6F64;"/>
                             </HBox>
                         </bottom>
                     </BorderPane>
@@ -243,9 +260,9 @@
                                     <VBox spacing="4"
                                           HBox.hgrow="ALWAYS">
                                         <Label text="Contribute to Community Statistics"
-                                               style="-fx-font-size: 20"/>
+                                               style="-fx-font-size: 25"/>
                                         <Label text="Turning this ON will allow us to use your data when generating communtiy statistics."
-                                               style="-fx-font-size: 15;
+                                               style="-fx-font-size: 20;
                                                        -fx-text-fill: grey"/>
                                     </VBox>
                                     <CheckBox fx:id="communityParticipationCheckBox"/>
@@ -260,9 +277,9 @@
                                     <VBox spacing="4"
                                           HBox.hgrow="ALWAYS">
                                         <Label text="Activity Data"
-                                               style="-fx-font-size: 20"/>
+                                               style="-fx-font-size: 25"/>
                                         <Label text="This will allow us to use your data from the activities page when generating community statistics."
-                                               style="-fx-font-size: 15
+                                               style="-fx-font-size: 20;
                                                       -fx-text-fill: grey"/>
                                     </VBox>
                                     <CheckBox fx:id="activityParticipationCheckbox"/>
@@ -277,9 +294,9 @@
                                     <VBox spacing="4"
                                           HBox.hgrow="ALWAYS">
                                         <Label text="Check-in Data"
-                                               style="-fx-font-size: 20"/>
+                                               style="-fx-font-size: 25"/>
                                         <Label text="This will allow us to use your data from the check-in page when generating community statistics."
-                                               style="-fx-font-size: 15
+                                               style="-fx-font-size: 20;
                                                       -fx-text-fill: grey"/>
                                     </VBox>
                                     <CheckBox fx:id="checkinParticipationCheckbox"/>
@@ -290,16 +307,30 @@
                             </VBox>
                         </center>
                         <bottom>
-                            <VBox>
+                            <HBox spacing="15">
                                 <padding>
                                     <Insets top="30" right="36" bottom="30" left="35"/>
                                 </padding>
                                 <Button text="Save"
-                                        style="-fx-background-color: #77DD77"
+                                        onAction="#onSaveSettings"
+                                        style="
+                                        -fx-text-fill: white;
+                                        -fx-font-size: 16px;
+                                        -fx-font-weight: bold;
+                                        -fx-background-radius: 8px;
+                                        -fx-background-color: #1F6F64"
                                         prefWidth="150"
-                                        prefHeight="40"
-                                        onAction="#onSaveSettings"/>
-                            </VBox>
+                                        prefHeight="40"/>
+
+                                <Label fx:id="saveStatusLabel1"
+                                       text=""
+                                       visible="false"
+                                       managed="false"
+                                       style="
+                                       -fx-font-size: 14px;
+                                       -fx-font-weight: bold;
+                                       -fx-text-fill: #1F6F64;"/>
+                            </HBox>
                         </bottom>
                     </BorderPane>
                 </AnchorPane>
@@ -335,15 +366,15 @@
                                     <VBox spacing="4"
                                           HBox.hgrow="ALWAYS">
                                         <Label text="Delete Activities Data"
-                                               style="-fx-font-size: 20"/>
+                                               style="-fx-font-size: 25"/>
                                         <Label text="Doing this will delete all your activities data entered into this app. "
-                                               style="-fx-font-size: 15;
+                                               style="-fx-font-size: 20;
                                                        -fx-text-fill: grey"/>
                                     </VBox>
                                     <Button text="Proceed to delete"
                                             onAction="#onDeleteActivitiesClicked"
                                             style="-fx-background-color: #800517;
-                                                   -fx-font-size: 14;
+                                                   -fx-font-size: 16;
                                                    -fx-text-fill: white;"
                                             prefHeight="40"
                                             prefWidth="140"
@@ -359,15 +390,15 @@
                                     <VBox spacing="4"
                                           HBox.hgrow="ALWAYS">
                                         <Label text="Delete Check-in Data"
-                                               style="-fx-font-size: 20"/>
+                                               style="-fx-font-size: 25"/>
                                         <Label text="Doing this will delete all your check-in data entered into this app. "
-                                               style="-fx-font-size: 15;
+                                               style="-fx-font-size: 20;
                                                        -fx-text-fill: grey"/>
                                     </VBox>
                                     <Button text="Proceed to delete"
                                             onAction="#onDeleteCheckInClicked"
                                             style="-fx-background-color: #800517;
-                                                   -fx-font-size: 14;
+                                                   -fx-font-size: 16;
                                                    -fx-text-fill: white;"
                                             prefHeight="40"
                                             prefWidth="140"
@@ -389,15 +420,15 @@
                                         <VBox spacing="4"
                                               HBox.hgrow="ALWAYS">
                                             <Label text="Delete Account"
-                                                   style="-fx-font-size: 20"/>
+                                                   style="-fx-font-size: 25"/>
                                             <Label text="Doing this will permanently delete your account and all of your data in STEM Well-being"
-                                                   style="-fx-font-size: 15;
+                                                   style="-fx-font-size: 20;
                                                        -fx-text-fill: grey"/>
                                         </VBox>
                                         <Button text="Proceed to delete"
                                                 onAction="#onDeleteAccountClicked"
                                                 style="-fx-background-color: #800517;
-                                                   -fx-font-size: 14;
+                                                   -fx-font-size: 16;
                                                    -fx-text-fill: white;"
                                                 prefHeight="40"
                                                 prefWidth="140"
@@ -445,9 +476,9 @@
                                     <VBox spacing="4"
                                           HBox.hgrow="ALWAYS">
                                         <Label text="AI Personalisation"
-                                               style="-fx-font-size: 20"/>
+                                               style="-fx-font-size: 25"/>
                                         <Label text="Turning this ON will allow our AI chatbot to access your data for recommending personal tips on improving your well-being."
-                                               style="-fx-font-size: 15;
+                                               style="-fx-font-size: 20;
                                                        -fx-text-fill: grey"/>
                                     </VBox>
                                     <CheckBox fx:id="aiCheckbox"/>
@@ -462,9 +493,9 @@
                                     <VBox spacing="4"
                                           HBox.hgrow="ALWAYS">
                                         <Label text="Check-in Data"
-                                               style="-fx-font-size: 20"/>
+                                               style="-fx-font-size: 25"/>
                                         <Label text="Turning this ON will allow our AI chatbot to access your check-in data for recommending personal tips on improving your mental well-being."
-                                               style="-fx-font-size: 15
+                                               style="-fx-font-size: 20;
                                                       -fx-text-fill: grey"/>
                                     </VBox>
                                     <CheckBox fx:id="aiCheckinCheckbox"/>
@@ -479,9 +510,9 @@
                                     <VBox spacing="4"
                                           HBox.hgrow="ALWAYS">
                                         <Label text="Activity Data"
-                                               style="-fx-font-size: 20"/>
+                                               style="-fx-font-size: 25"/>
                                         <Label text="Turning this ON will allow Maven to access your activities data for recommending personal tips on improving your physical well-being."
-                                               style="-fx-font-size: 15
+                                               style="-fx-font-size: 20;
                                                       -fx-text-fill: grey"/>
                                     </VBox>
                                     <CheckBox fx:id="aiActivityCheckbox"/>
@@ -492,15 +523,28 @@
                             </VBox>
                         </center>
                         <bottom>
-                            <HBox alignment="CENTER_LEFT">
+                            <HBox alignment="CENTER_LEFT" spacing="15">
                                 <padding>
-                                    <Insets top="30" right="36" bottom="30" left="35"/>
+                                    <Insets top="20" right="36" bottom="30" left="36"/>
                                 </padding>
                                 <Button text="Save"
-                                        style="-fx-background-color: #77DD77"
+                                        onAction="#onSaveSettings"
+                                        style="
+                                        -fx-text-fill: white;
+                                        -fx-font-size: 16px;
+                                        -fx-font-weight: bold;
+                                        -fx-background-radius: 8px;
+                                        -fx-background-color: #1F6F64"
                                         prefWidth="150"
-                                        prefHeight="40"
-                                        onAction="#onSaveSettings"/>
+                                        prefHeight="40"/>
+                                <Label fx:id="saveStatusLabel2"
+                                       text=""
+                                       visible="false"
+                                       managed="false"
+                                       style="
+                                       -fx-font-size: 14px;
+                                       -fx-font-weight: bold;
+                                       -fx-text-fill: #1F6F64;"/>
                             </HBox>
                         </bottom>
                     </BorderPane>
@@ -535,7 +579,7 @@
                                           -fx-font-weight: bold;"/>
 
                             <Label text="Current Password"
-                                   style="-fx-font-size: 15;
+                                   style="-fx-font-size: 20;
                                           -fx-font-weight: bold;"/>
 
                             <PasswordField fx:id="currentPasswordField"
@@ -543,7 +587,7 @@
                                            prefHeight="40"/>
 
                             <Label text="New Password"
-                                   style="-fx-font-size: 15;
+                                   style="-fx-font-size: 20;
                                           -fx-font-weight: bold;"/>
 
                             <PasswordField fx:id="newPasswordField"
@@ -551,7 +595,7 @@
                                            prefHeight="40"/>
 
                             <Label text="Confirm Password"
-                                   style="-fx-font-size: 15;
+                                   style="-fx-font-size: 20;
                                           -fx-font-weight: bold;"/>
 
                             <PasswordField fx:id="confirmPasswordField"
@@ -612,7 +656,7 @@
                         <Label fx:id="deleteMessage"
                                text=""
                                wrapText="true"
-                               style="-fx-font-size: 15;"/>
+                               style="-fx-font-size: 20;"/>
 
                         <HBox>
                             <Button text="Cancel"
