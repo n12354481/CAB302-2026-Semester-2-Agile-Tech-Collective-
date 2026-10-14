@@ -1,6 +1,7 @@
 package com.example.cab302project.Dashboard.Recommendations;
 
 import com.example.cab302project.Dashboard.Ollama.Connection;
+import com.example.cab302project.Dashboard.Ollama.OllamaConfig;
 import com.example.cab302project.Dashboard.Ollama.Response;
 import com.example.cab302project.Dashboard.Ollama.ResponseReceived;
 import com.example.cab302project.MoodForm.CheckIn;
@@ -19,7 +20,7 @@ public class RecommendationService {
      * Constructs the connection for ollama.
      */
     public RecommendationService() {
-        ollamaConnection = new Connection("http://localhost:11434/api/generate");
+        ollamaConnection = new Connection(OllamaConfig.API_URL);
     }
 
     /**
@@ -33,7 +34,7 @@ public class RecommendationService {
         System.out.println(prompt);
 
         //This fetches the response.
-        ollamaConnection.fetchAsynchronousOllamaResponse("llama3.2", prompt, response -> {
+        ollamaConnection.fetchAsynchronousOllamaResponse(OllamaConfig.MODEL_NAME, prompt, response -> {
             System.out.println("Ollama response: ");
             if(response == null) {
                 System.out.println("Response null");

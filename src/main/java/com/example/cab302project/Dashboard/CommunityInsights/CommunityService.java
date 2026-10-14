@@ -1,6 +1,7 @@
 package com.example.cab302project.Dashboard.CommunityInsights;
 
 import com.example.cab302project.Dashboard.Ollama.Connection;
+import com.example.cab302project.Dashboard.Ollama.OllamaConfig;
 import com.example.cab302project.Dashboard.Ollama.ResponseReceived;
 import com.example.cab302project.Dashboard.Recommendations.RecommendationData;
 import com.example.cab302project.MoodForm.CheckIn;
@@ -17,7 +18,7 @@ public class CommunityService {
      * A constructs which constructs the ollama connection.
      */
     public CommunityService() {
-        ollamaConnection = new Connection("http://localhost:11434/api/generate");
+        ollamaConnection = new Connection(OllamaConfig.API_URL);
     }
 
     /**
@@ -31,7 +32,7 @@ public class CommunityService {
         System.out.println(prompt);
 
         //This fetches the response.
-        ollamaConnection.fetchAsynchronousOllamaResponse("llama3.2", prompt, response -> {
+        ollamaConnection.fetchAsynchronousOllamaResponse(OllamaConfig.MODEL_NAME, prompt, response -> {
             System.out.println("Ollama response: ");
             if(response == null) {
                 System.out.println("Response null");
