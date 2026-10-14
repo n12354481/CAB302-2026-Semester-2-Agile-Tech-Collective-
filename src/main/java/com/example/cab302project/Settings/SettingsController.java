@@ -84,6 +84,14 @@ public class SettingsController {
     @FXML
     private AnchorPane ai;
 
+    @FXML
+    private Label saveStatusLabel;
+
+    @FXML
+    private Label saveStatusLabel1;
+
+    @FXML
+    private Label saveStatusLabel2;
 
     //Privacy section fields
     @FXML
@@ -176,6 +184,16 @@ public class SettingsController {
      * @param section: The sub-settings content that needs to be overlapped.
      */
     private void show(AnchorPane section) {
+        saveStatusLabel.setVisible(false);
+        saveStatusLabel.setManaged(false);
+
+        saveStatusLabel1.setVisible(false);
+        saveStatusLabel1.setManaged(false);
+
+        saveStatusLabel2.setVisible(false);
+        saveStatusLabel2.setManaged(false);
+
+
         account.setVisible(false);
         account.setManaged(false);
 
@@ -383,44 +401,78 @@ public class SettingsController {
      */
     @FXML
     private void onSaveSettings() {
-        if(communityParticipationCheckBox.isSelected())
+        if(account.isVisible())
         {
-            activityParticipationCheckbox.setDisable(false);
-            checkinParticipationCheckbox.setDisable(false);
-
-            settings.setActivityDataParticipation(activityParticipationCheckbox.isSelected());
-            settings.setCheckinDataParticipation(checkinParticipationCheckbox.isSelected());
-        } else {
-            activityParticipationCheckbox.setDisable(true);
-            checkinParticipationCheckbox.setDisable(true);
-
-            settings.setActivityDataParticipation(false);
-            settings.setCheckinDataParticipation(false);
+            settingsDAO.saveSettings(userId, settings);
+            showSaveStatus(saveStatusLabel);
+            System.out.println("Account settings saved.");
         }
 
-        if(aiCheckbox.isSelected())
+        else if (privacy.isVisible())
         {
-            aiActivityCheckbox.setDisable(false);
-            aiCheckinCheckbox.setDisable(false);
+            if(communityParticipationCheckBox.isSelected())
+            {
+                activityParticipationCheckbox.setDisable(false);
+                checkinParticipationCheckbox.setDisable(false);
 
-            settings.setAICheckinPersonalisation(aiCheckinCheckbox.isSelected());
-            settings.setAIActivityPersonalisation(aiActivityCheckbox.isSelected());
-        } else {
-            aiActivityCheckbox.setDisable(true);
-            aiCheckinCheckbox.setDisable(true);
+                settings.setActivityDataParticipation(activityParticipationCheckbox.isSelected());
+                settings.setCheckinDataParticipation(checkinParticipationCheckbox.isSelected());
+            } else {
+                activityParticipationCheckbox.setDisable(true);
+                checkinParticipationCheckbox.setDisable(true);
 
-            settings.setAICheckinPersonalisation(false);
-            settings.setAIActivityPersonalisation(false);
+                settings.setActivityDataParticipation(false);
+                settings.setCheckinDataParticipation(false);
+            }
+
+            settings.setCommunityParticipation(communityParticipationCheckBox.isSelected());
+            settingsDAO.saveSettings(userId, settings);
+            showSaveStatus(saveStatusLabel1);
+            System.out.println("Privacy settings saved.");
         }
 
-        settings.setCommunityParticipation(communityParticipationCheckBox.isSelected());
-        settings.setAIPersonalisation(aiCheckbox.isSelected());
+        else if (ai.isVisible())
+        {
+            if(aiCheckbox.isSelected())
+            {
+                aiActivityCheckbox.setDisable(false);
+                aiCheckinCheckbox.setDisable(false);
 
-        settingsDAO.saveSettings(userId, settings);
+                settings.setAICheckinPersonalisation(aiCheckinCheckbox.isSelected());
+                settings.setAIActivityPersonalisation(aiActivityCheckbox.isSelected());
+            } else {
+                aiActivityCheckbox.setDisable(true);
+                aiCheckinCheckbox.setDisable(true);
 
-        System.out.println("Settings saved for user: " + userId);
+                settings.setAICheckinPersonalisation(false);
+                settings.setAIActivityPersonalisation(false);
+            }
+
+            settings.setAIPersonalisation(aiCheckbox.isSelected());
+            settingsDAO.saveSettings(userId, settings);
+            showSaveStatus(saveStatusLabel2);
+            System.out.println("AI settings saved.");
+        }
     }
 
+    /**
+     * Updates the save status of a page.
+     */
+    private void showSaveStatus(Label statusLabel)
+    {
+        saveStatusLabel.setVisible(false);
+        saveStatusLabel.setManaged(false);
+
+        saveStatusLabel1.setVisible(false);
+        saveStatusLabel1.setManaged(false);
+
+        saveStatusLabel2.setVisible(false);
+        saveStatusLabel2.setManaged(false);
+
+        statusLabel.setText("Settings saved successfully!");
+        statusLabel.setVisible(true);
+        statusLabel.setManaged(true);
+    }
     /**
      * This method opens the overlay for deleting activities.
      */
