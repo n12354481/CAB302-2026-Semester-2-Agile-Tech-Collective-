@@ -4,11 +4,10 @@ import com.example.cab302project.Database.DatabaseUserDAO;
 import com.example.cab302project.HelloController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -68,12 +67,8 @@ public class LoginController {
                 )
         );
 
-        Scene scene = new Scene(loader.load());
-
-        Stage stage = (Stage)
-                usernameField.getScene().getWindow();
-
-        stage.setScene(scene);
+        // Swap the root, not the scene, so the window keeps its size.
+        usernameField.getScene().setRoot(loader.load());
     }
 
     private void goToHomePage(User user) throws IOException {
@@ -84,16 +79,12 @@ public class LoginController {
                 )
         );
 
-        Scene scene = new Scene(loader.load());
+        Parent root = loader.load();
 
         HelloController controller = loader.getController();
         controller.setUserID(user.getUserID());
 
-        Stage stage =
-                (Stage) usernameField
-                        .getScene()
-                        .getWindow();
-
-        stage.setScene(scene);
+        // Swap the root, not the scene, so the window keeps its size.
+        usernameField.getScene().setRoot(root);
     }
 }

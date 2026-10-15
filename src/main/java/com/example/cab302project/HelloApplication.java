@@ -28,7 +28,7 @@ public class HelloApplication extends Application {
             throw new RuntimeException("Could not create the rewards tables", sqlEx);
         }
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 1000);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Stemwise");
         stage.setScene(scene);
         stage.show();
