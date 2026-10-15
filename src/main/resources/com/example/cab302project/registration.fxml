@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<AnchorPane xmlns="http://javafx.com/javafx" styleClass="theme" stylesheets="@Theme.css"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cab302project.Authentication.RegistrationController"
             prefHeight="550.0"
@@ -18,22 +18,19 @@
           AnchorPane.leftAnchor="0.0"
           AnchorPane.rightAnchor="0.0"
           AnchorPane.topAnchor="0.0"
-          style="-fx-background-color: #237A6B;">
+          styleClass="sidebar">
 
         <Label text="Stem App"
                layoutX="290.0"
                layoutY="28.0"
-               style="-fx-font-size: 25px;
-                      -fx-font-weight: bold;
-                      -fx-text-fill: white;"/>
+               styleClass="brand"/>
     </Pane>
 
     <!-- Email -->
     <Label text="Email"
            layoutX="200.0"
            layoutY="125.0"
-           style="-fx-font-size: 14px;
-                  -fx-font-weight: bold;"/>
+           styleClass="field-label"/>
 
     <TextField fx:id="emailField"
                layoutX="200.0"
@@ -45,8 +42,7 @@
     <Label text="Username"
            layoutX="200.0"
            layoutY="200.0"
-           style="-fx-font-size: 14px;
-                  -fx-font-weight: bold;"/>
+           styleClass="field-label"/>
 
     <TextField fx:id="usernameField"
                layoutX="200.0"
@@ -58,8 +54,7 @@
     <Label text="Password"
            layoutX="200.0"
            layoutY="275.0"
-           style="-fx-font-size: 14px;
-                  -fx-font-weight: bold;"/>
+           styleClass="field-label"/>
 
     <PasswordField fx:id="passwordField"
                    layoutX="200.0"
@@ -71,8 +66,7 @@
     <Label text="Confirm Password"
            layoutX="200.0"
            layoutY="350.0"
-           style="-fx-font-size: 14px;
-                  -fx-font-weight: bold;"/>
+           styleClass="field-label"/>
 
     <PasswordField fx:id="confirmPasswordField"
                    layoutX="200.0"
@@ -93,6 +87,7 @@
             layoutX="300.0"
             layoutY="450.0"
             prefWidth="100.0"
+            styleClass="btn-primary"
             onAction="#handleRegister"/>
 
     <!-- Back to login -->
@@ -104,6 +99,7 @@
             layoutX="300.0"
             layoutY="515.0"
             prefWidth="100.0"
+            styleClass="btn-secondary"
             onAction="#goToLogin"/>
 
 </AnchorPane>
