@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -11,7 +12,8 @@
 
 <BorderPane fx:controller="com.example.cab302project.HelloController"
             xmlns:fx="http://javafx.com/fxml"
-            styleClass="theme" stylesheets="@Theme.css">
+            styleClass="theme" stylesheets="@Theme.css"
+            prefWidth="1100.0" prefHeight="700.0">
     <left>
         <VBox prefWidth="220.0" spacing="4.0" styleClass="sidebar">
             <padding>
@@ -55,7 +57,10 @@
         </VBox>
     </left>
 
+    <!-- Scrolls when a page is taller than the window, so the sidebar always fits. -->
     <center>
-        <StackPane fx:id="mainContent"/>
+        <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" styleClass="scroll-clear">
+            <StackPane fx:id="mainContent"/>
+        </ScrollPane>
     </center>
 </BorderPane>

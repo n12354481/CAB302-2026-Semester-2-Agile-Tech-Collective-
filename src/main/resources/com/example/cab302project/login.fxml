@@ -1,81 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx" styleClass="theme" stylesheets="@Theme.css"
+<BorderPane xmlns="http://javafx.com/javafx" styleClass="theme" stylesheets="@Theme.css"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.cab302project.Authentication.LoginController"
-            prefHeight="500.0"
-            prefWidth="700.0">
+            prefHeight="700.0"
+            prefWidth="1100.0">
 
     <!-- Green header -->
-    <Pane prefHeight="90.0"
-          AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0"
-          styleClass="sidebar">
+    <top>
+        <HBox alignment="CENTER" prefHeight="90.0" styleClass="sidebar">
+            <Label text="Stemwise" styleClass="brand"/>
+        </HBox>
+    </top>
 
-        <Label text="Stemwise"
-               layoutX="290.0"
-               layoutY="28.0"
-               styleClass="brand"/>
-    </Pane>
+    <!-- Centred in the space below the header -->
+    <center>
+        <VBox alignment="CENTER">
+            <VBox spacing="8.0" maxWidth="300.0">
 
-    <!-- Username -->
-    <Label text="Username"
-           layoutX="200.0"
-           layoutY="145.0"
-           styleClass="field-label"/>
+                <!-- Username -->
+                <Label text="Username" styleClass="field-label"/>
+                <TextField fx:id="usernameField" promptText="Enter username"/>
 
-    <TextField fx:id="usernameField"
-               layoutX="200.0"
-               layoutY="170.0"
-               prefWidth="300.0"
-               promptText="Enter username"/>
+                <!-- Password -->
+                <Label text="Password" styleClass="field-label">
+                    <VBox.margin>
+                        <Insets top="12.0"/>
+                    </VBox.margin>
+                </Label>
+                <PasswordField fx:id="passwordField" promptText="Enter password"/>
 
-    <!-- Password -->
-    <Label text="Password"
-           layoutX="200.0"
-           layoutY="225.0"
-           styleClass="field-label"/>
+                <!-- Error/success messages -->
+                <Label fx:id="messageLabel"
+                       maxWidth="Infinity"
+                       alignment="CENTER"
+                       wrapText="true"/>
 
-    <PasswordField fx:id="passwordField"
-                   layoutX="200.0"
-                   layoutY="250.0"
-                   prefWidth="300.0"
-                   promptText="Enter password"/>
+                <!-- Sign in -->
+                <VBox alignment="CENTER" spacing="8.0">
+                    <Button text="Sign in"
+                            prefWidth="100.0"
+                            styleClass="btn-primary"
+                            onAction="#handleLogin"/>
 
-    <!-- Error/success messages -->
-    <Label fx:id="messageLabel"
-           layoutX="200.0"
-           layoutY="295.0"
-           prefWidth="300.0"
-           alignment="CENTER"
-           wrapText="true"/>
+                    <!-- Registration -->
+                    <Label text="Haven't registered yet?">
+                        <VBox.margin>
+                            <Insets top="24.0"/>
+                        </VBox.margin>
+                    </Label>
+                    <Button text="Register"
+                            prefWidth="100.0"
+                            styleClass="btn-secondary"
+                            onAction="#goToRegister"/>
+                </VBox>
+            </VBox>
+        </VBox>
+    </center>
 
-    <!-- Sign in -->
-    <Button text="Sign in"
-            layoutX="300.0"
-            layoutY="335.0"
-            prefWidth="100.0"
-            styleClass="btn-primary"
-            onAction="#handleLogin"/>
-
-    <!-- Registration -->
-    <Label text="Haven't registered yet?"
-           layoutX="275.0"
-           layoutY="405.0"/>
-
-    <Button text="Register"
-            layoutX="300.0"
-            layoutY="430.0"
-            prefWidth="100.0"
-            styleClass="btn-secondary"
-            onAction="#goToRegister"/>
-
-</AnchorPane>
+</BorderPane>
