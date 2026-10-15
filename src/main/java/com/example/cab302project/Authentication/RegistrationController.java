@@ -3,9 +3,11 @@ package com.example.cab302project.Authentication;
 import com.example.cab302project.Database.DatabaseUserDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -88,7 +90,13 @@ public class RegistrationController {
                 )
         );
 
-        // Swap the root, not the scene, so the window keeps its size.
-        emailField.getScene().setRoot(loader.load());
+        Scene scene = new Scene(loader.load());
+
+        Stage stage =
+                (Stage) emailField
+                        .getScene()
+                        .getWindow();
+
+        stage.setScene(scene);
     }
 }
