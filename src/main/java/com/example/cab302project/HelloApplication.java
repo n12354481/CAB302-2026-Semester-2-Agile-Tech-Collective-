@@ -29,7 +29,7 @@ public class HelloApplication extends Application {
         }
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 1000);
-        stage.setTitle("STEM App");
+        stage.setTitle("Stemwise");
         stage.setScene(scene);
         stage.show();
     }

@@ -20,7 +20,7 @@
           AnchorPane.topAnchor="0.0"
           styleClass="sidebar">
 
-        <Label text="Stem App"
+        <Label text="Stemwise"
                layoutX="290.0"
                layoutY="28.0"
                styleClass="brand"/>
