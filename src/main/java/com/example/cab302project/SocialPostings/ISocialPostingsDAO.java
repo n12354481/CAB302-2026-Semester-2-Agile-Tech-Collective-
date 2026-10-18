@@ -49,4 +49,8 @@ public interface ISocialPostingsDAO {
      */
     List<SocialPostings> getRegisteredPosts(int userId) throws SQLException;
 
+    void markInterested(int userId, int postId) throws SQLException;
+    void removeInterest(int userId, int postId) throws SQLException;
+    boolean isInterested(int userId, int postId) throws SQLException;
+    List<SocialPostings> getInterestedPosts(int userId) throws SQLException;
 }

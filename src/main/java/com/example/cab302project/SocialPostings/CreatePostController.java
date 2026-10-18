@@ -15,6 +15,9 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import java.util.List;
+import javafx.stage.FileChooser;
+import java.io.File;
+import java.io.IOException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -35,6 +38,7 @@ public class CreatePostController {
     @FXML private TextField eventLocationField;
     @FXML private FlowPane tagsContainer;
     @FXML private Label statusLabel;
+    @FXML private Label pictureLabel;
 
     private final ISocialPostingsDAO socialPostingsDAO = new SocialPostingsDAO();
 
@@ -45,6 +49,8 @@ public class CreatePostController {
     }
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    private File selectedImageFile;
 
     private StackPane mainContent;
 
@@ -120,13 +126,25 @@ public class CreatePostController {
             return;
         }
 
+        String imagePath = null;
+        if (selectedImageFile != null) {
+            try {
+                imagePath = PostImages.saveImage(selectedImageFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+                statusLabel.setStyle("-fx-text-fill: #C0392B;");
+                statusLabel.setText("Couldn't save the picture, please try again.");
+                return;
+            }
+        }
+
         SocialPostings post = new SocialPostings(
                 0,
                 currentUserId,
                 title,
                 description,
                 description,
-                null,
+                imagePath,
                 dateText,
                 startTimeText,
                 endTimeText,
@@ -149,6 +167,20 @@ public class CreatePostController {
             e.printStackTrace();
             statusLabel.setStyle("-fx-text-fill: #C0392B;");
             statusLabel.setText("Database error, could not save the post.");
+        }
+    }
+
+    @FXML
+    private void onAddPictureClicked() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Upload a picture");
+        chooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
+
+        File file = chooser.showOpenDialog(eventNameField.getScene().getWindow());
+        if (file != null) {
+            selectedImageFile = file;
+            pictureLabel.setText(file.getName());
         }
     }
 
@@ -179,6 +211,8 @@ public class CreatePostController {
         startTimeField.clear();
         endTimeField.clear();
         eventLocationField.clear();
+        selectedImageFile = null;
+        pictureLabel.setText("No picture chosen");
         for (javafx.scene.Node node : tagsContainer.getChildren()) {
             if (node instanceof ToggleButton toggleButton) {
                 toggleButton.setSelected(false);

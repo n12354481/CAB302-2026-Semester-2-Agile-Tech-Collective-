@@ -9,14 +9,11 @@ import com.example.cab302project.SocialPostings.PostTags;
 import com.example.cab302project.Database.SocialPostingsDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.Parent;
 
 import java.io.IOException;
@@ -59,7 +56,10 @@ public class SocialPostingsController {
 
     private int currentUserId;
 
-    private final Map<Integer, Set<Integer>> registeredMockPostIds = new HashMap<>();
+    private final PostEngagement engagement = new PostEngagement(socialPostingsDAO);
+
+    @FXML
+    private VBox interestedEventsList;
 
     /**
      * Called automatically once the FXML file has finiished loading and this
@@ -69,11 +69,13 @@ public class SocialPostingsController {
     private void initialize() {
         loadPosts();
         refreshUpcomingEvents();
+        refreshInterestedEvents();
     }
 
     public void setUserId(int userId) {
         this.currentUserId = userId;
         refreshUpcomingEvents();
+        refreshInterestedEvents();
     }
 
     private void refreshUpcomingEvents() {
@@ -85,9 +87,7 @@ public class SocialPostingsController {
             e.printStackTrace();
         }
 
-        // Add registered mock posts
-        Set<Integer> registeredMockPosts =
-                registeredMockPostIds.getOrDefault(currentUserId, new HashSet<>());
+        Set<Integer> registeredMockPosts = engagement.getRegisteredMockIds(currentUserId);
 
         for (SocialPostings post : allPosts) {
             if (post.postId() < 0 && registeredMockPosts.contains(post.postId())) {
@@ -95,23 +95,45 @@ public class SocialPostingsController {
             }
         }
 
-        upcomingEventsList.getChildren().clear();
+        fillEventList(upcomingEventsList, registered, "You haven't registered for any events!");
+    }
 
-        if (registered.isEmpty()) {
-            Label emptyLabel = new Label("You haven't registered for any events!");
+    private void refreshInterestedEvents() {
+        List<SocialPostings> interested = new ArrayList<>();
+
+        try {
+            interested.addAll(socialPostingsDAO.getInterestedPosts(currentUserId));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Set<Integer> mockInterests = engagement.getInterestedMockIds(currentUserId);
+
+        for (SocialPostings post : allPosts) {
+            if (post.postId() < 0 && mockInterests.contains(post.postId())) {
+                interested.add(post);
+            }
+        }
+
+        fillEventList(interestedEventsList, interested, "You haven't marked any events as interested!");
+    }
+
+    private void fillEventList(VBox list, List<SocialPostings> posts, String emptyText) {
+        list.getChildren().clear();
+
+        if (posts.isEmpty()) {
+            Label emptyLabel = new Label(emptyText);
             emptyLabel.setWrapText(true);
             emptyLabel.getStyleClass().add("upcoming-event-item");
-            upcomingEventsList.getChildren().add(emptyLabel);
+            list.getChildren().add(emptyLabel);
             return;
         }
 
-        for (SocialPostings post : registered) {
-            Label eventLabel = new Label(
-                    post.title() + " • " + post.eventDate()
-            );
+        for (SocialPostings post : posts) {
+            Label eventLabel = new Label(post.title() + " • " + post.eventDate());
             eventLabel.setWrapText(true);
             eventLabel.getStyleClass().add("upcoming-event-item");
-            upcomingEventsList.getChildren().add(eventLabel);
+            list.getChildren().add(eventLabel);
         }
     }
 
@@ -121,10 +143,17 @@ public class SocialPostingsController {
 
         Region image = new Region();
         image.getStyleClass().add("post-image");
-        image.setPrefHeight(160);
+
+        image.getStyleClass().add("post-image-side");
+        image.setPrefSize(220, 150);
+        image.setMinSize(220, 150);
+        PostImages.showImage(image, post.image());
+
+        PostImages.showImage(image, post.image());
 
         VBox body = new VBox(6);
         body.setPadding(new Insets(10, 14, 14, 14));
+        HBox.setHgrow(body, Priority.ALWAYS);
 
         Label title = new Label(post.title());
         title.getStyleClass().add("post-title");
@@ -137,18 +166,26 @@ public class SocialPostingsController {
         Button registerButton = new Button();
         registerButton.getStyleClass().add("register-btn");
 
-        setRegisterButtonLabel(registerButton, isRegistered(post));
-
-        registerButton.setOnAction(e ->
-                toggleRegistration(post, registerButton)
-        );
+        setRegisterButtonLabel(registerButton, engagement.isRegistered(currentUserId, post));
+        registerButton.setOnAction(e -> {
+            boolean registered = engagement.toggleRegistration(currentUserId, post);
+            setRegisterButtonLabel(registerButton, registered);
+            refreshUpcomingEvents();
+        });
 
         Button interestedButton = new Button("Interested!");
+        interestedButton.getStyleClass().add("interested-btn");
+        setInterestedButtonLabel(interestedButton, engagement.isInterested(currentUserId, post));
+        interestedButton.setOnAction(e -> {
+            boolean interested = engagement.toggleInterest(currentUserId, post);
+            setInterestedButtonLabel(interestedButton, interested);
+            refreshInterestedEvents();
+        });
 
         buttons.getChildren().addAll(registerButton, interestedButton);
 
         body.getChildren().addAll(title, description, buttons);
-        card.getChildren().addAll(image, body);
+        card.getChildren().add(new HBox(image, body));
 
         // clicking anywhere opens the post detail page
         card.setOnMouseClicked(event -> openPostDetail(post));
@@ -158,70 +195,6 @@ public class SocialPostingsController {
         interestedButton.setOnMouseClicked(javafx.event.Event::consume);
 
         return card;
-    }
-
-    private boolean isRegistered(SocialPostings post) {
-        if (post.postId() < 0) {
-            Set<Integer> registeredMockPosts =
-                    registeredMockPostIds.getOrDefault(currentUserId, new HashSet<>());
-
-            return registeredMockPosts.contains(post.postId());
-        }
-
-        try {
-            return socialPostingsDAO.isRegistered(
-                    currentUserId,
-                    post.postId()
-            );
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    private void toggleRegistration(
-            SocialPostings post,
-            Button registerButton) {
-
-        boolean currentlyRegistered = isRegistered(post);
-
-        try {
-            if (post.postId() < 0) {
-
-                Set<Integer> registeredMockPosts =
-                        registeredMockPostIds.computeIfAbsent(
-                                currentUserId,
-                                id -> new HashSet<>()
-                        );
-
-                if (currentlyRegistered) {
-                    registeredMockPosts.remove(post.postId());
-                } else {
-                    registeredMockPosts.add(post.postId());
-                }
-
-            } else {
-
-                if (currentlyRegistered) {
-                    socialPostingsDAO.unregisterFromPost(
-                            currentUserId,
-                            post.postId()
-                    );
-                } else {
-                    socialPostingsDAO.registerForPost(
-                            currentUserId,
-                            post.postId()
-                    );
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        setRegisterButtonLabel(registerButton, !currentlyRegistered);
-        refreshUpcomingEvents();
     }
 
     private void setRegisterButtonLabel(
@@ -234,6 +207,16 @@ public class SocialPostingsController {
         } else {
             registerButton.setText("Register Here!");
             registerButton.getStyleClass().remove("register-btn-active");
+        }
+    }
+
+    private void setInterestedButtonLabel(Button interestedButton, boolean interested) {
+        if (interested) {
+            interestedButton.setText("Interested ✓");
+            interestedButton.getStyleClass().add("interested-btn-active");
+        } else {
+            interestedButton.setText("Interested!");
+            interestedButton.getStyleClass().remove("interested-btn-active");
         }
     }
 
@@ -270,7 +253,7 @@ public class SocialPostingsController {
                             "Science Trivia Night",
                             "Come test your knowledge about everything science!",
                             "Either come alone or with a team to challenge other science students and go head to head!",
-                            null,
+                            "/com/example/cab302project/social-images/science-trivia.jpg",
                             "20/09/2026",
                             "16:00",
                             "20:00",
@@ -283,7 +266,7 @@ public class SocialPostingsController {
                             "Robotics Design Challenge",
                             "Come along to build robots!",
                             "Learn how to design, code, and build robots.",
-                            null,
+                            "/com/example/cab302project/social-images/robotics-design.jpg",
                             "25/09/2026",
                             "12:00",
                             "17:00",
@@ -296,7 +279,7 @@ public class SocialPostingsController {
                             "Beach Walk",
                             "Come along for a casual and chill beach walk",
                             "Join the Social Brisbane Club for a chill walk along the beach to take a break from university!",
-                            null,
+                            "/com/example/cab302project/social-images/beach-walk.jpg",
                             "01/10/2026",
                             "07:00",
                             "10:00",
@@ -309,7 +292,7 @@ public class SocialPostingsController {
                     "Astronomy Night",
                     "Stargazing and telescope viewing for all experience levels",
                     "Bring a blanket and come look through our telescopes! We'll have a short talk on the current night sky before we get started.",
-                    null,
+                        "/com/example/cab302project/social-images/astronomy-night.jpg",
                     "08/10/2026",
                     "19:00",
                     "21:30",
@@ -322,7 +305,7 @@ public class SocialPostingsController {
                             "Coding Club Hackday",
                             "A relaxed one-day hackathon for all skill levels",
                             "Form a team or work solo on a small project of your choice. Mentors will be on hand, and there's pizza at lunch!",
-                            null,
+                            "/com/example/cab302project/social-images/hackathon.jpg",
                             "14/10/2026",
                             "10:00",
                             "16:00",
@@ -335,7 +318,7 @@ public class SocialPostingsController {
                             "Botanic Gardens Picnic",
                             "Casual picnic meetup, bring your own food and a mat",
                             "A laid-back afternoon to meet other students over snacks in the gardens. Open to everyone, no need to RSVP.",
-                            null,
+                            "/com/example/cab302project/social-images/garden-picnic.jpg",
                             "18/10/2026",
                             "12:00",
                             "14:00",
@@ -348,7 +331,7 @@ public class SocialPostingsController {
                             "Intro to Machine Learning Workshop",
                             "A beginner-friendly hands-on workshop on ML basics",
                             "We'll cover the basics of machine learning and get a simple model running together. Laptops provided if you don't have one.",
-                            null,
+                            "/com/example/cab302project/social-images/machine-workshop.jpg",
                             "22/10/2026",
                             "14:00",
                             "16:30",
@@ -361,7 +344,7 @@ public class SocialPostingsController {
                             "South Bank Markets Meetup",
                             "Explore the Sunday markets as a group",
                             "Meet at the entrance and we'll wander the stalls together, grab some food, and enjoy the river views.",
-                            null,
+                            "/com/example/cab302project/social-images/markets-meetup.jpg",
                             "25/10/2026",
                             "09:00",
                             "11:00",
@@ -374,7 +357,7 @@ public class SocialPostingsController {
                             "Chemistry Demo Show",
                             "Live chemistry demonstrations and experiments",
                             "Come watch some fun chemistry demonstrations, with a Q&A with the presenters afterwards.",
-                            null,
+                            "/com/example/cab302project/social-images/chemistry-show.jpg",
                             "29/10/2026",
                             "15:00",
                             "16:00",

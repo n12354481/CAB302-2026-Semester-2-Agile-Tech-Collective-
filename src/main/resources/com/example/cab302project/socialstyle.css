@@ -158,3 +158,13 @@
     -fx-background-color: #1F6F64;
     -fx-text-fill: white;
 }
+
+.interested-btn-active {
+    -fx-background-color: #1F6F64;
+    -fx-text-fill: white;
+}
+
+.post-image-side {
+    -fx-background-color: #D4D4D4;
+    -fx-background-radius: 8 0 0 8;
+}
