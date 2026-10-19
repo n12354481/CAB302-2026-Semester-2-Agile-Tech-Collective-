@@ -91,6 +91,7 @@ public class PostDetailController {
     @FXML
     private void onRegisterClicked() {
         setRegisterButtonLabel(engagement.toggleRegistration(currentUserId, currentPost));
+        setInterestedButtonLabel(engagement.isInterested(currentUserId, currentPost));
     }
 
     @FXML

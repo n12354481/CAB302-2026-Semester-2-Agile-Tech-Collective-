@@ -51,6 +51,10 @@ public class PostEngagement {
             e.printStackTrace();
             return !nowRegistered;
         }
+
+        if (nowRegistered && isInterested(userId, post)) {
+            toggleInterest(userId, post);
+        }
         return nowRegistered;
     }
 

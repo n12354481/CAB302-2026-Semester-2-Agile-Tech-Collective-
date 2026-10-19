@@ -15,6 +15,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.Parent;
+import javafx.geometry.Pos;
+import javafx.scene.control.Tooltip;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -95,7 +98,11 @@ public class SocialPostingsController {
             }
         }
 
-        fillEventList(upcomingEventsList, registered, "You haven't registered for any events!");
+        fillEventList(upcomingEventsList, registered, "You haven't registered for any events!", "Unregister", post -> {
+            engagement.toggleRegistration(currentUserId, post);
+            refreshUpcomingEvents();
+            applyFilters();
+        });
     }
 
     private void refreshInterestedEvents() {
@@ -115,25 +122,50 @@ public class SocialPostingsController {
             }
         }
 
-        fillEventList(interestedEventsList, interested, "You haven't marked any events as interested!");
+        fillEventList(interestedEventsList, interested, "You haven't marked any events as interested!", "Remove from interested", post -> {
+            engagement.toggleInterest(currentUserId, post);
+            refreshInterestedEvents();
+            applyFilters();
+        });
     }
 
-    private void fillEventList(VBox list, List<SocialPostings> posts, String emptyText) {
+    private void fillEventList(VBox list, List<SocialPostings> posts, String emptyText, String removeTip, java.util.function.Consumer<SocialPostings> onRemove) {
         list.getChildren().clear();
 
         if (posts.isEmpty()) {
             Label emptyLabel = new Label(emptyText);
             emptyLabel.setWrapText(true);
-            emptyLabel.getStyleClass().add("upcoming-event-item");
+            emptyLabel.getStyleClass().add("event-empty");
             list.getChildren().add(emptyLabel);
             return;
         }
 
         for (SocialPostings post : posts) {
-            Label eventLabel = new Label(post.title() + " • " + post.eventDate());
-            eventLabel.setWrapText(true);
-            eventLabel.getStyleClass().add("upcoming-event-item");
-            list.getChildren().add(eventLabel);
+            Label eventTitle = new Label(post.title());
+            eventTitle.setWrapText(true);
+            eventTitle.getStyleClass().add("event-item-title");
+
+            String when = post.eventDate() == null ? "" : post.eventDate();
+            if (post.startTime() != null && !post.startTime().isBlank()) {
+                when += " • " + post.startTime();
+            }
+            Label eventWhen = new Label(when);
+            eventWhen.getStyleClass().add("event-item-date");
+
+            VBox text = new VBox(2, eventTitle, eventWhen);
+            HBox.setHgrow(text, Priority.ALWAYS);
+
+            Button removeButton = new Button("X");
+            removeButton.getStyleClass().add("remove-event-btn");
+            removeButton.setTooltip(new Tooltip(removeTip));
+            removeButton.setOnAction(e -> onRemove.accept(post));
+            removeButton.setOnMouseClicked(javafx.event.Event::consume);
+
+            HBox row = new HBox(6, text, removeButton);
+            row.setAlignment(Pos.CENTER_LEFT);
+            row.getStyleClass().add("event-item");
+            row.setOnMouseClicked(e -> openPostDetail(post));
+            list.getChildren().add(row);
         }
     }
 
@@ -147,8 +179,6 @@ public class SocialPostingsController {
         image.getStyleClass().add("post-image-side");
         image.setPrefSize(220, 150);
         image.setMinSize(220, 150);
-        PostImages.showImage(image, post.image());
-
         PostImages.showImage(image, post.image());
 
         VBox body = new VBox(6);
@@ -167,11 +197,6 @@ public class SocialPostingsController {
         registerButton.getStyleClass().add("register-btn");
 
         setRegisterButtonLabel(registerButton, engagement.isRegistered(currentUserId, post));
-        registerButton.setOnAction(e -> {
-            boolean registered = engagement.toggleRegistration(currentUserId, post);
-            setRegisterButtonLabel(registerButton, registered);
-            refreshUpcomingEvents();
-        });
 
         Button interestedButton = new Button("Interested!");
         interestedButton.getStyleClass().add("interested-btn");
@@ -179,6 +204,15 @@ public class SocialPostingsController {
         interestedButton.setOnAction(e -> {
             boolean interested = engagement.toggleInterest(currentUserId, post);
             setInterestedButtonLabel(interestedButton, interested);
+            refreshInterestedEvents();
+        });
+
+        registerButton.setOnAction(e -> {
+            boolean registered = engagement.toggleRegistration(currentUserId, post);
+            setRegisterButtonLabel(registerButton, registered);
+
+            setInterestedButtonLabel(interestedButton, engagement.isInterested(currentUserId, post));
+            refreshUpcomingEvents();
             refreshInterestedEvents();
         });
 

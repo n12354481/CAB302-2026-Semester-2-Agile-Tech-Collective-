@@ -168,3 +168,47 @@
     -fx-background-color: #D4D4D4;
     -fx-background-radius: 8 0 0 8;
 }
+
+.remove-event-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #1F6F64;
+    -fx-font-size: 13px;
+    -fx-padding: 2 6 2 6;
+    -fx-cursor: hand;
+}
+
+.remove-event-btn:hover {
+    -fx-background-color: #E6F2F0;
+    -fx-background-radius: 10;
+}
+
+.event-item {
+    -fx-background-color: #F1F8F6;
+    -fx-background-radius: 8;
+    -fx-border-color: transparent transparent transparent #1F6F64;
+    -fx-border-width: 0 0 0 4;
+    -fx-border-radius: 8;
+    -fx-padding: 8 10 8 12;
+    -fx-cursor: hand;
+}
+
+.event-item:hover {
+    -fx-background-color: #E6F2F0;
+}
+
+.event-item-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1C1C1C;
+}
+
+.event-item-date {
+    -fx-font-size: 12px;
+    -fx-text-fill: #555555;
+}
+
+.event-empty {
+    -fx-font-size: 13px;
+    -fx-font-style: italic;
+    -fx-text-fill: #777777;
+}
