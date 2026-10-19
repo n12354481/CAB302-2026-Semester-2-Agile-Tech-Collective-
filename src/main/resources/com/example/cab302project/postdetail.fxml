@@ -25,6 +25,11 @@
         <Label fx:id="descriptionLabel" styleClass="post-desc" wrapText="true"/>
     </VBox>
 
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button fx:id="registerButton" style="register-btn" onAction="#onRegisterClicked"/>
+        <Button fx:id="interestedButton" style="interested-btn" onAction="#onInterestedClicked"/>
+    </HBox>
+
     <HBox spacing="16">
         <VBox spacing="8" styleClass="panel-card" HBox.hgrow="ALWAYS">
             <Label text="About the Event" styleClass="panel-title"/>
