@@ -1,3 +1,5 @@
+//package java;
+
 import com.example.cab302project.Database.DatabaseConnection;
 import org.junit.jupiter.api.Test;
 import org.sqlite.SQLiteConnection;

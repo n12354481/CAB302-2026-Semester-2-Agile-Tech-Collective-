@@ -17,11 +17,6 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Connection connection = DatabaseConnection.getInstance();
-//        try {
-//            //DatabaseSchema.createAll(connection);
-//        //} catch (SQLException sqlEx) {
-//            throw new RuntimeException("Could not create the database tables", sqlEx);
-//       // }
         try {
             GardenSchema.create(connection);
         } catch (SQLException sqlEx) {
@@ -32,5 +27,7 @@ public class HelloApplication extends Application {
         stage.setTitle("Stemwise");
         stage.setScene(scene);
         stage.show();
+        stage.setWidth(1000);
+        stage.setHeight(1000);
     }
 }

@@ -94,6 +94,14 @@ public final class DatabaseSchema {
                     + "PRIMARY KEY (userID, postID), "
                     + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE, "
                     + "FOREIGN KEY (postID) REFERENCES post (postID) ON DELETE CASCADE"
+                    + ")",
+
+            "CREATE TABLE IF NOT EXISTS interests ("
+                    + "userID INTEGER NOT NULL, "
+                    + "postID INTEGER NOT NULL, "
+                    + "PRIMARY KEY (userID, postID), "
+                    + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE, "
+                    + "FOREIGN KEY (postID) REFERENCES post (postID) ON DELETE CASCADE"
                     + ")"
     };
 
