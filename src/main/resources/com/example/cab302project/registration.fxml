@@ -27,7 +27,7 @@
                        maxWidth="Infinity"
                        style="-fx-background-color: #237A6B;">
 
-                <Label text="Stem App"
+                <Label text="Stemwise"
                        style="-fx-font-size: 25px;
                               -fx-font-weight: bold;
                               -fx-text-fill: white;"/>

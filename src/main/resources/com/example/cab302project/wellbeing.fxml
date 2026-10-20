@@ -40,14 +40,8 @@
                 <Button text="New Check-In"
                         layoutX="35.0"
                         layoutY="110.0"
-                        prefWidth="135.0"
-                        prefHeight="40.0"
                         onAction="#handleNewCheckIn"
-                        style="-fx-background-color: #2aa69a;
-                               -fx-text-fill: white;
-                               -fx-font-size: 14px;
-                               -fx-font-weight: bold;
-                               -fx-background-radius: 8;" />
+                        styleClass="btn-primary" />
 
                 <!-- Graph title -->
                 <Label text="Mood Over Time"
