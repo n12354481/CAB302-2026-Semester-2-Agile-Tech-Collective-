@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.cab302project.Authentication.LoginController"
+            fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            style="-fx-background: white;
+                   -fx-background-color: white;">
+
+    <content>
+
+        <VBox alignment="TOP_CENTER"
+              spacing="0"
+              minHeight="500.0"
+              style="-fx-background-color: white;">
+
+            <!-- Header -->
+            <StackPane prefHeight="90.0"
+                       minHeight="90.0"
+                       maxHeight="90.0"
+                       maxWidth="Infinity"
+                       style="-fx-background-color: #237A6B;">
+
+                <Label text="Stem App"
+                       style="-fx-font-size: 25px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: white;"/>
+
+            </StackPane>
+
+            <!-- Login content -->
+            <VBox alignment="TOP_LEFT"
+                  spacing="10.0"
+                  maxWidth="300.0">
+
+                <padding>
+                    <Insets top="50.0"
+                            right="0.0"
+                            bottom="20.0"
+                            left="0.0"/>
+                </padding>
+
+                <!-- Username -->
+                <Label text="Username"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
+
+                <TextField fx:id="usernameField"
+                           maxWidth="Infinity"
+                           prefHeight="32.0"
+                           promptText="Enter username"/>
+
+                <!-- Space between fields -->
+                <Region prefHeight="15.0"/>
+
+                <!-- Password -->
+                <Label text="Password"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
+
+                <PasswordField fx:id="passwordField"
+                               maxWidth="Infinity"
+                               prefHeight="32.0"
+                               promptText="Enter password"/>
+
+                <!-- Messages -->
+                <Label fx:id="messageLabel"
+                       maxWidth="Infinity"
+                       minHeight="30.0"
+                       alignment="CENTER"
+                       wrapText="true"/>
+
+                <!-- Sign in -->
+                <HBox alignment="CENTER">
+
+                    <Button text="Sign in"
+                            prefWidth="100.0"
+                            onAction="#handleLogin"/>
+
+                </HBox>
+
+                <Region prefHeight="20.0"/>
+
+                <!-- Registration -->
+                <Label text="Haven't registered yet?"
+                       maxWidth="Infinity"
+                       alignment="CENTER"/>
+
+                <HBox alignment="CENTER">
+
+                    <Button text="Register"
+                            prefWidth="100.0"
+                            onAction="#goToRegister"/>
+
+                </HBox>
+
+            </VBox>
+
+        </VBox>
+
+    </content>
+
+</ScrollPane>

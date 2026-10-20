@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.cab302project.Authentication.RegistrationController"
+            fitToWidth="true"
+            hbarPolicy="NEVER"
+            vbarPolicy="AS_NEEDED"
+            style="-fx-background: white;
+                   -fx-background-color: white;">
+
+    <content>
+
+        <VBox alignment="TOP_CENTER"
+              spacing="0"
+              minHeight="600.0"
+              style="-fx-background-color: white;">
+
+            <!-- Header -->
+            <StackPane prefHeight="90.0"
+                       minHeight="90.0"
+                       maxHeight="90.0"
+                       maxWidth="Infinity"
+                       style="-fx-background-color: #237A6B;">
+
+                <Label text="Stem App"
+                       style="-fx-font-size: 25px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: white;"/>
+
+            </StackPane>
+
+            <!-- Registration form -->
+            <VBox alignment="TOP_LEFT"
+                  spacing="10.0"
+                  maxWidth="300.0">
+
+                <padding>
+                    <Insets top="30.0"
+                            right="0.0"
+                            bottom="25.0"
+                            left="0.0"/>
+                </padding>
+
+                <!-- Email -->
+                <Label text="Email"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
+
+                <TextField fx:id="emailField"
+                           maxWidth="Infinity"
+                           prefHeight="32.0"
+                           promptText="Enter email"/>
+
+                <Region prefHeight="8.0"/>
+
+                <!-- Username -->
+                <Label text="Username"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
+
+                <TextField fx:id="usernameField"
+                           maxWidth="Infinity"
+                           prefHeight="32.0"
+                           promptText="Enter username"/>
+
+                <Region prefHeight="8.0"/>
+
+                <!-- Password -->
+                <Label text="Password"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
+
+                <PasswordField fx:id="passwordField"
+                               maxWidth="Infinity"
+                               prefHeight="32.0"
+                               promptText="Enter password"/>
+
+                <Region prefHeight="8.0"/>
+
+                <!-- Confirm password -->
+                <Label text="Confirm Password"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
+
+                <PasswordField fx:id="confirmPasswordField"
+                               maxWidth="Infinity"
+                               prefHeight="32.0"
+                               promptText="Re-enter password"/>
+
+                <!-- Error/success message -->
+                <Label fx:id="messageLabel"
+                       maxWidth="Infinity"
+                       minHeight="30.0"
+                       alignment="CENTER"
+                       wrapText="true"/>
+
+                <!-- Register button -->
+                <HBox alignment="CENTER">
+
+                    <Button text="Register"
+                            prefWidth="100.0"
+                            onAction="#handleRegister"/>
+
+                </HBox>
+
+                <Region prefHeight="10.0"/>
+
+                <!-- Back to login -->
+                <Label text="Already have an account?"
+                       maxWidth="Infinity"
+                       alignment="CENTER"/>
+
+                <HBox alignment="CENTER">
+
+                    <Button text="Sign In"
+                            prefWidth="100.0"
+                            onAction="#goToLogin"/>
+
+                </HBox>
+
+            </VBox>
+
+        </VBox>
+
+    </content>
+
+</ScrollPane>

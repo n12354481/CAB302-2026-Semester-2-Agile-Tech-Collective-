@@ -58,6 +58,11 @@
                     <Label text="Upcoming Events" styleClass="panel-title"/>
                     <VBox fx:id="upcomingEventsList" spacing="8"/>
                 </VBox>
+
+                <VBox styleClass="panel-card" VBox.vgrow="ALWAYS">
+                    <Label text="Interested" styleClass="panel-title"/>
+                    <VBox fx:id="interestedEventsList" spacing="8"/>
+                </VBox>
             </VBox>
 
 

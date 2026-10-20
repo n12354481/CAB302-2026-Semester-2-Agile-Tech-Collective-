@@ -6,6 +6,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Region;
+
+import com.example.cab302project.Database.SocialPostingsDAO;
 
 import java.io.IOException;
 
@@ -21,9 +25,17 @@ public class PostDetailController {
     @FXML private Label locationLabel;
     @FXML private Label timeLabel;
 
+    @FXML private Region postImage;
+
     private StackPane mainContent;
 
     private int currentUserId;
+
+    @FXML private Button registerButton;
+    @FXML private Button interestedButton;
+
+    private final PostEngagement engagement = new PostEngagement(new SocialPostingsDAO());
+    private SocialPostings currentPost;
 
     public void setUserId(int userId) {
         this.currentUserId = userId;
@@ -42,10 +54,13 @@ public class PostDetailController {
      * @param post
      */
     public void setPost(SocialPostings post) {
+        this.currentPost = post;
         titleLabel.setText(post.title());
         descriptionLabel.setText(post.description());
         contentLabel.setText(post.content());
         locationLabel.setText(post.eventLocation());
+
+        PostImages.showImage(postImage, post.image());
 
         String time = "";
         if (post.startTime() != null && !post.startTime().isBlank()) {
@@ -55,6 +70,9 @@ public class PostDetailController {
             time += " - " + post.endTime();
         }
         timeLabel.setText(time);
+
+        setRegisterButtonLabel(engagement.isRegistered(currentUserId, post));
+        setInterestedButtonLabel(engagement.isInterested(currentUserId, post));
     }
 
     @FXML
@@ -69,6 +87,37 @@ public class PostDetailController {
 
             mainContent.getChildren().setAll(content);
         }
+
+    @FXML
+    private void onRegisterClicked() {
+        setRegisterButtonLabel(engagement.toggleRegistration(currentUserId, currentPost));
+        setInterestedButtonLabel(engagement.isInterested(currentUserId, currentPost));
+    }
+
+    @FXML
+    private void onInterestedClicked() {
+        setInterestedButtonLabel(engagement.toggleInterest(currentUserId, currentPost));
+    }
+
+    private void setRegisterButtonLabel(boolean registered) {
+        registerButton.getStyleClass().remove("register-btn-active");
+        if (registered) {
+            registerButton.setText("Registered ✓");
+            registerButton.getStyleClass().add("register-btn-active");
+        } else {
+            registerButton.setText("Register Here!");
+        }
+    }
+
+    private void setInterestedButtonLabel(boolean interested) {
+        interestedButton.getStyleClass().remove("interested-btn-active");
+        if (interested) {
+            interestedButton.setText("Interested ✓");
+            interestedButton.getStyleClass().add("interested-btn-active");
+        } else {
+            interestedButton.setText("Interested!");
+        }
+    }
 
     @FXML
     private void onContactInfoClicked() {
