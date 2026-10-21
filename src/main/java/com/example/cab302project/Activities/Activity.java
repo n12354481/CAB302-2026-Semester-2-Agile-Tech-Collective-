@@ -1,7 +1,7 @@
 package com.example.cab302project.Activities;
 
 /**
- * represents activity that can be viewed and selected by user
+ * Represents activity that can be viewed and selected by user
  */
 public class Activity {
    private int id;
