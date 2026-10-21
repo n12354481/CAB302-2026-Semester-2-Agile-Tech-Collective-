@@ -24,7 +24,7 @@ public class Activity {
       this.id = id;
    }
 
-   // returns stored information for activity
+   // Returns stored information for activity
    public Activity(String name, String category, String description, int goal) {
       this.name = name;
       this.category = category;
