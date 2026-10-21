@@ -130,7 +130,7 @@ public class HelloController {
     private void markActive(String page) {
         Button active = switch (page) {
             case "Dashboard.fxml" -> homeButton;
-            case "mood-checkin.fxml" -> checkInButton;
+            case "mood-checkin.fxml", "wellbeing.fxml" -> checkInButton;
             case "Activities.fxml" -> activitiesButton;
             case "socialpostings.fxml" -> socialButton;
             case "Rewards.fxml" -> rewardsButton;

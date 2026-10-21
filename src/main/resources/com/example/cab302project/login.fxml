@@ -11,24 +11,27 @@
             fitToWidth="true"
             hbarPolicy="NEVER"
             vbarPolicy="AS_NEEDED"
-            stylesheets="@Theme.css"
-            styleClass="scroll-clear">
+            style="-fx-background: white;
+                   -fx-background-color: white;">
 
     <content>
 
         <VBox alignment="TOP_CENTER"
               spacing="0"
               minHeight="500.0"
-              styleClass="theme">
+              style="-fx-background-color: white;">
 
             <!-- Header -->
             <StackPane prefHeight="90.0"
                        minHeight="90.0"
                        maxHeight="90.0"
                        maxWidth="Infinity"
-                       styleClass="sidebar">
+                       style="-fx-background-color: #237A6B;">
 
-                <Label text="Stemwise" styleClass="brand"/>
+                <Label text="Stemwise"
+                       style="-fx-font-size: 25px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: white;"/>
 
             </StackPane>
 
@@ -45,7 +48,9 @@
                 </padding>
 
                 <!-- Username -->
-                <Label text="Username" styleClass="field-label"/>
+                <Label text="Username"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
 
                 <TextField fx:id="usernameField"
                            maxWidth="Infinity"
@@ -56,7 +61,9 @@
                 <Region prefHeight="15.0"/>
 
                 <!-- Password -->
-                <Label text="Password" styleClass="field-label"/>
+                <Label text="Password"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
 
                 <PasswordField fx:id="passwordField"
                                maxWidth="Infinity"
@@ -75,7 +82,6 @@
 
                     <Button text="Sign in"
                             prefWidth="100.0"
-                            styleClass="btn-primary"
                             onAction="#handleLogin"/>
 
                 </HBox>
@@ -91,7 +97,6 @@
 
                     <Button text="Register"
                             prefWidth="100.0"
-                            styleClass="btn-secondary"
                             onAction="#goToRegister"/>
 
                 </HBox>

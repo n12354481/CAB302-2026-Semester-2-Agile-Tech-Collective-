@@ -46,17 +46,21 @@ import static com.example.cab302project.Rewards.GardenGeometry.WIDTH;
  */
 public class GardenPane extends StackPane {
 
-    private static final Color STEM = Color.web("#2F7D68");
-    private static final Color LEAF = Color.web("#D6EBE1");
-    private static final Color PETAL = Color.web("#E9F4EE");
-    private static final Color ROOT = Color.web("#8A7660");
-    private static final Color SOIL = Color.web("#F2EEE7");
-    private static final Color SOIL_LINE = Color.web("#C9BFAF");
-    private static final Color SEED = Color.web("#9a9f9e");
-    private static final Color DIVIDER = Color.web("#e4e6e5");
+    private static final Color STEM = Color.web("#1F6F63");
+    private static final Color LEAF = Color.web("#9ED89A");
+    private static final Color LEAF_EDGE = Color.web("#3E9A5A");
+    private static final Color PETAL = Color.web("#F7A1B5");
+    private static final Color PETAL_EDGE = Color.web("#D9607A");
+    private static final Color CENTRE = Color.web("#E8B23A");
+    private static final Color BUD = Color.web("#FBD3DC");
+    private static final Color ROOT = Color.web("#9C6B3F");
+    private static final Color SOIL = Color.web("#F5E8D6");
+    private static final Color SOIL_LINE = Color.web("#C9A97E");
+    private static final Color SEED = Color.web("#A8957C");
+    private static final Color DIVIDER = Color.web("#E2E5E2");
 
-    // See-through versions of #E3F0EA and the screen grey, so the goal lines and soil show through.
-    private static final Color SELECTED = Color.web("#2F7D68", 0.13);
+    // See-through versions of the stem teal and the screen grey, so the goal lines and soil show through.
+    private static final Color SELECTED = Color.web("#1F6F63", 0.13);
     private static final Color HOVER = Color.web("#1b1d1d", 0.05);
 
     private static final double SOIL_DEPTH = 112;
@@ -269,7 +273,7 @@ public class GardenPane extends StackPane {
         SVGPath leaf = new SVGPath();
         leaf.setContent("M0 0 Q5 -7 13 -6 Q8 1 0 0 Z");
         leaf.setFill(LEAF);
-        leaf.setStroke(STEM);
+        leaf.setStroke(LEAF_EDGE);
         leaf.setStrokeWidth(1);
         leaf.getTransforms().addAll(new Translate(x, y), new Scale(side, 1));
         return leaf;
@@ -282,12 +286,12 @@ public class GardenPane extends StackPane {
             double angle = Math.toRadians(-90 + k * 72);
             Circle petal = new Circle(x + 5.6 * Math.cos(angle), y + 5.6 * Math.sin(angle), 4.4);
             petal.setFill(PETAL);
-            petal.setStroke(STEM);
+            petal.setStroke(PETAL_EDGE);
             petal.setStrokeWidth(1);
             flower.getChildren().add(petal);
         }
         Circle centre = new Circle(x, y, 3);
-        centre.setFill(STEM);
+        centre.setFill(CENTRE);
         flower.getChildren().add(centre);
         return flower;
     }
@@ -295,8 +299,8 @@ public class GardenPane extends StackPane {
     /** Sits just above the top of the stem. */
     private static Node bud(double x, double y) {
         Ellipse bud = new Ellipse(x, y - 4, 3.4, 5);
-        bud.setFill(Color.WHITE);
-        bud.setStroke(STEM);
+        bud.setFill(BUD);
+        bud.setStroke(PETAL_EDGE);
         bud.setStrokeWidth(1.4);
         return bud;
     }

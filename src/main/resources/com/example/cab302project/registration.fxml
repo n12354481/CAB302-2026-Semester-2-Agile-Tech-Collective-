@@ -10,24 +10,27 @@
             fitToWidth="true"
             hbarPolicy="NEVER"
             vbarPolicy="AS_NEEDED"
-            stylesheets="@Theme.css"
-            styleClass="scroll-clear">
+            style="-fx-background: white;
+                   -fx-background-color: white;">
 
     <content>
 
         <VBox alignment="TOP_CENTER"
               spacing="0"
               minHeight="600.0"
-              styleClass="theme">
+              style="-fx-background-color: white;">
 
             <!-- Header -->
             <StackPane prefHeight="90.0"
                        minHeight="90.0"
                        maxHeight="90.0"
                        maxWidth="Infinity"
-                       styleClass="sidebar">
+                       style="-fx-background-color: #237A6B;">
 
-                <Label text="Stemwise" styleClass="brand"/>
+                <Label text="Stemwise"
+                       style="-fx-font-size: 25px;
+                              -fx-font-weight: bold;
+                              -fx-text-fill: white;"/>
 
             </StackPane>
 
@@ -44,7 +47,9 @@
                 </padding>
 
                 <!-- Email -->
-                <Label text="Email" styleClass="field-label"/>
+                <Label text="Email"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
 
                 <TextField fx:id="emailField"
                            maxWidth="Infinity"
@@ -54,7 +59,9 @@
                 <Region prefHeight="8.0"/>
 
                 <!-- Username -->
-                <Label text="Username" styleClass="field-label"/>
+                <Label text="Username"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
 
                 <TextField fx:id="usernameField"
                            maxWidth="Infinity"
@@ -64,7 +71,9 @@
                 <Region prefHeight="8.0"/>
 
                 <!-- Password -->
-                <Label text="Password" styleClass="field-label"/>
+                <Label text="Password"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
 
                 <PasswordField fx:id="passwordField"
                                maxWidth="Infinity"
@@ -74,7 +83,9 @@
                 <Region prefHeight="8.0"/>
 
                 <!-- Confirm password -->
-                <Label text="Confirm Password" styleClass="field-label"/>
+                <Label text="Confirm Password"
+                       style="-fx-font-size: 14px;
+                              -fx-font-weight: bold;"/>
 
                 <PasswordField fx:id="confirmPasswordField"
                                maxWidth="Infinity"
@@ -93,7 +104,6 @@
 
                     <Button text="Register"
                             prefWidth="100.0"
-                            styleClass="btn-primary"
                             onAction="#handleRegister"/>
 
                 </HBox>
@@ -109,7 +119,6 @@
 
                     <Button text="Sign In"
                             prefWidth="100.0"
-                            styleClass="btn-secondary"
                             onAction="#goToLogin"/>
 
                 </HBox>

@@ -76,6 +76,14 @@
                         <Label text="Event Tags" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
                         <FlowPane fx:id="tagsContainer" hgap="6" vgap="6" />
                     </VBox>
+
+                    <VBox spacing="4">
+                        <Label text="Picture"/>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Button text="Add picture" onAction="#onAddPictureClicked"/>
+                            <Label fx:id="pictureLabel" text="No picture chosen"/>
+                        </HBox>
+                    </VBox>
                 </HBox>
 
             </VBox>
