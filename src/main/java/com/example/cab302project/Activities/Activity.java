@@ -11,7 +11,7 @@ public class Activity {
    private final int goal;
 
    /**
-    * creates an activity that already has a database id
+    * Creates an activity that already has a database id
     *
     * @param id activity id from database
     * @param name name of activity
