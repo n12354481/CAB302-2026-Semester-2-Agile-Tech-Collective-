@@ -46,7 +46,7 @@ public class CommunityInsightsData {
 
     /**
      * A method to get the participating users.
-     * @return: returns the participating users.
+     * @return returns the participating users.
      */
     public int getParticipatingUsers() {
         return participatingUsers;
@@ -54,7 +54,7 @@ public class CommunityInsightsData {
 
     /**
      * A method to get the total activity minutes.
-     * @return: returns the activity minutes.
+     * @return returns the activity minutes.
      */
     public int getTotalActivityMinutes() {
         return totalActivityMinutes;
@@ -62,7 +62,7 @@ public class CommunityInsightsData {
 
     /**
      * A method to get the average sleep data.
-     * @return: returns the average sleep.
+     * @return returns the average sleep.
      */
     public double getAvgSleep() {
         return avgSleep;
@@ -70,7 +70,7 @@ public class CommunityInsightsData {
 
     /**
      * A method to get the average study stress data.
-     * @return: returns the average study stress.
+     * @return returns the average study stress.
      */
     public double getAvgStudyStress()
     {
@@ -79,7 +79,7 @@ public class CommunityInsightsData {
 
     /**
      * A method to get the average water data.
-     * @return: returns the average water.
+     * @return returns the average water.
      */
     public double getAvgWater()
     {
@@ -88,7 +88,7 @@ public class CommunityInsightsData {
 
     /**
      * A method to get the average emotion data.
-     * @return: returns the average emotion.
+     * @return returns the average emotion.
      */
     public double getAvgEmotion()
     {
@@ -97,7 +97,7 @@ public class CommunityInsightsData {
 
     /**
      * A method to get the most popular activity data.
-     * @return: returns the most popular activity.
+     * @return returns the most popular activity.
      */
     public String getMostPopularActivity()
     {
@@ -106,7 +106,7 @@ public class CommunityInsightsData {
 
     /**
      * A method to get the most popular mood data.
-     * @return: returns the most popular mood.
+     * @return returns the most popular mood.
      */
     public String getMostPopularMood()
     {

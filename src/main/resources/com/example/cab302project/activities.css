@@ -1,0 +1,55 @@
+.activity-card {
+    -fx-background-color: white;
+    -fx-border-color: #D5DEDC;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-cursor: hand;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.activity-card:hover {
+    -fx-border-color: #1F6F64;
+    -fx-background-color: #F6FAF9;
+}
+
+.activity-image-container {
+    -fx-background-color: #E8EEEE;
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+}
+
+.create-activity-card {
+    -fx-background-color: white;
+    -fx-border-color: #D5DEDC;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-cursor: hand;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+.create-activity-card:hover {
+    -fx-border-color: #1F6F64;
+    -fx-background-color: #F6FAF9;
+}
+
+.activity-details-banner {
+    -fx-background-color: #E8EEEE;
+    -fx-background-radius: 15;
+    -fx-alignment: center;
+}
+
+.upload-image-button {
+    -fx-background-color: #DEF3F0;
+    -fx-text-fill: #1F6F64;
+    -fx-background-radius: 8;
+    -fx-padding: 10 16;
+    -fx-cursor: hand;
+}
+
+.upload-image-button:hover {
+    -fx-background-color: #C6E8E2;
+}

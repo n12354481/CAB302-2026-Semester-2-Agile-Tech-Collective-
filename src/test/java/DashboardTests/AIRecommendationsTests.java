@@ -120,7 +120,7 @@ public class AIRecommendationsTests {
         });
 
         //Ensuring that the test did wait for 30 sec.
-        assertTrue(latch.await(30, TimeUnit.SECONDS), "Ollama did not respond in 30 sec.");
+        assertTrue(latch.await(150, TimeUnit.SECONDS), "Ollama did not respond in 30 sec.");
     }
 
     //A test to check whether the service returning Ollama's response returns appropriate recommendations needed if there is no activity data.

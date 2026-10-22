@@ -41,7 +41,10 @@ public final class DatabaseSchema {
                     + "category TEXT NOT NULL, "
                     + "activity_description TEXT, "
                     + "goal INTEGER, "
-                    + "points INTEGER NOT NULL DEFAULT 0)",
+                    + "points INTEGER NOT NULL DEFAULT 0, "
+                    + "image_file TEXT, "
+                    + "userID INTEGER, "
+                    + "FOREIGN KEY (userID) REFERENCES users(userID) ON DELETE CASCADE)",
 
             // One row per logged instance.
             "CREATE TABLE IF NOT EXISTS activity_log ("
@@ -94,6 +97,14 @@ public final class DatabaseSchema {
                     + "PRIMARY KEY (userID, postID), "
                     + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE, "
                     + "FOREIGN KEY (postID) REFERENCES post (postID) ON DELETE CASCADE"
+                    + ")",
+
+            "CREATE TABLE IF NOT EXISTS interests ("
+                    + "userID INTEGER NOT NULL, "
+                    + "postID INTEGER NOT NULL, "
+                    + "PRIMARY KEY (userID, postID), "
+                    + "FOREIGN KEY (userID) REFERENCES users (userID) ON DELETE CASCADE, "
+                    + "FOREIGN KEY (postID) REFERENCES post (postID) ON DELETE CASCADE"
                     + ")"
     };
 
@@ -112,6 +123,26 @@ public final class DatabaseSchema {
                 );
             } catch (SQLException e) {
                 if (!e.getMessage().contains("duplicate column name")) {
+                    throw e;
+                }
+            }
+
+            try {
+                statement.executeUpdate(
+                        "ALTER TABLE activity ADD COLUMN image_file TEXT"
+                );
+            } catch (SQLException e) {
+                if (e.getMessage() == null || !e.getMessage().contains("duplicate column name")) {
+                    throw e;
+                }
+            }
+
+            try {
+                statement.executeUpdate(
+                        "ALTER TABLE activity ADD COLUMN userID INTEGER REFERENCES users(userID) on DELETE CASCADE"
+                );
+            } catch (SQLException e) {
+                if (e.getMessage() == null || !e.getMessage().contains("duplicate column name")) {
                     throw e;
                 }
             }

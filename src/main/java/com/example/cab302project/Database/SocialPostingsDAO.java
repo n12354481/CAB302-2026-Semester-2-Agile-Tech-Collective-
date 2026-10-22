@@ -236,6 +236,67 @@ public class SocialPostingsDAO implements ISocialPostingsDAO {
         return posts;
     }
 
+    @Override
+    public void markInterested(int userId, int postId) throws SQLException {
+        String sql = "INSERT OR IGNORE INTO interests (userID, postID) VALUES (?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, postId);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public void removeInterest(int userId, int postId) throws SQLException {
+        String sql = "DELETE FROM interests WHERE userID = ? AND postID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, postId);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public boolean isInterested(int userId, int postId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM interests WHERE userID = ? AND postID = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, postId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next() && resultSet.getInt(1) > 0;
+            }
+        }
+    }
+
+    @Override
+    public List<SocialPostings> getInterestedPosts(int userId) throws SQLException {
+        List<SocialPostings> posts = new ArrayList<>();
+        String sql = "SELECT p.postId, p.userId, p.title, p.description, p.content, p.image, "
+                + "p.event_date, p.start_time, p.end_time, p.event_location, p.tags "
+                + "FROM post p JOIN interests i ON i.postID = p.postId "
+                + "WHERE i.userID = ? ORDER BY p.event_date ASC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    posts.add(new SocialPostings(
+                            resultSet.getInt("postId"),
+                            resultSet.getInt("userId"),
+                            resultSet.getString("title"),
+                            resultSet.getString("description"),
+                            resultSet.getString("content"),
+                            resultSet.getString("image"),
+                            resultSet.getString("event_date"),
+                            resultSet.getString("start_time"),
+                            resultSet.getString("end_time"),
+                            resultSet.getString("event_location"),
+                            resultSet.getString("tags")
+                    ));
+                }
+            }
+        }
+        return posts;
+    }
     /**
      * adds a post only if a post with the same title and date does not exist
      */

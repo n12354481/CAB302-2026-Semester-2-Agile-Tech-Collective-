@@ -4,12 +4,23 @@ import com.example.cab302project.Database.DatabaseActivityDAO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.scene.image.Image;
+import javafx.geometry.Pos;
 
 /**
  * controller for activities feature
@@ -20,6 +31,8 @@ public class ActivitiesController implements Initializable {
     private Activity selectedActivity;
 
     private final IActivityDAO activityDAO = new DatabaseActivityDAO();
+
+    private final DatabaseActivityDAO userActivityDAO = new DatabaseActivityDAO();
 
     private int userId;
 
@@ -32,8 +45,7 @@ public class ActivitiesController implements Initializable {
 
     private SelectedActivity activityBeingEdited = null;
 
-    // file used to remember selected activities after closing app
-    private static final String MY_ACTIVITIES_FILE = "myActivities.txt";
+    private File selectedImageFile;
 
     @FXML
     private VBox browsePane;
@@ -61,6 +73,9 @@ public class ActivitiesController implements Initializable {
 
     @FXML
     private Label goalLabel;
+
+    @FXML
+    private ImageView activityDetailsImage;
 
     @FXML
     private ToggleGroup durationGroup;
@@ -113,6 +128,15 @@ public class ActivitiesController implements Initializable {
     @FXML
     private Label createActivityMessage;
 
+    @FXML
+    private Label selectedImageLabel;
+
+    @FXML
+    private ImageView customImagePreview;
+
+    @FXML
+    private StackPane detailsImageFrame;
+
 
     /**
      * initialises the activities page when the FXML is loaded
@@ -133,6 +157,10 @@ public class ActivitiesController implements Initializable {
     public void setUserId(int userId) {
         this.userId = userId;
         loadCompletedActivities();
+        if (!buttonBar.getButtons().isEmpty()) {
+            Button firstButton = (Button) buttonBar.getButtons().get(0);
+            changeCategory(firstButton.getText());
+        }
     }
 
     private void loadCompletedActivities() {
@@ -186,7 +214,7 @@ public class ActivitiesController implements Initializable {
             }
         }
 
-        List<Activity> categoryActivities = activityDAO.getActivitiesByCategory(category);
+        List<Activity> categoryActivities = userActivityDAO.getActivitiesForUser(userId, category);
 
         // creates card for each activity in selected category
         for (Activity activity : categoryActivities) {
@@ -205,49 +233,47 @@ public class ActivitiesController implements Initializable {
     private Button createActivityCard(Activity activity) {
         Button button = new Button(activity.getName());
 
-        button.setPrefSize(230, 260);
-        button.setMinSize(230, 260);
+        button.setPrefSize(310, 340);
+        button.setMinSize(310, 340);
         button.setWrapText(true);
         button.setContentDisplay(ContentDisplay.TOP);
         button.setGraphicTextGap(10);
-        button.setTooltip(new Tooltip(activity.getDescription()));
 
-        button.setStyle(
-                "-fx-background-color: white;" +
-                        "-fx-border-color: gray;" +
-                        "-fx-border-radius: 15;" +
-                        "-fx-background-radius: 15;" +
-                        "-fx-cursor: hand;" +
-                        "-fx-font-size: 15;" +
-                        "-fx-font-weight: bold;");
+        button.getStyleClass().add("activity-card");
 
-        StackPane placeholder = new StackPane();
-        Label placeholderLabel = new Label(activity.getCategory());
-        placeholder.getChildren().add(placeholderLabel);
-        placeholder.setPrefSize(205, 185);
-        placeholder.setStyle("-fx-background-color: #E8EEEE;" + "-fx-background-radius: 10;");
-        button.setGraphic(placeholder);
+        StackPane imageContainer = new StackPane();
+        imageContainer.setPrefSize(285, 260);
+        imageContainer.setMinSize(285, 260);
+        imageContainer.setMaxSize(285, 260);
+        imageContainer.getStyleClass().add("activity-image-container");
 
-        // opens selected activity details page
-        button.setOnAction(event -> openActivity(activity));
+        Image image = ActivityImages.load(activity);
+
+        if (image != null) {
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(285);
+            imageView.setFitHeight(260);
+            imageView.setPreserveRatio(false);
+            imageView.setSmooth(true);
+
+            imageContainer.getChildren().add(imageView);
+        } else {
+            Label placeholder =  new Label(activity.getCategory());
+            imageContainer.getChildren().add(placeholder);
+        }
+        button.setGraphic(imageContainer);
+        button.setOnAction(event -> {openActivity(activity);});
         return button;
     }
 
     private Button createCustomActivityCard() {
         Button button = new Button("+\n\nCreate your\nown activity");
-        button.setPrefSize(230, 260);
-        button.setMinSize(230, 260);
+        button.setPrefSize(310, 340);
+        button.setMinSize(310, 340);
         button.setWrapText(true);
         button.setAlignment(javafx.geometry.Pos.CENTER);
 
-        button.setStyle("-fx-background-color: white;" +
-                "-fx-border-color: gray;" +
-                "-fx-border-radius: 15;" +
-                "-fx-background-radius: 15;" +
-                "-fx-cursor: hand;" +
-                "-fx-font-size: 15;" +
-                "-fx-font-weight: bold;" +
-                "-fx-text-alignment: center;");
+        button.getStyleClass().add("create-activity-card");
 
         button.setOnAction(event -> openCreateActivityPage());
 
@@ -281,6 +307,28 @@ public class ActivitiesController implements Initializable {
     }
 
     @FXML
+    private void onChooseActivityImageClicked() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Choose an Image");
+
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image files", "*.png", "*.jpg", "*.jpeg"));
+        File file = chooser.showOpenDialog(createActivityPane.getScene().getWindow());
+
+        if (file != null) {
+            Image preview = new Image(file.toURI().toString(), false);
+
+            if (preview.isError()) {
+                createActivityMessage.setText("Could not open the selected image.");
+                return;
+            }
+
+            selectedImageFile = file;
+            selectedImageLabel.setText(file.getName());
+            customImagePreview.setImage(preview);
+        }
+    }
+
+    @FXML
     private void onCreateActivityClicked() {
         String name = customActivityName.getText().trim();
         String category = customActivityCategory.getValue();
@@ -291,14 +339,34 @@ public class ActivitiesController implements Initializable {
             return;
         }
 
-        Activity newActivity = new Activity(name, category, description, 0);
+        String imageFile = null;
+        if (selectedImageFile != null) {
+            try {
+                imageFile = ActivityImages.saveUpload(selectedImageFile);
+            } catch (IOException e) {
+                createActivityMessage.setText("Could not save image: " + e.getMessage());
+                return;
+            }
+        }
 
-        Activity savedActivity = activityDAO.getOrCreateActivity(newActivity);
-        activities = activityDAO.getAllActivities();
+        Activity newActivity = new Activity(name, category, description, 0, imageFile);
+
+        int newId = userActivityDAO.insertForUser(newActivity, userId);
+        if (newId <= 0) {
+            createActivityMessage.setText("Could not save activity");
+            return;
+        }
+
+        Activity savedActivity = activityDAO.getActivityById(newId);
 
         customActivityName.clear();
         customActivityCategory.setValue(null);
         customActivityDescription.clear();
+
+        selectedImageFile = null;
+        selectedImageLabel.setText("No image selected");
+        customImagePreview.setImage(null);
+
         createActivityMessage.setText("");
 
         createActivityPane.setVisible(false);
@@ -308,6 +376,44 @@ public class ActivitiesController implements Initializable {
         browsePane.setManaged(true);
 
         changeCategory(savedActivity.getCategory());
+    }
+
+    private void displayDetailsImage(Activity activity) {
+        Image image = ActivityImages.load(activity);
+        activityDetailsImage.setImage(image);
+
+        if (image != null && image.getWidth() > 0 && image.getHeight() > 0) {
+            Runnable updateImage = () -> {
+                double width = detailsImageFrame.getWidth();
+                double height = detailsImageFrame.getHeight();
+
+                if (width <= 0 || height <= 0) return;
+
+                double scale = Math.max(width / image.getWidth(), height / image.getHeight());
+                double cropWidth = width / scale;
+                double cropHeight = height / scale;
+                double x = (image.getWidth() - cropWidth) / 2;
+                double y = (image.getHeight() - cropHeight) / 2;
+
+                activityDetailsImage.setViewport(new javafx.geometry.Rectangle2D(x, y, cropWidth, cropHeight));
+
+                activityDetailsImage.setFitWidth(width);
+                activityDetailsImage.setFitHeight(height);
+                activityDetailsImage.setPreserveRatio(false);
+                activityDetailsImage.setSmooth(true);
+            };
+            detailsImageFrame.widthProperty().addListener((obs, oldWidth, newWidth) -> updateImage.run());
+            detailsImageFrame.heightProperty().addListener((obs, oldHeight, newHeight) -> updateImage.run());
+
+            javafx.application.Platform.runLater(updateImage);
+        } else {
+            activityDetailsImage.setImage(null);
+            activityDetailsImage.setViewport(null);
+        }
+        boolean noImage = image ==  null;
+
+        categoryBannerLabel.setVisible(noImage);
+        categoryBannerLabel.setManaged(noImage);
     }
 
     // opens details view and displays selected activity information
@@ -322,6 +428,8 @@ public class ActivitiesController implements Initializable {
         categoryLabel.setText(activity.getCategory());
         categoryBannerLabel.setText(selectedActivity.getCategory());
         descriptionLabel.setText(activity.getDescription());
+
+        displayDetailsImage(activity);
 
         if (activity.getGoal() > 0) {
             goalLabel.setText("Suggested goal: " +
@@ -388,10 +496,9 @@ public class ActivitiesController implements Initializable {
 
         myActivities.removeIf(selected -> selected.getActivity().getId() == activityId);
 
-        recentActivities.removeIf(selected -> selected.getActivity().getId() == activityId);
+        userActivityDAO.deleteForUser(activityId, userId);
 
-        activityDAO.delete(activityId);
-        activities = activityDAO.getAllActivities();
+        loadCompletedActivities();
 
         selectedActivity = null;
         detailsPane.setVisible(false);
@@ -415,6 +522,8 @@ public class ActivitiesController implements Initializable {
         categoryBannerLabel.setText(selectedActivity.getCategory());
 
         descriptionLabel.setText(selectedActivity.getDescription());
+
+        displayDetailsImage(selectedActivity);
 
         if (selectedActivity.getGoal() > 0) {
             goalLabel.setText("Suggested goal: " + selectedActivity.getGoal() + " mins");
@@ -508,8 +617,6 @@ public class ActivitiesController implements Initializable {
             selectionMessage.setText(selectedActivity.getName() + " updated to " + minutes + " mins. ");
         } else {
             // checks whether the activity already exists before adding it to database
-            activityDAO.getOrCreateActivity(selectedActivity);
-
             addToMyActivities(selectedActivity, minutes);
 
             selectionMessage.setText(selectedActivity.getName() + " added to My Activities for " + minutes + "mins.");
@@ -518,7 +625,7 @@ public class ActivitiesController implements Initializable {
 
     private void addToMyActivities(Activity activity, int minutes) {
         for (SelectedActivity selected : myActivities) {
-            if (selected.getActivity().getName().equalsIgnoreCase(activity.getName())) {
+            if (selected.getActivity().getId() == activity.getId()) {
                 selected.setMinutes(minutes);
 
                 return;
@@ -762,10 +869,3 @@ public class ActivitiesController implements Initializable {
         public void setLogId(int logId) { this.logId = logId; }
     }
 }
-
-
-
-
-
-
-

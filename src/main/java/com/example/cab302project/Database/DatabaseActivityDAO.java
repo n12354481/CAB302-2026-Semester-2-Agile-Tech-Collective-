@@ -24,6 +24,7 @@ public class DatabaseActivityDAO implements IActivityDAO {
     public DatabaseActivityDAO() {
         this.connection = DatabaseConnection.getInstance();
     }
+
     // converts a database result into an activity object
     private static Activity marshallActivity(ResultSet rs) throws SQLException {
         int id = rs.getInt("activityID");
@@ -31,22 +32,23 @@ public class DatabaseActivityDAO implements IActivityDAO {
         String category = rs.getString("category");
         String description = rs.getString("activity_description");
         int goal = rs.getInt("goal");
+        String imageFile = rs.getString("image_file");
 
-        return new Activity(id, name, category, description, goal);
+        return new Activity(id, name, category, description, goal, imageFile);
     }
 
     // finds activity using database id
     @Override
     public Activity getActivityById(int id) {
         String query = "SELECT * FROM activity WHERE activityID = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)){
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
 
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) return marshallActivity(rs);
             }
             return null;
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -58,19 +60,20 @@ public class DatabaseActivityDAO implements IActivityDAO {
     public int insert(Activity activity) {
         int insertId = -1;
 
-        String sql = "INSERT INTO activity " + "(activity_name, category, activity_description, goal) " + "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO activity " + "(activity_name, category, activity_description, goal, image_file) " + "VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, activity.getName());
             stmt.setString(2, activity.getCategory());
             stmt.setString(3, activity.getDescription());
             stmt.setInt(4, activity.getGoal());
+            stmt.setString(5, activity.getImageFile());
 
             int affectedRows = stmt.executeUpdate();
 
             // retrieves id created by database
             if (affectedRows > 0) {
-                try (ResultSet generatedKeys = stmt.getGeneratedKeys()){
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         insertId = generatedKeys.getInt(1);
                     }
@@ -80,6 +83,32 @@ public class DatabaseActivityDAO implements IActivityDAO {
             throw new RuntimeException(e);
         }
         return insertId;
+    }
+
+    public int insertForUser(Activity activity, int userId) {
+        if (userId <= 0) {
+            throw new IllegalArgumentException("Invalid user ID");
+        }
+        String sql = """
+                INSERT INTO activity
+                (activity_name, category, activity_description, goal, image_file, userID)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """;
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, activity.getName());
+            stmt.setString(2, activity.getCategory());
+            stmt.setString(3, activity.getDescription());
+            stmt.setInt(4, activity.getGoal());
+            stmt.setString(5, activity.getImageFile());
+            stmt.setInt(6, userId);
+
+            stmt.executeUpdate();
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+                return keys.next() ? keys.getInt(1) : -1;
+            }
+        } catch (SQLException e) {
+             throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -117,7 +146,7 @@ public class DatabaseActivityDAO implements IActivityDAO {
 
         int id = insert(activity);
 
-        return new Activity(id, activity.getName(), activity.getCategory(), activity.getDescription(), activity.getGoal());
+        return new Activity(id, activity.getName(), activity.getCategory(), activity.getDescription(), activity.getGoal(), activity.getImageFile());
     }
 
     @Override
@@ -166,6 +195,39 @@ public class DatabaseActivityDAO implements IActivityDAO {
         return categoryActivities;
     }
 
+    public List<Activity> getActivitiesForUser(int userId, String category) {
+        List<Activity> result = new ArrayList<>();
+        String sql = """
+                SELECT * FROM activity 
+                WHERE category = ?
+                AND (
+                    userID = ?
+                    OR (userID IS NULL AND activity_name IN (
+                    'Swimming', 'Jogging', 'Tennis',
+                    'Study with a friend', 'Attend a workshop',
+                    'Join a STEM society event', 'Meditation',
+                    'Review lecture notes', 'Coding Practice',
+                    'Reading', 'Gym workout', 'Go for a walk',
+                    'University club event', 'Lunch with a friend'
+                    ))
+                )
+                ORDER BY activityID
+                """;
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, category);
+            statement.setInt(2, userId);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    result.add(marshallActivity(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
     @Override
     public void delete(int id) {
         String sql = "DELETE FROM activity WHERE activityID = ?";
@@ -173,6 +235,22 @@ public class DatabaseActivityDAO implements IActivityDAO {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteForUser(int activityId, int userId) {
+        if (userId <= 0) {
+            throw new IllegalArgumentException("Invalid user ID");
+        }
+
+        String sql = "DELETE FROM activity " +
+                "WHERE activityID = ? AND userID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, activityId);
+            stmt.setInt(2, userId);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -332,11 +410,46 @@ public class DatabaseActivityDAO implements IActivityDAO {
     }
 
     private void addDefaultActivity(String name, String category, String description, int goal) {
-        if (findByName(name) != null) {
-            return;
+        String checkSql = "SELECT 1 FROM activity " +
+                "WHERE activity_name = ? AND userID IS NULL LIMIT 1";
+
+        try (PreparedStatement stmt = connection.prepareStatement(checkSql)) {
+            stmt.setString(1, name);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        Activity activity = new Activity(name, category, description, goal);
+
+        String imageFile = defaultImageFile(name);
+
+        Activity activity = new Activity(name, category, description, goal, imageFile);
+
         insert(activity);
+    }
+
+    private String defaultImageFile(String name) {
+        return switch (name) {
+            case "Swimming" -> "swimming.jpg";
+            case "Jogging" -> "jogging.jpg";
+            case "Tennis" -> "tennis.jpg";
+            case "Study with a friend" -> "study-with-friend.jpg";
+            case "Attend a workshop" -> "workshop.jpg";
+            case "Join a STEM society event" -> "stem-event.jpg";
+            case "Meditation" -> "meditation.jpg";
+            case "Review lecture notes" -> "review-notes.jpg";
+            case "Coding Practice" -> "coding-practice.jpg";
+            case "Reading" -> "reading.jpg";
+            case "Gym workout" -> "gym-workout.jpg";
+            case "Go for a walk" -> "walking.jpg";
+            case "University club event" -> "uni-club.jpg";
+            case "Lunch with a friend" -> "lunch-with-friend.jpg";
+            default -> null;
+        };
     }
 }
 

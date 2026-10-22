@@ -4,9 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets ?>
 
+<?import javafx.scene.image.ImageView?>
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.example.cab302project.Activities.ActivitiesController"
+           stylesheets="@activities.css"
            prefWidth="900"
            prefHeight="650"
            style="-fx-background-color: white;">
@@ -80,8 +82,20 @@
                                -fx-cursor: hand;"/>
 
                 <!-- category banner -->
-                <StackPane prefHeight="250" minHeight="250" maxHeight="250" style="-fx-background-color: #E8EEEE; -fx-background-radius: 15;">
-                    <Label fx:id="categoryBannerLabel" style="-fx-font-size: 20px; -fx-text-fill: gray;"/>
+                <StackPane fx:id="detailsImageFrame"
+                           prefHeight="250"
+                           minHeight="250"
+                           maxHeight="250"
+                           styleClass="activity-details-banner">
+
+                    <ImageView fx:id="activityDetailsImage"
+                               fitWidth="760"
+                               fitHeight="250"
+                               preserveRatio="true"
+                               smooth="true"/>
+
+                    <Label fx:id="categoryBannerLabel"
+                           style="-fx-font-size: 20px; -fx-text-fill: gray;"/>
                 </StackPane>
 
                 <Label fx:id="activityName" wrapText="true" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
@@ -238,6 +252,30 @@
                           promptText="Add details about your activity..."
                           prefRowCount="4"
                           wrapText="true"/>
+
+                <Label text="Activity image (optional)"
+                       style="-fx-font-size: 17px; -fx-font-weight: bold;"/>
+
+                <Button text="Choose image"
+                        onAction="#onChooseActivityImageClicked"
+                        styleClass="upload-image-button"/>
+
+                <Label fx:id="selectedImageLabel"
+                       text="No image selected"
+                       style="-fx-text-fill: gray;"/>
+
+                <StackPane prefWidth="260"
+                           prefHeight="160"
+                           maxWidth="260"
+                           maxHeight="160"
+                           styleClass="activity-image-container">
+
+                    <ImageView fx:id="customImagePreview"
+                               fitWidth="250"
+                               fitHeight="150"
+                               preserveRatio="true"
+                               smooth="true"/>
+                </StackPane>
 
                 <Button text="Create activity"
                         onAction="#onCreateActivityClicked"
