@@ -17,20 +17,17 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Connection connection = DatabaseConnection.getInstance();
-//        try {
-//            //DatabaseSchema.createAll(connection);
-//        //} catch (SQLException sqlEx) {
-//            throw new RuntimeException("Could not create the database tables", sqlEx);
-//       // }
         try {
             GardenSchema.create(connection);
         } catch (SQLException sqlEx) {
             throw new RuntimeException("Could not create the rewards tables", sqlEx);
         }
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 1000);
-        stage.setTitle("STEM App");
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Stemwise");
         stage.setScene(scene);
         stage.show();
+        stage.setWidth(1000);
+        stage.setHeight(1000);
     }
 }

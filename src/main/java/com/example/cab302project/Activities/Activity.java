@@ -1,7 +1,7 @@
 package com.example.cab302project.Activities;
 
 /**
- * represents activity that can be viewed and selected by user
+ * Represents activity that can be viewed and selected by user
  */
 public class Activity {
    private int id;
@@ -12,7 +12,7 @@ public class Activity {
    private final String imageFile;
 
    /**
-    * creates an activity that already has a database id
+    * Creates an activity that already has a database id
     *
     * @param id activity id from database
     * @param name name of activity
