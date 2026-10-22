@@ -93,7 +93,7 @@ public class ActivityTest {
    }
 
    @Test
-   public void testGetOrCreateActivityById() {
+   public void testGetOrCreateActivity() {
       Activity found = activityDAO.getOrCreateActivity(testActivity);
       assertNotNull(found);
       assertEquals(testActivity.getName(), found.getName());
@@ -104,7 +104,7 @@ public class ActivityTest {
    public void testInsertActivityLog() {
       int activityId = activityDAO.insert(testActivity);
       int logId = activityDAO.insertActivityLog(1, activityId, "2026-10-06", 30);
-      assertTrue(activityId > 0);
+      assertTrue(logId > 0);
    }
 
    @Test
@@ -118,10 +118,13 @@ public class ActivityTest {
    @Test
    public void testGetActivityLogMinutes() {
       int activityId = activityDAO.insert(testActivity);
-      activityDAO.insertActivityLog(1, activityId, "2026-10-06", 45);
+      int logId = activityDAO.insertActivityLog(1, activityId, "2026-10-06", 45);
       List<int[]> logs = activityDAO.getActivityLogs(1);
-      assertFalse(logs.isEmpty());
-      assertEquals(45, logs.get(0)[2]);
+
+      int[] foundLog = logs.stream().filter(log -> log[0] == logId).findFirst().orElse(null);
+
+      assertNotNull(foundLog);
+      assertEquals(45, foundLog[2]);
    }
 
    @Test
